@@ -5,6 +5,13 @@
 ## Usage
 
 1. Clone this repo
-2. [Install uv](https://docs.astral.sh/uv/getting-started/installation/#installation-methods) (Python package manager)
-3. Run `uv sync`
-4. Run `uv run manim -pql [FILE] [SCENE]` for a low-quality preview (e.g. `manim -pql manim_test/test.py AnimateSquareToCircle`)
+2. [Install uv](https://docs.astral.sh/uv/getting-started/installation/#installation-methods) (Python package manager).
+3. If you're using linux, then additionally install these packages
+
+```bash
+sudo apt update
+sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev
+```
+
+4. Run `uv sync`
+5. Run `uv run manim -pql [FILE] [SCENE]` for a low-quality preview (e.g. `manim -pql manim_test/test.py AnimateSquareToCircle`)
