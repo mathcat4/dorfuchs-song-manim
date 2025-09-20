@@ -1,0 +1,5 @@
+.venv/
+.vscode/
+media/
+__pycache__/
+mpv_preview.sh
