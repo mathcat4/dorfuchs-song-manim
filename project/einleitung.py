@@ -5,6 +5,6 @@ mn.config.background_color = mn.WHITE
 
 class MainSketch(mn.Scene):
     def construct(self):
-        ax = mn.Axes(x_range = [0, 10, 1]).set_color(mn.BLACK)
+        number_line = mn.NumberLine(x_range = [0, 10, 1], include_numbers = True, color = mn.BLACK)
 
-        self.add(ax)
+        self.add(number_line)
