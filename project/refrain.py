@@ -65,6 +65,6 @@ class MainSketch(mn.Scene):
 
         final_text = mn.Text("Das sind die Mittelungleichungen!").set_color(mn.BLACK).scale(0.75)
         final_text.next_to(group_eq, 3 * mn.DOWN)
-        self.play(mn.Create(final_text))
+        self.play(mn.Create(final_text), run_time=2)
 
         self.wait(3)
