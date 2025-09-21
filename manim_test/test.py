@@ -14,3 +14,13 @@ class AnimateSquareToCircle(mn.Scene):
         self.play(mn.Create(square))
         self.play(mn.Transform(square, circle))
         self.play(mn.FadeOut(square))
+
+class TransformCycle(mn.Scene):
+    def construct(self):
+        a = mn.Circle()
+        t1 = mn.Square()
+        t2 = mn.Triangle()
+        self.add(a)
+        self.wait()
+        for t in [t1,t2]:
+            self.play(mn.Transform(a,t))
