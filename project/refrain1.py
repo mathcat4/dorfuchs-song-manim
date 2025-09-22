@@ -18,24 +18,24 @@ class MainSketch(mn.Scene):
 
         eq_HM = mn.MathTex("\\frac{2ab}{a+b}", color = mn.BLACK)
 
-        group_eq = mn.VGroup(eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM).center().arrange(mn.RIGHT, buff=0.5)
+        group_eq = mn.VGroup(eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM).arrange(mn.RIGHT, buff=0.5)
         self.add(group_eq)
     
         # Text Objects
 
-        text_QM = mn.Text("QM", color = mn.RED).move_to(eq_QM).scale(0.75)
+        text_QM = mn.Text("QM", color = mn.BLUE_D).move_to(eq_QM).scale(0.75)
         text_QM.move_to(eq_QM).align_to(group_eq.get_top() + mn.UP, mn.UP)
         group_QM = mn.VGroup(eq_QM, text_QM)
 
-        text_AM = mn.Text("AM", color = mn.RED).move_to(eq_AM).scale(0.75)
+        text_AM = mn.Text("AM", color = mn.ORANGE).move_to(eq_AM).scale(0.75)
         text_AM.move_to(eq_AM).align_to(group_eq.get_top() + mn.UP, mn.UP)
         group_AM = mn.VGroup(eq_AM, text_AM)
 
-        text_GM = mn.Text("GM", color = mn.RED).move_to(eq_GM).scale(0.75)
+        text_GM = mn.Text("GM", color = mn.GREEN_D).move_to(eq_GM).scale(0.75)
         text_GM.move_to(eq_GM).align_to(group_eq.get_top() + mn.UP, mn.UP)
         group_GM = mn.VGroup(eq_GM, text_GM)
 
-        text_HM = mn.Text("HM", color = mn.RED).move_to(eq_HM).scale(0.75)
+        text_HM = mn.Text("HM", color = mn.PURPLE_D).move_to(eq_HM).scale(0.75)
         text_HM.move_to(eq_HM).align_to(group_eq.get_top() + mn.UP, mn.UP)
         group_HM = mn.VGroup(eq_HM, text_HM)
 
