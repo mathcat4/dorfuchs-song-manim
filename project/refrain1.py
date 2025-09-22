@@ -7,16 +7,16 @@ class MainSketch(mn.Scene):
     def construct(self):
         # Equation and Relation objects
 
-        eq_QM = mn.MathTex("\\sqrt{\\frac{a^2+b^2}{2}}", color=mn.BLACK)
-        rel_QM_AM = mn.MathTex("\\geq", color = mn.BLACK)
+        eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=mn.BLACK)
+        rel_QM_AM = mn.MathTex(r"\geq", color = mn.BLACK)
 
-        eq_AM = mn.MathTex("\\frac{a+b}{2}", color = mn.BLACK)
-        rel_AM_GM = mn.MathTex("\\geq", color = mn.BLACK)
+        eq_AM = mn.MathTex(r"\frac{a+b}{2}", color = mn.BLACK)
+        rel_AM_GM = mn.MathTex(r"\geq", color = mn.BLACK)
 
-        eq_GM = mn.MathTex("\\sqrt{ab}", color = mn.BLACK)
-        rel_GM_HM = mn.MathTex("\\geq", color = mn.BLACK)
+        eq_GM = mn.MathTex(r"\sqrt{ab}", color = mn.BLACK)
+        rel_GM_HM = mn.MathTex(r"\geq", color = mn.BLACK)
 
-        eq_HM = mn.MathTex("\\frac{2ab}{a+b}", color = mn.BLACK)
+        eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color = mn.BLACK)
 
         group_eq = mn.VGroup(eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM).arrange(mn.RIGHT, buff=0.5)
         self.add(group_eq)
