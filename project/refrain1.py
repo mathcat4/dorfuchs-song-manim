@@ -67,7 +67,7 @@ class MainSketch(mn.Scene):
 
             self.play(group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from)
             self.wait(0.5)
-            self.play(group_anim.animate.scale(1/1.5), rate_func=mn.rate_functions.rush_from)
+            self.play(group_anim.animate.scale(1/1.5), rate_func=mn.rate_functions.rush_into)
 
             fade_in = fade_out.copy()
 

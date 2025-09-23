@@ -18,10 +18,10 @@ class MainSketch(mn.Scene):
 
         # Draw a and b
 
-        dot_a = mn.Dot(number_line.n2p(num_a), color=mn.RED)
+        dot_a = mn.Dot(number_line.n2p(num_a), color=mn.BLACK)
         label_a = mn.MathTex("a", color = mn.BLACK).next_to(dot_a, mn.UP)
 
-        dot_b = mn.Dot(number_line.n2p(num_b), color=mn.DARK_BLUE)
+        dot_b = mn.Dot(number_line.n2p(num_b), color=mn.BLACK)
         label_b = mn.MathTex("b", color = mn.BLACK).next_to(dot_b, mn.UP)
 
         self.play(mn.Create(dot_a), mn.Write(label_a))
