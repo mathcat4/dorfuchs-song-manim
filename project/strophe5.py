@@ -43,7 +43,7 @@ class MainSketch(mn.Scene):
         # Wiggle Relations
         self.play(mn.Wiggle(group_rel))
 
-        # Generalized means
+        # Power means
 
         eq_PM = mn.MathTex(r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color = mn.BLACK) 
         eq_PM_original = eq_PM.copy()
@@ -51,19 +51,22 @@ class MainSketch(mn.Scene):
 
         eq_PM_QM = mn.MathTex(r"\sqrt[2]{ \frac{{a_1}^2 + {a_2}^2 + \dots + {a_n}^2}{n} }", color = mn.BLUE_D) 
         eq_PM_AM = mn.MathTex(r"\sqrt[1]{ \frac{{a_1}^1 + {a_2}^1 + \dots + {a_n}^1}{n} }", color = mn.ORANGE) 
-        eq_PM_GM = mn.MathTex(r"\lim_{p \to 0} \sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color = mn.GREEN_D) 
+        eq_PM_GM = mn.MathTex(r"\lim_{p \to 0} {{ \sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } }}", color = mn.GREEN_D) 
         eq_PM_HM = mn.MathTex(r"\sqrt[-1]{ \frac{{a_1}^{-1} + {a_2}^{-1} + \dots + {a_n}^{-1} }{n} }", color = mn.PURPLE_D) 
 
         for (mean, PM_mean) in [(eq_QM, eq_PM_QM), (eq_AM, eq_PM_AM), (eq_HM, eq_PM_HM), (eq_GM, eq_PM_GM)]:
             self.play(mn.ReplacementTransform(eq_PM, PM_mean))
             eq_PM = eq_PM_original.copy()
             self.wait(0.75)
-            self.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM))
+            if mean == eq_GM:
+                self.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM))
+            else:
+                self.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM))
             self.remove(PM_mean)
 
         self.play(mn.FadeOut(group_eq), mn.FadeOut(group_rel))
 
-        # Generalized mean inequality
+        # Power mean inequality
 
         text = mn.MathTex(r"\text{Für alle } p \geq q \text{ gilt:}", color = mn.BLACK).shift(mn.UP)
         ineq_PM = mn.MathTex(r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } \geq \sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }", color = mn.BLACK).shift(mn.DOWN)

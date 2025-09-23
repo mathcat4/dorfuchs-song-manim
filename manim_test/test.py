@@ -24,3 +24,10 @@ class TransformCycle(mn.Scene):
         self.wait()
         for t in [t1,t2]:
             self.play(mn.Transform(a,t))
+
+
+class LatexTest(mn.Scene):
+    mn.config.background_color = mn.WHITE
+    def construct(self):
+        a = mn.MathTex(r"\underbrace{\frac{a + b}{2}}_{AM}", tex_to_color_map={"AM": mn.ORANGE}, color = mn.BLACK)
+        self.add(a)
