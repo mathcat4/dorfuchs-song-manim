@@ -1,5 +1,7 @@
 import manim as mn
 
+mn.config.background_color = mn.WHITE
+
 class MainSketch(mn.Scene):
     def construct(self):
         # Multi variable means

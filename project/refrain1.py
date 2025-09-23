@@ -65,13 +65,13 @@ class MainSketch(mn.Scene):
             
             self.play(*(fade_out_anims + fade_in_anims))
 
-            self.play(group_anim.animate.scale(1.5))
+            self.play(group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from)
             self.wait(0.5)
-            self.play(group_anim.animate.scale(1/1.5))
+            self.play(group_anim.animate.scale(1/1.5), rate_func=mn.rate_functions.rush_from)
 
             fade_in = fade_out.copy()
 
-            self.wait(1)
+            # self.wait(1)
         
         self.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
 
