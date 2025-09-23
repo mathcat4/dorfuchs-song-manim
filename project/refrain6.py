@@ -3,6 +3,7 @@ import refrain1 as rf1
 
 class MainSketch(mn.Scene):
     def construct(self):
+        pass
         
         #!TODO: Think of a better scene
         # # Power mean equation and Relation objects
