@@ -1,10 +1,10 @@
 from helpers import *
 
 
-class MainSketch(mn.Scene):
-    def construct(self):
-        # Multi variable means
+class BaseSketch(mn.Scene):
+    def construct_scene(self, reverse=False):
 
+        # Multi variable means
         eq_QM = mn.MathTex(
             r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
             color=QMCOL,
@@ -75,8 +75,11 @@ class MainSketch(mn.Scene):
         # Fade and scale animations
 
         fade_in = []
+        group_anims = [group_QM_AM, group_AM_GM, group_GM_HM]
+        if reverse:
+            group_anims = group_anims[::-1]
 
-        for group_anim in [group_QM_AM, group_AM_GM, group_GM_HM]:
+        for group_anim in group_anims:
             fade_out = [
                 mobj
                 for mobj in [*group_eq, *group_rel, *group_text]
@@ -107,3 +110,8 @@ class MainSketch(mn.Scene):
         self.play(mn.Write(final_text), run_time=2)
 
         self.wait(3)
+
+
+class MainSketch(BaseSketch):
+    def construct(self):
+        self.construct_scene()
