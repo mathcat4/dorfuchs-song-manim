@@ -52,11 +52,47 @@ def construct_scene(scene: mn.Scene):
         mn.Transform(eq_AM, eq2_AM),
         mn.Transform(eq_GM, eq2_GM),
         mn.Transform(eq_HM, eq2_HM),
+        rel_QM_AM.animate.move_to((eq2_QM.get_bottom() + eq2_AM.get_top()) / 2),
         rel_AM_GM.animate.move_to((eq2_AM.get_bottom() + eq2_GM.get_top()) / 2),
+        rel_GM_HM.animate.move_to((eq2_GM.get_bottom() + eq2_HM.get_top()) / 2),
     )
 
     # Wiggle Relations
     scene.play(mn.Wiggle(group_rel))
+
+    # Equation Relations
+    rel2_QM_AM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+        (eq_QM.get_right() + eq_AM.get_left()) / 2
+    )
+    rel2_AM_GM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+        (eq_AM.get_bottom() + eq_GM.get_top()) / 2
+    )
+    rel2_AM_GM.rotate(mn.PI / 2)
+    rel2_GM_HM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+        (eq_GM.get_left() + eq_HM.get_right()) / 2
+    )
+
+    # Oskars krasse Gleichheitsfälle
+    orel_QM_AM = rel_QM_AM.copy()
+    orel_AM_GM = rel_AM_GM.copy()
+    orel_GM_HM = rel_GM_HM.copy()
+
+    scene.play(
+        mn.Transform(rel_QM_AM, rel2_QM_AM),
+        mn.Transform(rel_AM_GM, rel2_AM_GM),
+        mn.Transform(rel_GM_HM, rel2_GM_HM),
+    )
+
+    eq_equality = mn.MathTex(r"\implies a_1 = a_2 = \dots = a_n", color=TXTCOL)
+    scene.play(mn.Write(eq_equality))
+    scene.wait(3)
+
+    scene.play(
+        mn.FadeOut(eq_equality),
+        mn.Transform(rel_QM_AM, orel_QM_AM),
+        mn.Transform(rel_AM_GM, orel_AM_GM),
+        mn.Transform(rel_GM_HM, orel_GM_HM),
+    )
 
     # Power means
 
