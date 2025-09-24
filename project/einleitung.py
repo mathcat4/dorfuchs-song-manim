@@ -1,100 +1,98 @@
 from helpers import *
 
 
+def construct_scene(scene):
+    # Number line
+
+    number_line = mn.NumberLine(
+        x_range=[0, 10, 1], include_numbers=True, color=TXTCOL
+    ).shift(mn.DOWN)
+    for num in number_line.numbers:
+        num.set_color(TXTCOL)
+
+    scene.add(number_line)
+
+    num_a = 1.5
+    num_b = 8.5
+
+    # Draw a and b
+
+    dot_a = mn.Dot(number_line.n2p(num_a), color=TXTCOL)
+    label_a = mn.MathTex("a", color=TXTCOL).next_to(dot_a, mn.UP)
+
+    dot_b = mn.Dot(number_line.n2p(num_b), color=TXTCOL)
+    label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.UP)
+
+    scene.play(mn.Create(dot_a), mn.Write(label_a))
+    scene.play(mn.Create(dot_b), mn.Write(label_b))
+
+    # Draw moving mean Dot
+
+    dot_mean = mn.Dot(number_line.n2p((num_a + num_b) / 2), color=AMCOL)
+    label_mean = mn.MathTex("M", color=AMCOL).next_to(dot_mean, mn.UP)
+    label_mean.add_updater(lambda label: label.next_to(dot_mean, mn.UP))
+
+    scene.play(mn.FadeIn(dot_mean), mn.FadeIn(label_mean))
+    scene.play(dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)))
+    scene.play(dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)))
+    scene.play(dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)))
+    scene.wait(1)
+
+    label_mean.clear_updaters()
+
+    # Four mean dots
+
+    dot_am = mn.Dot(number_line.n2p((num_a + num_b) / 2), color=AMCOL)
+    label_am = mn.MathTex("AM", color=AMCOL).scale(0.75).next_to(dot_mean, mn.UP)
+
+    dot_gm = mn.Dot(number_line.n2p((num_a * num_b) ** 0.5), color=GMCOL)
+    label_gm = (
+        mn.MathTex("GM", color=GMCOL)
+        .scale(0.75)
+        .next_to(dot_gm, mn.UP)
+        .align_to(label_am, mn.UP)
+    )
+
+    dot_qm = mn.Dot(number_line.n2p(((num_a**2 + num_b**2) / 2) ** 0.5), color=QMCOL)
+    label_qm = (
+        mn.MathTex("QM", color=QMCOL)
+        .scale(0.75)
+        .next_to(dot_qm, mn.UP)
+        .align_to(label_am, mn.UP)
+    )
+
+    dot_hm = mn.Dot(number_line.n2p((2 * num_a * num_b) / (num_a + num_b)), color=HMCOL)
+    label_hm = (
+        mn.MathTex("HM", color=HMCOL)
+        .scale(0.75)
+        .next_to(dot_hm, mn.UP)
+        .align_to(label_am, mn.UP)
+    )
+
+    # Mean descriptions
+    desc_am = mn.Text("AM: Arithmetische Mittel", color=AMCOL)
+    desc_gm = mn.Text("GM: Geometrische Mittel", color=GMCOL)
+    desc_qm = mn.Text("QM: Quadratische Mittel", color=QMCOL)
+    desc_hm = mn.Text("HM: Harmonische Mittel", color=HMCOL)
+
+    group_desc = mn.VGroup(desc_am, desc_gm, desc_qm, desc_hm).arrange_in_grid(
+        rows=2, cols=2, buff=2
+    )
+    group_desc.scale(0.5).shift(2 * mn.UP)
+
+    scene.play(
+        mn.Transform(dot_mean, dot_am),
+        mn.Transform(label_mean, label_am),
+        mn.Write(desc_am),
+    )
+    scene.wait(1)
+    scene.play(mn.FadeIn(dot_gm), mn.FadeIn(label_gm), mn.Write(desc_gm))
+    scene.wait(1)
+    scene.play(mn.FadeIn(dot_qm), mn.FadeIn(label_qm), mn.Write(desc_qm))
+    scene.wait(1)
+    scene.play(mn.FadeIn(dot_hm), mn.FadeIn(label_hm), mn.Write(desc_hm))
+
+
 class MainSketch(mn.Scene):
     def construct(self):
-        # Number line
-
-        number_line = mn.NumberLine(
-            x_range=[0, 10, 1], include_numbers=True, color=TXTCOL
-        ).shift(mn.DOWN)
-        for num in number_line.numbers:
-            num.set_color(TXTCOL)
-
-        self.add(number_line)
-
-        num_a = 1.5
-        num_b = 8.5
-
-        # Draw a and b
-
-        dot_a = mn.Dot(number_line.n2p(num_a), color=TXTCOL)
-        label_a = mn.MathTex("a", color=TXTCOL).next_to(dot_a, mn.UP)
-
-        dot_b = mn.Dot(number_line.n2p(num_b), color=TXTCOL)
-        label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.UP)
-
-        self.play(mn.Create(dot_a), mn.Write(label_a))
-        self.play(mn.Create(dot_b), mn.Write(label_b))
-
-        # Draw moving mean Dot
-
-        dot_mean = mn.Dot(number_line.n2p((num_a + num_b) / 2), color=AMCOL)
-        label_mean = mn.MathTex("M", color=AMCOL).next_to(dot_mean, mn.UP)
-        label_mean.add_updater(lambda label: label.next_to(dot_mean, mn.UP))
-
-        self.play(mn.FadeIn(dot_mean), mn.FadeIn(label_mean))
-        self.play(dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)))
-        self.play(dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)))
-        self.play(dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)))
-        self.wait(1)
-
-        label_mean.clear_updaters()
-
-        # Four mean dots
-
-        dot_am = mn.Dot(number_line.n2p((num_a + num_b) / 2), color=AMCOL)
-        label_am = mn.MathTex("AM", color=AMCOL).scale(0.75).next_to(dot_mean, mn.UP)
-
-        dot_gm = mn.Dot(number_line.n2p((num_a * num_b) ** 0.5), color=GMCOL)
-        label_gm = (
-            mn.MathTex("GM", color=GMCOL)
-            .scale(0.75)
-            .next_to(dot_gm, mn.UP)
-            .align_to(label_am, mn.UP)
-        )
-
-        dot_qm = mn.Dot(
-            number_line.n2p(((num_a**2 + num_b**2) / 2) ** 0.5), color=QMCOL
-        )
-        label_qm = (
-            mn.MathTex("QM", color=QMCOL)
-            .scale(0.75)
-            .next_to(dot_qm, mn.UP)
-            .align_to(label_am, mn.UP)
-        )
-
-        dot_hm = mn.Dot(
-            number_line.n2p((2 * num_a * num_b) / (num_a + num_b)), color=HMCOL
-        )
-        label_hm = (
-            mn.MathTex("HM", color=HMCOL)
-            .scale(0.75)
-            .next_to(dot_hm, mn.UP)
-            .align_to(label_am, mn.UP)
-        )
-
-        # Mean descriptions
-        desc_am = mn.Text("AM: Arithmetische Mittel", color=AMCOL)
-        desc_gm = mn.Text("GM: Geometrische Mittel", color=GMCOL)
-        desc_qm = mn.Text("QM: Quadratische Mittel", color=QMCOL)
-        desc_hm = mn.Text("HM: Harmonische Mittel", color=HMCOL)
-
-        group_desc = mn.VGroup(desc_am, desc_gm, desc_qm, desc_hm).arrange_in_grid(
-            rows=2, cols=2, buff=2
-        )
-        group_desc.scale(0.5).shift(2 * mn.UP)
-
-        self.play(
-            mn.Transform(dot_mean, dot_am),
-            mn.Transform(label_mean, label_am),
-            mn.Write(desc_am),
-        )
-        self.wait(1)
-        self.play(mn.FadeIn(dot_gm), mn.FadeIn(label_gm), mn.Write(desc_gm))
-        self.wait(1)
-        self.play(mn.FadeIn(dot_qm), mn.FadeIn(label_qm), mn.Write(desc_qm))
-        self.wait(1)
-        self.play(mn.FadeIn(dot_hm), mn.FadeIn(label_hm), mn.Write(desc_hm))
-
-        self.wait(3)
+        construct_scene(self)

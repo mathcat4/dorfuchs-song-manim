@@ -1,117 +1,106 @@
 from helpers import *
 
 
-class BaseSketch(mn.Scene):
-    def construct_scene(self, reverse=False):
+def construct_scene(scene, reverse=False):
 
-        # Multi variable means
-        eq_QM = mn.MathTex(
-            r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
-            color=QMCOL,
-        )
-        eq_AM = mn.MathTex(r"\frac{ a_1 + a_2 + \dots + a_n } { n }", color=AMCOL)
-        eq_GM = mn.MathTex(r"\sqrt[n]{ a_1 a_2 \ldots a_n }", color=GMCOL)
-        eq_HM = mn.MathTex(
-            r"\frac{ n }{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }",
-            color=HMCOL,
-        )
+    # Multi variable means
+    eq_QM = mn.MathTex(
+        r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
+        color=QMCOL,
+    )
+    eq_AM = mn.MathTex(r"\frac{ a_1 + a_2 + \dots + a_n } { n }", color=AMCOL)
+    eq_GM = mn.MathTex(r"\sqrt[n]{ a_1 a_2 \ldots a_n }", color=GMCOL)
+    eq_HM = mn.MathTex(
+        r"\frac{ n }{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }",
+        color=HMCOL,
+    )
 
-        group_eq = mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM).arrange_in_grid(
-            rows=2, cols=2, buff=4
-        )
+    group_eq = mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM).arrange_in_grid(
+        rows=2, cols=2, buff=4
+    )
 
-        # Relations
+    # Relations
 
-        rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL).move_to(
-            (eq_QM.get_right() + eq_AM.get_left()) / 2
-        )
-        rel_AM_GM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
-            (eq_AM.get_bottom() + eq_GM.get_top()) / 2
-        )
-        rel_AM_GM.rotate(mn.PI / 2)
-        rel_GM_HM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
-            (eq_GM.get_left() + eq_HM.get_right()) / 2
-        )
+    rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL).move_to(
+        (eq_QM.get_right() + eq_AM.get_left()) / 2
+    )
+    rel_AM_GM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
+        (eq_AM.get_bottom() + eq_GM.get_top()) / 2
+    )
+    rel_AM_GM.rotate(mn.PI / 2)
+    rel_GM_HM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
+        (eq_GM.get_left() + eq_HM.get_right()) / 2
+    )
 
-        group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
+    group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
 
-        self.add(group_eq, group_rel)
+    scene.add(group_eq, group_rel)
 
-        # Text objects
+    # Text objects
 
-        text_QM = mn.MathTex(r"\textbf{QM } (p = 2)", color=QMCOL).scale(0.75)
-        text_QM.move_to(eq_QM).align_to(
-            mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
-        )
-        group_QM = mn.VGroup(eq_QM, text_QM)
+    text_QM = mn.MathTex(r"\textbf{QM } (p = 2)", color=QMCOL).scale(0.75)
+    text_QM.move_to(eq_QM).align_to(
+        mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
+    )
+    group_QM = mn.VGroup(eq_QM, text_QM)
 
-        text_AM = mn.MathTex(r"\textbf{AM } (p = 1)", color=AMCOL).scale(0.75)
-        text_AM.move_to(eq_AM).align_to(
-            mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
-        )
-        group_AM = mn.VGroup(eq_AM, text_AM)
+    text_AM = mn.MathTex(r"\textbf{AM } (p = 1)", color=AMCOL).scale(0.75)
+    text_AM.move_to(eq_AM).align_to(
+        mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
+    )
+    group_AM = mn.VGroup(eq_AM, text_AM)
 
-        text_GM = mn.MathTex(
-            r"\textbf{GM } (\textstyle \lim_{p \to 0})", color=GMCOL
-        ).scale(0.75)
-        text_GM.move_to(eq_GM).align_to(
-            mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP
-        )
-        group_GM = mn.VGroup(eq_GM, text_GM)
+    text_GM = mn.MathTex(
+        r"\textbf{GM } (\textstyle \lim_{p \to 0})", color=GMCOL
+    ).scale(0.75)
+    text_GM.move_to(eq_GM).align_to(mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP)
+    group_GM = mn.VGroup(eq_GM, text_GM)
 
-        text_HM = mn.MathTex(r"\textbf{HM } (p = -1)", color=HMCOL).scale(0.75)
-        text_HM.move_to(eq_HM).align_to(
-            mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP
-        )
-        group_HM = mn.VGroup(eq_HM, text_HM)
+    text_HM = mn.MathTex(r"\textbf{HM } (p = -1)", color=HMCOL).scale(0.75)
+    text_HM.move_to(eq_HM).align_to(mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP)
+    group_HM = mn.VGroup(eq_HM, text_HM)
 
-        group_text = mn.VGroup(text_QM, text_AM, text_GM, text_HM)
-        self.add(group_text)
+    group_text = mn.VGroup(text_QM, text_AM, text_GM, text_HM)
+    scene.add(group_text)
 
-        group_QM_AM = mn.VGroup(*group_QM, rel_QM_AM, *group_AM)
-        group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
-        group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
+    group_QM_AM = mn.VGroup(*group_QM, rel_QM_AM, *group_AM)
+    group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
+    group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
 
-        # Fade and scale animations
+    # Fade and scale animations
 
-        fade_in = []
-        group_anims = [group_QM_AM, group_AM_GM, group_GM_HM]
-        if reverse:
-            group_anims = group_anims[::-1]
+    fade_in = []
+    group_anims = [group_QM_AM, group_AM_GM, group_GM_HM]
+    if reverse:
+        group_anims = group_anims[::-1]
 
-        for group_anim in group_anims:
-            fade_out = [
-                mobj
-                for mobj in [*group_eq, *group_rel, *group_text]
-                if mobj not in group_anim
-            ]
+    for group_anim in group_anims:
+        fade_out = [
+            mobj
+            for mobj in [*group_eq, *group_rel, *group_text]
+            if mobj not in group_anim
+        ]
 
-            fade_out_anims = [
-                mobj.animate.set_opacity(0.3)
-                for mobj in fade_out
-                if mobj not in fade_in
-            ]
-            fade_in_anims = [
-                mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
-            ]
+        fade_out_anims = [
+            mobj.animate.set_opacity(0.3) for mobj in fade_out if mobj not in fade_in
+        ]
+        fade_in_anims = [
+            mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
+        ]
 
-            self.play(*(fade_out_anims + fade_in_anims))
-            self.play(mn.Circumscribe(group_anim, color=TXTCOL), run_time=2)
+        scene.play(*(fade_out_anims + fade_in_anims))
+        scene.play(mn.Circumscribe(group_anim, color=TXTCOL), run_time=2)
 
-            fade_in = fade_out.copy()
+        fade_in = fade_out.copy()
 
-        self.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
+    scene.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
 
-        # Final text
+    # Final text
 
-        final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(
-            0.6
-        )
-        self.play(mn.Write(final_text), run_time=2)
-
-        self.wait(3)
+    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.6)
+    scene.play(mn.Write(final_text), run_time=2)
 
 
-class MainSketch(BaseSketch):
+class MainSketch(mn.Scene):
     def construct(self):
-        self.construct_scene()
+        construct_scene(self)

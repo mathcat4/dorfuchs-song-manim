@@ -1,123 +1,117 @@
 from helpers import *
 
 
-class BaseSketch(mn.Scene):
-    def construct_scene(self, shift=False, mObjs={}):
-        # Equation and Relation objects
+def construct_scene(scene, shift=False, mObjs=None):
+    if mObjs is None:
+        mObjs = {}
 
-        eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=TXTCOL)
-        rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)
+    # Equation and Relation objects
 
-        eq_AM = mn.MathTex(r"\frac{a+b}{2}", color=TXTCOL)
-        rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
+    eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=TXTCOL)
+    rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)
 
-        eq_GM = mn.MathTex(r"\sqrt{ab}", color=TXTCOL)
-        rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
+    eq_AM = mn.MathTex(r"\frac{a+b}{2}", color=TXTCOL)
+    rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
 
-        eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
+    eq_GM = mn.MathTex(r"\sqrt{ab}", color=TXTCOL)
+    rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
 
-        group_eq = mn.VGroup(
-            eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
-        ).arrange(mn.RIGHT, buff=0.5)
+    eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
 
-        # Text objects
+    group_eq = mn.VGroup(
+        eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
+    ).arrange(mn.RIGHT, buff=0.5)
 
-        text_QM = mn.Text("QM", color=QMCOL).scale(0.75)
-        text_QM.move_to(eq_QM).align_to(group_eq.get_top() + mn.UP, mn.UP)
-        group_QM = mn.VGroup(eq_QM, text_QM)
+    # Text objects
 
-        text_AM = mn.Text("AM", color=AMCOL).scale(0.75)
-        text_AM.move_to(eq_AM).align_to(group_eq.get_top() + mn.UP, mn.UP)
-        group_AM = mn.VGroup(eq_AM, text_AM)
+    text_QM = mn.Text("QM", color=QMCOL).scale(0.75)
+    text_QM.move_to(eq_QM).align_to(group_eq.get_top() + mn.UP, mn.UP)
+    group_QM = mn.VGroup(eq_QM, text_QM)
 
-        text_GM = mn.Text("GM", color=GMCOL).scale(0.75)
-        text_GM.move_to(eq_GM).align_to(group_eq.get_top() + mn.UP, mn.UP)
-        group_GM = mn.VGroup(eq_GM, text_GM)
+    text_AM = mn.Text("AM", color=AMCOL).scale(0.75)
+    text_AM.move_to(eq_AM).align_to(group_eq.get_top() + mn.UP, mn.UP)
+    group_AM = mn.VGroup(eq_AM, text_AM)
 
-        text_HM = mn.Text("HM", color=HMCOL).scale(0.75)
-        text_HM.move_to(eq_HM).align_to(group_eq.get_top() + mn.UP, mn.UP)
-        group_HM = mn.VGroup(eq_HM, text_HM)
+    text_GM = mn.Text("GM", color=GMCOL).scale(0.75)
+    text_GM.move_to(eq_GM).align_to(group_eq.get_top() + mn.UP, mn.UP)
+    group_GM = mn.VGroup(eq_GM, text_GM)
 
-        group_text = mn.VGroup(text_QM, text_AM, text_GM, text_HM)
+    text_HM = mn.Text("HM", color=HMCOL).scale(0.75)
+    text_HM.move_to(eq_HM).align_to(group_eq.get_top() + mn.UP, mn.UP)
+    group_HM = mn.VGroup(eq_HM, text_HM)
 
-        group_QM_AM = mn.VGroup(*group_QM, rel_QM_AM, *group_AM)
-        group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
-        group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
+    group_text = mn.VGroup(text_QM, text_AM, text_GM, text_HM)
 
-        self.add(group_eq, group_text)
-        if shift:
-            self.play(group_eq.animate.shift(mn.UP), group_text.animate.shift(mn.UP))
+    group_QM_AM = mn.VGroup(*group_QM, rel_QM_AM, *group_AM)
+    group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
+    group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
 
-        # Fade and scale animations
+    scene.add(group_eq, group_text)
+    if shift:
+        scene.play(group_eq.animate.shift(mn.UP), group_text.animate.shift(mn.UP))
 
-        fade_in = []
-        iteration = 0
+    # Fade and scale animations
 
-        for group_anim in [group_QM_AM, group_AM_GM, group_GM_HM]:
-            fade_out = [
-                mobj for mobj in [*group_eq, *group_text] if mobj not in group_anim
-            ]
+    fade_in = []
+    iteration = 0
 
-            fade_out_anims = [
-                mobj.animate.set_opacity(0.3)
-                for mobj in fade_out
-                if mobj not in fade_in
-            ]
-            fade_in_anims = [
-                mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
-            ]
+    for group_anim in [group_QM_AM, group_AM_GM, group_GM_HM]:
+        fade_out = [mobj for mobj in [*group_eq, *group_text] if mobj not in group_anim]
 
-            self.play(*(fade_out_anims + fade_in_anims))
+        fade_out_anims = [
+            mobj.animate.set_opacity(0.3) for mobj in fade_out if mobj not in fade_in
+        ]
+        fade_in_anims = [
+            mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
+        ]
 
-            if iteration in mObjs.keys():
-                self.play(
-                    mn.FadeIn(mObjs[iteration]),
-                    group_anim.animate.scale(1.5),
-                    rate_func=mn.rate_functions.rush_from,
-                )
-                self.wait(0.5)
-                self.play(
-                    mn.FadeOut(mObjs[iteration]),
-                    group_anim.animate.scale(2 / 3),
-                    rate_func=mn.rate_functions.rush_into,
-                )
-            else:
-                self.play(
-                    group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from
-                )
-                self.wait(0.5)
-                self.play(
-                    group_anim.animate.scale(2 / 3),
-                    rate_func=mn.rate_functions.rush_into,
-                )
+        scene.play(*(fade_out_anims + fade_in_anims))
 
-            fade_in = fade_out.copy()
-
-            # self.wait(1)
-            iteration += 1
-
-        self.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
-
-        # Final text
-
-        final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(
-            0.75
-        )
-        final_text.next_to(group_eq, mn.DOWN, buff=2)
-
-        if shift:
-            self.play(
-                group_eq.animate.shift(mn.DOWN),
-                group_text.animate.shift(mn.DOWN),
-                mn.Write(final_text),
-                run_time=2,
+        if iteration in mObjs.keys():
+            scene.play(
+                mn.FadeIn(mObjs[iteration]),
+                group_anim.animate.scale(1.5),
+                rate_func=mn.rate_functions.rush_from,
+            )
+            scene.wait(0.5)
+            scene.play(
+                mn.FadeOut(mObjs[iteration]),
+                group_anim.animate.scale(2 / 3),
+                rate_func=mn.rate_functions.rush_into,
             )
         else:
-            self.play(mn.Write(final_text), run_time=2)
+            scene.play(
+                group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from
+            )
+            scene.wait(0.5)
+            scene.play(
+                group_anim.animate.scale(2 / 3),
+                rate_func=mn.rate_functions.rush_into,
+            )
 
-        self.wait(3)
+        fade_in = fade_out.copy()
+
+        # scene.wait(1)
+        iteration += 1
+
+    scene.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
+
+    # Final text
+
+    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
+    final_text.next_to(group_eq, mn.DOWN, buff=2)
+
+    if shift:
+        scene.play(
+            group_eq.animate.shift(mn.DOWN),
+            group_text.animate.shift(mn.DOWN),
+            mn.Write(final_text),
+            run_time=2,
+        )
+    else:
+        scene.play(mn.Write(final_text), run_time=2)
 
 
-class MainSketch(BaseSketch):
+class MainSketch(mn.Scene):
     def construct(self):
-        self.construct_scene()
+        construct_scene(self)
