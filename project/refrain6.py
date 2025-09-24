@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene, reverse=False):
+def construct_scene(scene: mn.Scene, reverse=False):
 
     # Multi variable means
     eq_QM = mn.MathTex(

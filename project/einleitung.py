@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene):
+def construct_scene(scene: mn.Scene):
     # Number line
 
     number_line = mn.NumberLine(

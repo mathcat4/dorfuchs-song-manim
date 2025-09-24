@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene):
+def construct_scene(scene: mn.Scene):
     # Two variable means
     eq_QM = mn.MathTex(r"\sqrt{ {{ {{ a^2 + b^2 }} \over {{ 2 }} }} }", color=QMCOL)
     eq_AM = mn.MathTex(r"{{ a + b }} \over {{ 2 }}", color=AMCOL)
