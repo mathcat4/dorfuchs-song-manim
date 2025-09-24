@@ -2,7 +2,7 @@ import manim as mn
 import einleitung, refrain1, refrain6, strophe1, strophe2, strophe3, strophe4, strophe5
 
 
-def fade_out(scene):
+def fade_out(scene: mn.Scene):
     anims = []
     for mobj in scene.mobjects:
         anims.append(mn.FadeOut(mobj))

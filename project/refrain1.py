@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene, shift=False, mObjs=None):
+def construct_scene(scene: mn.Scene, shift=False, mObjs=None):
     if mObjs is None:
         mObjs = {}
 
