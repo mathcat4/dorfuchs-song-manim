@@ -210,9 +210,9 @@ class Constram(Scene):
         term14 = MathTex(r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{(a+b)^2 + (b-a)^2}{2^2}", color = TXTCOL).move_to(right_half_center).shift(UP*1.5)
         term15 = MathTex(r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{a^2 + 2ab + b^2 + a^2 - 2ab + b^2}{2^2}", color = TXTCOL, font_size=36).move_to(right_half_center)
         term16 = MathTex(r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{2a^2 + 2b^2}{2^2}", color = TXTCOL).move_to(right_half_center)
-        term17 = MathTex(r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{a^2 + b^2}{2^2}", color = TXTCOL).move_to(right_half_center)
-        term18 = MathTex(r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2^2}}}}", color = TXTCOL).move_to(right_half_center).shift(DOWN*1.5)
-        term19 = MathTex(r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2^2}}}} = QM(a,b)", color = QMCOL).move_to(right_half_center)
+        term17 = MathTex(r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{a^2 + b^2}{2}", color = TXTCOL).move_to(right_half_center)
+        term18 = MathTex(r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2}}}}", color = TXTCOL).move_to(right_half_center).shift(DOWN*1.5)
+        term19 = MathTex(r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2}}}} = QM(a,b)", color = QMCOL).move_to(right_half_center)
         self.play(Wiggle(am2), Write(term10))
         self.remove(lineMS)
         lineMS.color = RED
@@ -234,7 +234,7 @@ class Constram(Scene):
         zauberfunktion(self, GanzeSkizze, lambda m: m.shift(RIGHT*3))
 
         #gm visualisierung
-        self.play(FadeOut(am2), qm.animate.set_opacity(0.5))
+        self.play(FadeOut(am2), FadeOut(rightM), qm.animate.set_opacity(0.5))
         term4 = MathTex(r"a \cdot b", color=TXTCOL).shift(UP*3)
         term5 = MathTex(r"\sqrt{ab}", color=TXTCOL).shift(UP*3)
         term6 = MathTex(r"GM(a,b) =", r"\sqrt{ab}", color=GMCOL).shift(UP*3)
@@ -272,6 +272,7 @@ class Constram(Scene):
 
 
         #hm visualisieren
+        tex1 = MathTex(r"HM(a,b) = \sqrt{\frac{2}{\frac{1}{a} + \frac{1}{b}}}", color = HMCOL).shift(UP*3)
         self.play(ReplacementTransform(am1,dashedam))
         self.play(Create(dashed1))
         self.play(Create(G), Create(labelG))
@@ -281,6 +282,7 @@ class Constram(Scene):
         self.play(Wiggle(rightG), Wiggle(rightS))
         self.play(Wiggle(AMGMDreieck))
         self.play(Wiggle(GMHMDreieck))
+        
 
 
         self.wait(1)
