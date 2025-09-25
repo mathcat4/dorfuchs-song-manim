@@ -34,6 +34,7 @@ def TransformMatchingTexNoReplace(src, target, **kwargs):
     src_copy = src.copy()
     return mn.TransformMatchingTex(src_copy, target, **kwargs)
 
+
 def TransformMatchingShapesNoReplace(src, target, **kwargs):
     """
     Transform a *copy* of `src` into `target`, leaving `src` unchanged.
@@ -171,61 +172,39 @@ angleXlabel = mn.MathTex(r"\alpha", color=mn.PINK, font_size=24).move_to(
     ).point_from_proportion(0.5)
 )
 
-# Dreiecke und Grops
+# Dreiecke und Groups
 QMAMDreieck = mn.Group(qm, am2, lineMS, S, M, N, rightM)
 AMGMDreieck = mn.Group(gm, am1, lineMS, S, M, X, rightS)  # auch Dreieck für Ähnlichkeit
 GMHMDreieck = mn.Group(hm, gm, dashed1, S, G, X, rightG)
 angXl = mn.Group(angleX, angleXlabel)
 GanzeSkizze = mn.VGroup(
-    #    Punkte
-    M,
-    A,
-    B,
-    S,
-    N,
-    X,
-    G,
+    # Punkte
+    *[M, A, B, S, N, X, G],
     # Linien
-    sega,
-    segb,
-    semikreis,
-    gm,
-    am1,
-    am2,
-    am3,
-    qm,
-    hm,
-    lineAX,
-    lineBX,
-    lineMS,
-    dashed1,
-    dashedam,
+    *[
+        sega,
+        segb,
+        semikreis,
+        gm,
+        am1,
+        am2,
+        am3,
+        qm,
+        hm,
+        lineAX,
+        lineBX,
+        lineMS,
+        dashed1,
+        dashedam,
+    ],
     # Labels
-    labelM,
-    labelS,
-    labelN,
-    labelX,
-    labelG,
+    *[labelM, labelS, labelN, labelX, labelG],
     # nur zum animieren
-    firsta,
-    firstb,
+    *[firsta, firstb],
     # Braces + brace texts
-    b1,
-    b2,
-    b1text,
-    b2text,
-    labelAB,
-    abr,
-    bbr,
-    abrtxt,
-    bbrtxt,
+    *[b1, b2, b1text, b2text, labelAB, abr, bbr, abrtxt, bbrtxt],
     # Winkel + Winkel-Labels
-    rightAXB,
-    rightS,
-    rightM,
-    rightG,
-    angleX,
-    angleXlabel,
+    [rightAXB, rightS, rightM, rightG, angleX, angleXlabel],
 )
 
 # positions

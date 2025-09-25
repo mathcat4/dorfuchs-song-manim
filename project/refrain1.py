@@ -1,9 +1,11 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene, shift=False, mObjs=None):
+def construct_scene(scene: mn.Scene, mObjs=None):
     if mObjs is None:
         mObjs = {}
+
+    shift = len(mObjs) != 0
 
     # Equation and Relation objects
 
@@ -67,15 +69,18 @@ def construct_scene(scene: mn.Scene, shift=False, mObjs=None):
 
         scene.play(*(fade_out_anims + fade_in_anims))
 
+        wiggle_duration = 1
         if iteration in mObjs.keys():
+            wiggle_obj = mObjs[iteration].copy()
+            wiggle_obj.next_to(group_eq, mn.DOWN, buff=1)
             scene.play(
-                mn.FadeIn(mObjs[iteration]),
+                mn.FadeIn(wiggle_obj),
                 group_anim.animate.scale(1.5),
                 rate_func=mn.rate_functions.rush_from,
             )
-            scene.wait(0.5)
+            scene.play(mn.Wiggle(wiggle_obj), run_time=wiggle_duration)
             scene.play(
-                mn.FadeOut(mObjs[iteration]),
+                mn.FadeOut(wiggle_obj),
                 group_anim.animate.scale(2 / 3),
                 rate_func=mn.rate_functions.rush_into,
             )
@@ -83,7 +88,7 @@ def construct_scene(scene: mn.Scene, shift=False, mObjs=None):
             scene.play(
                 group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from
             )
-            scene.wait(0.5)
+            scene.wait(wiggle_duration)
             scene.play(
                 group_anim.animate.scale(2 / 3),
                 rate_func=mn.rate_functions.rush_into,
@@ -94,24 +99,29 @@ def construct_scene(scene: mn.Scene, shift=False, mObjs=None):
         # scene.wait(1)
         iteration += 1
 
-    scene.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
-
     # Final text
+
+    for mobj in fade_in:
+        mobj.set_opacity(1)
 
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
     final_text.next_to(group_eq, mn.DOWN, buff=2)
 
+    all_final_anims = [mn.Write(final_text)]
+
     if shift:
-        scene.play(
+        all_final_anims += [
             group_eq.animate.shift(mn.DOWN),
             group_text.animate.shift(mn.DOWN),
-            mn.Write(final_text),
-            run_time=2,
-        )
-    else:
-        scene.play(mn.Write(final_text), run_time=2)
+        ]
+
+    scene.play(*all_final_anims, run_time=3)
 
 
 class MainSketch(mn.Scene):
     def construct(self):
         construct_scene(self)
+
+        # construct_scene(
+        #     self, mObjs={0: QMAMDreieck, 1: AMGMDreieck, 2: GMHMDreieck}
+        # )
