@@ -16,14 +16,26 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(angleX), mn.Create(angleXlabel))
     scene.play(mn.Wiggle(angXl))
     scene.play(mn.Wiggle(rightG), mn.Wiggle(rightS))
+    scene.play(mn.FadeOut(tex1))
+    scene.add(sega, angleX) # zauberfunktionfix
+    zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
     scene.play(mn.Wiggle(AMGMDreieck))
     scene.play(mn.Wiggle(GMHMDreieck))
-    scene.play(mn.FadeOut(tex1))
-    zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
+    
     term20 = mn.MathTex(
-        r"\frac{|\overline{XG}|}{|\overline{XS}|} = \frac{|\overline{XS}|}{|\overline{XM}|}",
+        r"{{{|\overline{XG}|}} \over |\overline{XS}|} {{=}} {|\overline{XS}| \over |\overline{XM}|}",
         color=TXTCOL,
     ).move_to(right_half_center)
+    term21 = mn.MathTex(
+        r"{{{|\overline{XG}|}} \over \sqrt{ {{ab}} }} {{=}} {\sqrt{ {{ab}} } {{\over}} {{ {a+b \over 2} }} }",
+        color=TXTCOL,
+    ).move_to(right_half_center)
+    term22 = mn.MathTex(
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}} {{ {a+b \over 2} }}}",
+        color=TXTCOL,
+    ).move_to(right_half_center)
+    scene.play(mn.Write(term20))
+    scene.play(mn.TransformMatchingTex(term20,term21))
 
 
 class MainSketch(mn.Scene):
