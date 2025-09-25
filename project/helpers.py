@@ -224,3 +224,9 @@ GanzeSkizze = mn.VGroup(
 # positions
 right_half_center = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 left_half_center = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
+
+
+# Base construction
+construction = mn.VGroup(
+    semikreis, sega, segb, S, M, labelS, labelM, abr, bbr, abrtxt, bbrtxt
+)
