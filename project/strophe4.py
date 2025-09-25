@@ -3,13 +3,12 @@ from helpers import *
 
 def construct_scene(scene: mn.Scene):
     qm.set_opacity(0.5)
-    scene.add(construction, qm, gm, N, X, S, labelN, labelX, rightS)
+    scene.add(construction, qm, gm, N, X, S, labelN, labelX, rightS, am1)
 
     tex1 = mn.MathTex(
         r"HM(a,b) = \sqrt{\frac{2}{\frac{1}{a} + \frac{1}{b}}}", color=HMCOL
     ).shift(mn.UP * 3)
     scene.play(mn.Write(tex1))
-    scene.play(mn.ReplacementTransform(am2, am1))
     scene.play(mn.ReplacementTransform(am1, dashedam))
     scene.play(mn.Create(dashed1))
     scene.play(mn.Create(G), mn.Create(labelG))

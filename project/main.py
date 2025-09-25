@@ -1,5 +1,6 @@
 import manim as mn
 import einleitung, refrain1, refrain6, strophe1, strophe2, strophe3, strophe4, strophe5
+from helpers import *
 
 
 def fade_out(scene: mn.Scene):
@@ -35,9 +36,7 @@ class MainSketch(mn.Scene):
         fade_out(self)
 
         # Refrain 3
-        refrain1.construct_scene(
-            self, shift=True, mObjs={0: mn.Square(2, color=mn.BLACK)}
-        )
+        refrain1.construct_scene(self, mObjs={0: QMAMDreieck})
         fade_out(self)
 
         # Strophe 3 (GM)
@@ -45,9 +44,7 @@ class MainSketch(mn.Scene):
         fade_out(self)
 
         # Refrain 4
-        refrain1.construct_scene(
-            self, shift=True, mObjs={1: mn.Square(2, color=mn.BLACK)}
-        )
+        refrain1.construct_scene(self, mObjs={0: QMAMDreieck, 1: AMGMDreieck})
         fade_out(self)
 
         # Strophe 4 (HM)
@@ -56,7 +53,7 @@ class MainSketch(mn.Scene):
 
         # Refrain 5
         refrain1.construct_scene(
-            self, shift=True, mObjs={2: mn.Square(2, color=mn.BLACK)}
+            self, mObjs={0: QMAMDreieck, 1: AMGMDreieck, 2: GMHMDreieck}
         )
         fade_out(self)
 
