@@ -54,6 +54,9 @@ def construct_scene(scene: mn.Scene):
         mn.FadeOut(rightAXB),
     )
     scene.play(mn.ReplacementTransform(am2, am1))
+    
+
+    
 
 
 class MainSketch(mn.Scene):
