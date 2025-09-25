@@ -20,23 +20,31 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.FadeOut(tex1))
     zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
     term10 = (
-        mn.MathTex(r"{{\frac{a+b}{2}}}", color=TXTCOL)
+        mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL)
         .move_to(right_half_center)
         .shift(mn.LEFT * 1.5)
     )
     term11 = (
-        mn.MathTex(r"\frac{a+b}{2} - a", color=TXTCOL)
+        mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL)
         .move_to(right_half_center)
         .shift(mn.RIGHT * 1.5)
     )
     term12 = (
-        mn.MathTex(r"{{\frac{b-a}{2}}}", color=TXTCOL)
+        mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL)
         .move_to(right_half_center)
         .shift(mn.RIGHT * 1.5)
     )
     term13 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}}{{^2}} {{=}} ({{\frac{a+b}{2}}})^2 + ({{\frac{b-a}{2}}})^2 ",
+            r"{{|\overline{SM}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
+            color=TXTCOL,
+        )
+        .move_to(right_half_center)
+        .shift(mn.UP * 1.5)
+    )
+    term135 = (
+        mn.MathTex(
+            r"{{|\overline{SM}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
             color=TXTCOL,
         )
         .move_to(right_half_center)
@@ -44,26 +52,26 @@ def construct_scene(scene: mn.Scene):
     )
     term14 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{(a+b)^2 + (b-a)^2}{2^2}",
+            r"{{|\overline{SM}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
         .shift(mn.UP * 1.5)
     )
     term15 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{a^2 + 2ab + b^2 + a^2 - 2ab + b^2}{2^2}",
+        r"{{|\overline{SM}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
         color=TXTCOL,
         font_size=36,
     ).move_to(right_half_center)
     term16 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{2a^2 + 2b^2}{2^2}", color=TXTCOL
+        r"{{|\overline{SM}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}", color=TXTCOL
     ).move_to(right_half_center)
     term17 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}} \frac{a^2 + b^2}{2}", color=TXTCOL
+        r"{{|\overline{SM}|}}{{^2}} {{=}}  {{{a^2}} + {{b^2}} \over 2} ", color=TXTCOL
     ).move_to(right_half_center)
     term18 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2}}}}",
+            r"{{|\overline{SM}|}} {{=}} {{\sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
@@ -83,7 +91,8 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.TransformMatchingShapes(term11, term12))
     scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13))
     scene.wait(1)
-    scene.play(mn.TransformMatchingTex(term13, term14))
+    scene.play(mn.TransformMatchingTex(term13, term135))
+    scene.play(mn.TransformMatchingTex(term135, term14))
     scene.play(TransformMatchingTexNoReplace(term14, term15))
     scene.play(mn.TransformMatchingTex(term15, term16))
     scene.play(mn.TransformMatchingTex(term16, term17))
