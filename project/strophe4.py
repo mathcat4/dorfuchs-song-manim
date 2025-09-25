@@ -34,8 +34,14 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}} {{ {a+b \over 2} }}}",
         color=TXTCOL,
     ).move_to(right_half_center)
+    term23 = mn.MathTex(
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot {2 \over ab} {{\over}} {{ {a+b \over 2} \cdot {2 \over ab} }}}",
+        color=TXTCOL,
+    ).move_to(right_half_center)
     scene.play(mn.Write(term20))
     scene.play(mn.TransformMatchingTex(term20,term21))
+    scene.play(mn.TransformMatchingTex(term21,term22))
+    scene.play(mn.TransformMatchingTex(term22,term23))
 
 
 class MainSketch(mn.Scene):
