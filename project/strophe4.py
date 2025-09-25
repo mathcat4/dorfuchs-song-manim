@@ -27,11 +27,11 @@ def construct_scene(scene: mn.Scene):
         color=TXTCOL,
     ).move_to(right_half_center)
     term21 = mn.MathTex(
-        r"{{{|\overline{XG}|}} \over \sqrt{ {{ab}} }} {{=}} {\sqrt{ {{ab}} } {{\over}} {{ {a+b \over 2} }} }",
+        r"{ {{|\overline{XG}|}} \over \sqrt{ ab } } {{=}} {\sqrt{ ab } {{\over}}  {a+b \over 2}  }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term22 = mn.MathTex(
-        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}} {{ {a+b \over 2} }}}",
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}  {a+b \over 2}  }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term23 = mn.MathTex(
