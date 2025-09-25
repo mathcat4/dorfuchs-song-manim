@@ -34,6 +34,13 @@ def TransformMatchingTexNoReplace(src, target, **kwargs):
     src_copy = src.copy()
     return mn.TransformMatchingTex(src_copy, target, **kwargs)
 
+def TransformMatchingShapesNoReplace(src, target, **kwargs):
+    """
+    Transform a *copy* of `src` into `target`, leaving `src` unchanged.
+    """
+    src_copy = src.copy()
+    return mn.TransformMatchingShapes(src_copy, target, **kwargs)
+
 
 # Punkte
 M = mn.Dot(np.array([0, -1.5, 0]), color=TXTCOL)  # kinda variable
