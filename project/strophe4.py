@@ -23,19 +23,19 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Wiggle(GMHMDreieck))
     
     term20 = mn.MathTex(
-        r"{|\overline{XG}| \over |\overline{XS}|} {{=}} {|\overline{XS}| \over |\overline{XM}|}",
+        r"{ {{|\overline{XG}|}} {{\over}} |\overline{XS}|} {{=}} {|\overline{XS}| {{\over}} |\overline{XM}|}",
         color=TXTCOL,
     ).move_to(right_half_center)
     term21 = mn.MathTex(
-        r"{ {{|\overline{XG}|}} \over \sqrt{ab} } {{=}} {\sqrt{ab} \over   {a{{+}}b \over 2}   }",
-        color=TXTCOL,
+        r"{ {{|\overline{XG}|}} {{\over}} \sqrt{ab} } {{=}} {\sqrt{ab} {{\over}}  {{ {a+b \over 2} }} }",
+        color=TXTCOL
     ).move_to(right_half_center)
     term22 = mn.MathTex(
-        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}   {a{{+}}b \over 2}   }",
-        color=TXTCOL,
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}   {{ {a+b \over 2} }}   }",
+        color=TXTCOL
     ).move_to(right_half_center)
     term23 = mn.MathTex(
-        r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}   {a{{+}}b \over 2}  \cdot \frac{2}{ab} }",
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}   {{ {a+b \over 2} }}  \cdot \frac{2}{ab} }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term24 = mn.MathTex(
