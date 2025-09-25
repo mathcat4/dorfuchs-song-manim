@@ -36,7 +36,11 @@ class MainSketch(mn.Scene):
         fade_out(self)
 
         # Refrain 3
-        refrain1.construct_scene(self, mObjs={0: QMAMDreieck.copy()})
+        refrain1.construct_scene(
+            self,
+            mObjFade=mn.VGroup(construction.copy(), N.copy(), labelN.copy()),
+            mObjsWiggle={0: QMAMDreieck.copy()},
+        )
         fade_out(self)
 
         # Strophe 3 (GM)
@@ -45,7 +49,11 @@ class MainSketch(mn.Scene):
 
         # Refrain 4
         refrain1.construct_scene(
-            self, mObjs={0: QMAMDreieck.copy(), 1: AMGMDreieck.copy()}
+            self,
+            mObjFade=mn.VGroup(
+                construction.copy(), N.copy(), labelN.copy(), X.copy(), labelX.copy()
+            ),
+            mObjsWiggle={0: QMAMDreieck.copy(), 1: AMGMDreieck.copy()},
         )
         fade_out(self)
 
@@ -56,7 +64,20 @@ class MainSketch(mn.Scene):
         # Refrain 5
         refrain1.construct_scene(
             self,
-            mObjs={0: QMAMDreieck.copy(), 1: AMGMDreieck.copy(), 2: GMHMDreieck.copy()},
+            mObjFade=mn.VGroup(
+                construction.copy(),
+                N.copy(),
+                labelN.copy(),
+                X.copy(),
+                labelX.copy(),
+                G.copy(),
+                labelG.copy().next_to(G, mn.UP, buff=0.05).shift(0.1 * mn.RIGHT),
+            ),
+            mObjsWiggle={
+                0: QMAMDreieck.copy(),
+                1: AMGMDreieck.copy(),
+                2: GMHMDreieck.copy(),
+            },
         )
         fade_out(self)
 

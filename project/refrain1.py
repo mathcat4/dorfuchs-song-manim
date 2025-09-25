@@ -1,11 +1,9 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene, mObjs=None):
-    if mObjs is None:
-        mObjs = {}
-
-    shift = len(mObjs) != 0
+def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
+    if mObjsWiggle is None:
+        mObjsWiggle = {}
 
     # Equation and Relation objects
 
@@ -49,8 +47,24 @@ def construct_scene(scene: mn.Scene, mObjs=None):
     group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
 
     scene.add(group_eq, group_text)
-    if shift:
-        scene.play(group_eq.animate.shift(mn.UP), group_text.animate.shift(mn.UP))
+
+    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
+    final_text.next_to(group_eq, mn.DOWN, buff=1.5)
+
+    fade_obj = None
+    shift_amount = 1.2
+
+    if mObjFade is not None:
+        mObjFade.shift(1.2 * mn.DOWN)
+        for wiggle_obj in mObjsWiggle.values():
+            wiggle_obj.shift(1.2 * mn.DOWN)
+
+        scene.play(
+            mn.FadeIn(mObjFade),
+            *[mn.FadeIn(wiggle_obj) for wiggle_obj in mObjsWiggle.values()],
+            group_eq.animate.shift(2 * mn.UP),
+            group_text.animate.shift(2 * mn.UP),
+        )
 
     # Fade and scale animations
 
@@ -70,27 +84,25 @@ def construct_scene(scene: mn.Scene, mObjs=None):
         scene.play(*(fade_out_anims + fade_in_anims))
 
         wiggle_duration = 1
-        if iteration in mObjs.keys():
-            wiggle_obj = mObjs[iteration].copy()
-            wiggle_obj.next_to(group_eq, mn.DOWN, buff=1)
+        if iteration in mObjsWiggle.keys():
+            wiggle_obj = mObjsWiggle[iteration]
+
             scene.play(
-                mn.FadeIn(wiggle_obj),
-                group_anim.animate.scale(1.5),
+                group_anim.animate.scale(5 / 4),
                 rate_func=mn.rate_functions.rush_from,
             )
             scene.play(mn.Wiggle(wiggle_obj), run_time=wiggle_duration)
             scene.play(
-                mn.FadeOut(wiggle_obj),
-                group_anim.animate.scale(2 / 3),
+                group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
             )
         else:
             scene.play(
-                group_anim.animate.scale(1.5), rate_func=mn.rate_functions.rush_from
+                group_anim.animate.scale(5 / 4), rate_func=mn.rate_functions.rush_from
             )
             scene.wait(wiggle_duration)
             scene.play(
-                group_anim.animate.scale(2 / 3),
+                group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
             )
 
@@ -99,20 +111,18 @@ def construct_scene(scene: mn.Scene, mObjs=None):
         # scene.wait(1)
         iteration += 1
 
-    # Final text
+    # Final animation
 
     for mobj in fade_in:
         mobj.set_opacity(1)
 
-    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
-    final_text.next_to(group_eq, mn.DOWN, buff=2)
-
     all_final_anims = [mn.Write(final_text)]
 
-    if shift:
+    if mObjFade is not None:
+        scene.remove(*[wiggle_obj for wiggle_obj in mObjsWiggle.values()], mObjFade)
         all_final_anims += [
-            group_eq.animate.shift(mn.DOWN),
-            group_text.animate.shift(mn.DOWN),
+            group_eq.animate.shift(1.5 * mn.DOWN),
+            group_text.animate.shift(1.5 * mn.DOWN),
         ]
 
     scene.play(*all_final_anims, run_time=3)
@@ -121,7 +131,3 @@ def construct_scene(scene: mn.Scene, mObjs=None):
 class MainSketch(mn.Scene):
     def construct(self):
         construct_scene(self)
-
-        # construct_scene(
-        #     self, mObjs={0: QMAMDreieck, 1: AMGMDreieck, 2: GMHMDreieck}
-        # )
