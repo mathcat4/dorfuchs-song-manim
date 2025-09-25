@@ -67,18 +67,18 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SM}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}", color=TXTCOL
     ).move_to(right_half_center)
     term17 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}}  {{{a^2}} + {{b^2}} \over 2} ", color=TXTCOL
+        r"{{|\overline{SM}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ", color=TXTCOL
     ).move_to(right_half_center)
     term18 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}} {{=}} {{\sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }}",
+            r"{{|\overline{SM}|}} {{=}} {{ \sqrt{  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} }  } }}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
         .shift(mn.DOWN * 1.5)
     )
     term19 = mn.MathTex(
-        r"{{|\overline{SM}|}} {{=}} {{\sqrt{\frac{a^2 + b^2}{2}}}} = QM(a,b)",
+        r"{{|\overline{SM}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
         color=QMCOL,
     ).move_to(right_half_center)
     scene.play(mn.Wiggle(am2), mn.Write(term10))
