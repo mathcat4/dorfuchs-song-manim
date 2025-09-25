@@ -14,8 +14,8 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(G), mn.Create(labelG))
     scene.play(mn.Create(hm), mn.Create(rightG))
     scene.play(mn.Create(angleX), mn.Create(angleXlabel))
-    scene.play(mn.Wiggle(angXl))
-    scene.play(mn.Wiggle(rightG), mn.Wiggle(rightS))
+    scene.play(mn.Wiggle(angXl,scale_value=1.5))
+    scene.play(mn.Wiggle(rightG,scale_value=1.5), mn.Wiggle(rightS,scale_value=1.5))
     scene.play(mn.FadeOut(tex1))
     scene.add(sega, angleX) # zauberfunktionfix
     zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
@@ -23,19 +23,19 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Wiggle(GMHMDreieck))
     
     term20 = mn.MathTex(
-        r"{{{|\overline{XG}|}} \over |\overline{XS}|} {{=}} {|\overline{XS}| \over |\overline{XM}|}",
+        r"{|\overline{XG}| \over |\overline{XS}|} {{=}} {|\overline{XS}| \over |\overline{XM}|}",
         color=TXTCOL,
     ).move_to(right_half_center)
     term21 = mn.MathTex(
-        r"{ {{|\overline{XG}|}} \over \sqrt{ ab } } {{=}} {\sqrt{ ab } {{\over}}  {a{{+}}b \over 2}  }",
+        r"{ {{|\overline{XG}|}} \over \sqrt{ab} } {{=}} {\sqrt{ab} \over   {a{{+}}b \over 2}   }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term22 = mn.MathTex(
-        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}  {a{{+}}b \over 2}  }",
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}   {a{{+}}b \over 2}   }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term23 = mn.MathTex(
-        r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}  {a{{+}}b \over 2} \cdot \frac{2}{ab} }",
+        r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}   {a{{+}}b \over 2}  \cdot \frac{2}{ab} }",
         color=TXTCOL,
     ).move_to(right_half_center)
     term24 = mn.MathTex(
@@ -52,6 +52,7 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.TransformMatchingTex(term22,term23))
     scene.play(mn.TransformMatchingTex(term23,term24))
     scene.play(mn.TransformMatchingShapes(term24,term25))
+    scene.wait(1)
 
 
 class MainSketch(mn.Scene):
