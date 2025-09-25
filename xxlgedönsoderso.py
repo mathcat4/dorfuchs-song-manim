@@ -282,7 +282,9 @@ class Constram(Scene):
         self.play(Wiggle(rightG), Wiggle(rightS))
         self.play(Wiggle(AMGMDreieck))
         self.play(Wiggle(GMHMDreieck))
-        
+        zauberfunktion(self, GanzeSkizze, lambda m: m.shift(LEFT*3))
+        term20 = MathTex(r"\frac{|\overline{XG}|}{|\overline{XS}|} = \frac{|\overline{XS}|}{|\overline{XM}|}", color = TXTCOL).move_to(right_half_center)
+
 
 
         self.wait(1)
