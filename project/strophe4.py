@@ -63,6 +63,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.TransformMatchingTex(term22,term23))
     scene.play(mn.TransformMatchingTex(term23,term24))
     scene.play(mn.TransformMatchingShapes(term24,term25))
+
+    #3:50,92
+    #scene.play(mn.Wiggle(hm))
     
 
 
