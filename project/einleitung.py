@@ -23,8 +23,9 @@ def construct_scene(scene: mn.Scene):
     dot_b = mn.Dot(number_line.n2p(num_b), color=TXTCOL)
     label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.UP)
 
+    scene.wait(1.5)
     scene.play(mn.Create(dot_a), mn.Write(label_a))
-    scene.wait(2)
+    scene.wait(1)
     scene.play(mn.Create(dot_b), mn.Write(label_b))
 
     # Draw moving mean Dot
@@ -33,7 +34,7 @@ def construct_scene(scene: mn.Scene):
     label_mean = mn.MathTex("M", color=AMCOL).next_to(dot_mean, mn.UP)
     label_mean.add_updater(lambda label: label.next_to(dot_mean, mn.UP))
 
-    scene.wait(2)
+    scene.wait(1.5)
 
     scene.play(mn.FadeIn(dot_mean), mn.FadeIn(label_mean))
     scene.play(
@@ -79,10 +80,10 @@ def construct_scene(scene: mn.Scene):
     )
 
     # Mean descriptions
-    desc_am = mn.Text("AM: Arithmetische Mittel", color=AMCOL)
-    desc_gm = mn.Text("GM: Geometrische Mittel", color=GMCOL)
-    desc_qm = mn.Text("QM: Quadratische Mittel", color=QMCOL)
-    desc_hm = mn.Text("HM: Harmonische Mittel", color=HMCOL)
+    desc_am = mn.Text("AM: Arithmetisches Mittel", color=AMCOL)
+    desc_gm = mn.Text("GM: Geometrisches Mittel", color=GMCOL)
+    desc_qm = mn.Text("QM: Quadratisches Mittel", color=QMCOL)
+    desc_hm = mn.Text("HM: Harmonisches Mittel", color=HMCOL)
 
     group_desc = mn.VGroup(desc_am, desc_gm, desc_qm, desc_hm).arrange_in_grid(
         rows=2, cols=2, buff=2
