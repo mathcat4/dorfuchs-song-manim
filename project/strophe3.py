@@ -4,6 +4,7 @@ from helpers import *
 def construct_scene(scene: mn.Scene):
     qm.set_opacity(0.5)
     scene.add(construction, qm, N)
+    
 
     # scene.play(mn.FadeOut(am2), mn.FadeOut(rightM), qm.animate.set_opacity(0.5)) # nehme an das gehört noch zur transition qm-gm, deshalb nicht nötig?
     term4 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
@@ -13,16 +14,30 @@ def construct_scene(scene: mn.Scene):
     assert term5.target is not None
     term5.target.move_to(term6[1].get_center())  # move into place
     term5.target.set_color(GMCOL)
-    scene.play(mn.Write(term4))
-    scene.play(mn.TransformMatchingShapes(term4, term5))
-    scene.play(mn.FadeIn(term6[0]), mn.MoveToTarget(term5))
-    scene.wait(1)
-    scene.play(mn.FadeOut(term6), mn.FadeOut(term5))
-    scene.play(mn.Create(gm), mn.Create(rightS))
-    scene.play(mn.Create(X))
-    scene.play(mn.Create(labelX))
-    scene.play(mn.AnimationGroup(mn.Create(lineAX), mn.Create(lineBX)))
-    scene.play(mn.AnimationGroup(mn.Create(rightAXB)))
+    # ANIMATION START 2:24,97
+    scene.wait(1.77)
+    #26:74
+    scene.play(mn.Write(term4), run_time=1.5)
+    scene.wait(1.62)
+    #29,86
+    scene.play(mn.TransformMatchingShapes(term4, term5), run_time=1)
+    scene.play(mn.FadeIn(term6[0]), mn.MoveToTarget(term5), run_time=1.5)
+    scene.wait(4.7)
+    #37,06
+    scene.play(mn.FadeOut(term6), mn.FadeOut(term5), run_time=1)
+    scene.wait(6.14)
+    #44,2
+    scene.play(mn.Create(gm), mn.Create(rightS), run_time=1)
+    scene.wait(2.48)
+    #47,68
+    scene.play(mn.Create(X), run_time=1)
+    scene.play(mn.Create(labelX), run_time=1)
+    scene.play(mn.AnimationGroup(mn.Create(lineAX), mn.Create(lineBX)), run_time=1)
+    scene.wait(1.17)
+    #51,85
+    scene.play(mn.AnimationGroup(mn.Create(rightAXB)), run_time=1)
+    scene.wait(2.72)
+    #55,57
     term7 = mn.MathTex(
         r"{{ |\overline{SX}| }}", r"^2 {{=}}", r"{{a}} \cdot", r"{{b}}", color=TXTCOL
     ).shift(mn.UP * 3)
@@ -45,15 +60,18 @@ def construct_scene(scene: mn.Scene):
     term8.target.move_to(term9[0].get_center())  # move into place
     term8.target.set_color(GMCOL)
     scene.play(mn.FadeIn(term9[1]), mn.MoveToTarget(term8))
-    scene.wait(1)
-    scene.play(
-        mn.FadeOut(term8),
-        mn.FadeOut(term9),
-        mn.FadeOut(lineAX),
-        mn.FadeOut(lineBX),
-        mn.FadeOut(rightAXB),
-    )
-    scene.play(mn.ReplacementTransform(am2, am1))
+    #scene.wait(1)
+
+
+
+    #scene.play(
+    #    mn.FadeOut(term8),
+    #    mn.FadeOut(term9),
+    #    mn.FadeOut(lineAX),
+    #    mn.FadeOut(lineBX),
+    #    mn.FadeOut(rightAXB),
+    #)
+    #scene.play(mn.ReplacementTransform(am2, am1))
     
 
     
