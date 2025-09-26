@@ -61,7 +61,7 @@ def construct_scene(scene: mn.Scene):
     scene.remove(line)
     scene.wait(1.5)
     scene.play(mn.Create(labelS))
-    scene.wait(4.5)
+    # scene.wait(4.5)
     # ANIMATION END 65,33s
 
 
