@@ -4,7 +4,7 @@ from helpers import *
 def construct_scene(scene: mn.Scene):
     qm.set_opacity(0.5)
     scene.add(construction, qm, N)
-    GanzeSkizze.shift(RIGHT*3)
+    GanzeSkizze.shift(mn.RIGHT*3)
     
 
     # scene.play(mn.FadeOut(am2), mn.FadeOut(rightM), qm.animate.set_opacity(0.5)) # nehme an das gehört noch zur transition qm-gm, deshalb nicht nötig?
