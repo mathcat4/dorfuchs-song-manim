@@ -8,8 +8,10 @@ def construct_scene(scene: mn.Scene):
     tex1 = mn.MathTex(
         r"HM(a,b) = \sqrt{\frac{2}{\frac{1}{a} + \frac{1}{b}}}", color=HMCOL
     ).shift(mn.UP * 3)
-    scene.play(mn.Write(tex1))
+    #3:24,04
+    scene.play(mn.Write(tex1).run_time=2)
     scene.play(mn.ReplacementTransform(am1, dashedam))
+    #28,6
     scene.play(mn.Create(dashed1))
     scene.play(mn.Create(G), mn.Create(labelG))
     scene.play(mn.Create(hm), mn.Create(rightG))
