@@ -1,6 +1,7 @@
 import manim as mn
 import einleitung, refrain1, refrain6, strophe1, strophe2, strophe3, strophe4, strophe5
 from helpers import *
+import os
 
 
 def fade_out(scene: mn.Scene, run_time=1):
@@ -40,6 +41,10 @@ class MainSketch(mn.Scene):
             AMGMDreieck.copy(),
             GMHMDreieck.copy(),
         )
+        AUDIO_PATH = "media/Audio/finalpremix.wav"
+        if os.path.exists(AUDIO_PATH):
+            self.add_sound(AUDIO_PATH, time_offset=0)
+
 
         # Einleitung
         einleitung.construct_scene(self)
