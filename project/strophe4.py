@@ -6,7 +6,7 @@ def construct_scene(scene: mn.Scene):
     scene.add(construction, qm, gm, N, X, S, labelN, labelX, rightS, am1)
 
     tex1 = mn.MathTex(
-        r"HM(a,b) = \sqrt{\frac{2}{\frac{1}{a} + \frac{1}{b}}}", color=HMCOL
+        r"HM(a,b) = \frac{2}{\frac{1}{a} + \frac{1}{b}}", color=HMCOL
     ).shift(mn.UP * 3)
     term20 = mn.MathTex(
         r"{ {{|\overline{XG}|}} {{\over}} |\overline{XS}|} {{=}} {|\overline{XS}| {{\over}} |\overline{XM}|}",
