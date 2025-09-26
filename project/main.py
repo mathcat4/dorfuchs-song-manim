@@ -3,16 +3,6 @@ import einleitung, refrain1, refrain6, strophe1, strophe2, strophe3, strophe4, s
 from helpers import *
 import os
 
-
-def fade_out(scene: mn.Scene, run_time=1):
-    anims = []
-    for mobj in scene.mobjects:
-        anims.append(mn.FadeOut(mobj, run_time=run_time))
-
-    if anims:
-        scene.play(*anims)
-
-
 refrain1_start = 26.9
 strophe1_start = 44.69
 refrain2_start = 1 * 60 + 5.39
