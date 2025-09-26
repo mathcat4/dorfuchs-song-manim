@@ -31,7 +31,7 @@ class MainSketch(mn.Scene):
             AMGMDreieck.copy(),
             GMHMDreieck.copy(),
         )
-        AUDIO_PATH = "media/Audio/finalpremix.wav"
+        AUDIO_PATH = "media/Audio/finalpremixv2.wav"
         if os.path.exists(AUDIO_PATH):
             self.add_sound(AUDIO_PATH, time_offset=0)
 
