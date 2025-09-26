@@ -51,7 +51,7 @@ def construct_scene(scene: mn.Scene):
     scene.add(moving_dot)
     scene.add(line)
     scene.play(
-        mn.MoveAlongPath(
+        mn.MoveAlongPath(staticmethod
             moving_dot, semikreis, rate_func=lambda t: 1 - (1 - t) ** 2, run_time=3
         )
     )
