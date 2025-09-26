@@ -4,6 +4,7 @@ from helpers import *
 def construct_scene(scene: mn.Scene):
     qm.set_opacity(0.5)
     scene.add(construction, qm, N)
+    GanzeSkizze.shift(RIGHT*3)
     
 
     # scene.play(mn.FadeOut(am2), mn.FadeOut(rightM), qm.animate.set_opacity(0.5)) # nehme an das gehört noch zur transition qm-gm, deshalb nicht nötig?
@@ -43,11 +44,11 @@ def construct_scene(scene: mn.Scene):
     ).shift(mn.UP * 3)
 
     # term70 = typing.cast(mn.VMobject, term7[0]) # usw. shuts pylance tf up, but kinda unnecessary
-    scene.play(mn.Write(term7[0]), mn.Wiggle(gm))
-    scene.play(mn.Write(term7[1]), mn.Wiggle(gm))
-    scene.play(mn.Write(term7[2]), mn.Write(term7[3]), mn.Wiggle(sega))
-    scene.play(mn.Write(term7[4]), mn.Write(term7[5]), mn.Wiggle(segb))
-    scene.wait(1)
+    scene.play(mn.Write(term7[0]), mn.Wiggle(gm), run_time=0.9)
+    scene.play(mn.Write(term7[1]), mn.Wiggle(gm), run_time=0.9)
+    scene.play(mn.Write(term7[2]), mn.Write(term7[3]), mn.Wiggle(sega), run_time=0.9)
+    scene.play(mn.Write(term7[4]), mn.Write(term7[5]), mn.Wiggle(segb), run_time=0.9)
+    scene.wait(0.5)
     term8 = mn.MathTex(
         r"{{|\overline{SX}|}} {{=}} \sqrt{{{a}}{{b}}}", color=TXTCOL
     ).shift(mn.UP * 3)
@@ -60,7 +61,7 @@ def construct_scene(scene: mn.Scene):
     term8.target.move_to(term9[0].get_center())  # move into place
     term8.target.set_color(GMCOL)
     scene.play(mn.FadeIn(term9[1]), mn.MoveToTarget(term8))
-    #scene.wait(1)
+    #scene.wait(20)
 
 
 
