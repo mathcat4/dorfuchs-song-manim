@@ -3,6 +3,7 @@ from helpers import *
 
 def construct_scene(scene: mn.Scene):
     # Two variable means
+    #4:22,33
     eq_QM = mn.MathTex(r"\sqrt{ {{ {{ a^2 + b^2 }} \over {{ 2 }} }} }", color=QMCOL)
     eq_AM = mn.MathTex(r"{{ a + b }} \over {{ 2 }}", color=AMCOL)
     eq_GM = mn.MathTex(r"\sqrt[2]{ \hspace{0.1pt} {{ ab }} }", color=GMCOL)
@@ -27,6 +28,8 @@ def construct_scene(scene: mn.Scene):
 
     group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
 
+    
+
     scene.add(group_eq, group_rel)
     scene.wait(1)
 
@@ -46,7 +49,8 @@ def construct_scene(scene: mn.Scene):
     )
 
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
-
+    scene.wait(13.77)
+     #36,1
     scene.play(
         mn.Transform(eq_QM, eq2_QM),
         mn.Transform(eq_AM, eq2_AM),
@@ -57,8 +61,10 @@ def construct_scene(scene: mn.Scene):
         rel_GM_HM.animate.move_to((eq2_GM.get_bottom() + eq2_HM.get_top()) / 2),
     )
 
+    # 4:41,14
+
     # Wiggle Relations
-    scene.play(mn.Wiggle(group_rel))
+    scene.play(mn.Wiggle(group_rel), run_time=1.5)
 
     # Equation Relations
     rel2_QM_AM = mn.MathTex(r"=", color=mn.BLACK).move_to(
@@ -80,21 +86,23 @@ def construct_scene(scene: mn.Scene):
     scene.play(
         mn.Transform(rel_QM_AM, rel2_QM_AM),
         mn.Transform(rel_AM_GM, rel2_AM_GM),
-        mn.Transform(rel_GM_HM, rel2_GM_HM),
+        mn.Transform(rel_GM_HM, rel2_GM_HM), run_time=1
     )
 
     eq_equality = mn.MathTex(r"\implies a_1 = a_2 = \dots = a_n", color=TXTCOL)
-    scene.play(mn.Write(eq_equality))
-    scene.wait(3)
+    scene.play(mn.Write(eq_equality), run_time=0.5)
+    scene.wait(0.5)
 
     scene.play(
         mn.FadeOut(eq_equality),
         mn.Transform(rel_QM_AM, orel_QM_AM),
         mn.Transform(rel_AM_GM, orel_AM_GM),
-        mn.Transform(rel_GM_HM, orel_GM_HM),
+        mn.Transform(rel_GM_HM, orel_GM_HM), run_time=1
     )
 
     # Power means
+
+    #4:46,0
 
     eq_PM = mn.MathTex(
         r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=mn.BLACK
@@ -127,7 +135,7 @@ def construct_scene(scene: mn.Scene):
     ]:
         scene.play(mn.ReplacementTransform(eq_PM, PM_mean))
         eq_PM = eq_PM_original.copy()
-        scene.wait(0.75)
+        scene.wait(0.65)
         if mean == eq_GM:
             scene.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM))
         else:
