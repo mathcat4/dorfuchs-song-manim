@@ -14,6 +14,15 @@ RIGHTANGLECOL = mn.GREY
 r = 3
 
 
+def fade_out(scene: mn.Scene, run_time=1):
+    anims = []
+    for mobj in scene.mobjects:
+        anims.append(mn.FadeOut(mobj, run_time=run_time))
+
+    if anims:
+        scene.play(*anims)
+
+
 def zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn):
     # please only use homogenous animations
     visible_parts = [m for m in group if m in scene.mobjects]
