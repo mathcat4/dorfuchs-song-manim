@@ -88,7 +88,7 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
                 rate_func=mn.rate_functions.rush_from,
             )
             scene.play(
-                mn.Wiggle(wiggle_obj, scale_value=1.25, n_wiggles=3),
+                mn.Wiggle(wiggle_obj, scale_value=1.25, n_wiggles=4),
                 run_time=wiggle_duration,
             )
             scene.play(
