@@ -27,37 +27,46 @@ class MainSketch(mn.Scene):
 
         # Einleitung
         einleitung.construct_scene(self)
-        fade_out(self)
 
         # Refrain 1
-        refrain1.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        refrain1.construct_scene(self)
+        return
 
         # Strophe 1 (AM)
-        strophe1.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        strophe1.construct_scene(self)
 
         # Refrain 2
+        self.wait(26.9 - self.time)
+        fade_out(self)
         refrain1.construct_scene(self)
         fade_out(self)
 
         # Strophe 2 (QM)
-        strophe2.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        strophe2.construct_scene(self)
 
         # Refrain 3
+        self.wait(26.9 - self.time)
+        fade_out(self)
         refrain1.construct_scene(
             self,
             mObjFade=mn.VGroup(constructionC.copy(), NC.copy(), labelNC.copy()),
             mObjsWiggle={0: QMAMDreieckC.copy()},
         )
-        fade_out(self)
 
         # Strophe 3 (GM)
-        strophe3.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        strophe3.construct_scene(self)
 
         # Refrain 4
+        self.wait(26.9 - self.time)
+        fade_out(self)
         refrain1.construct_scene(
             self,
             mObjFade=mn.VGroup(
@@ -69,13 +78,15 @@ class MainSketch(mn.Scene):
             ),
             mObjsWiggle={0: QMAMDreieckC.copy(), 1: AMGMDreieckC.copy()},
         )
-        fade_out(self)
 
         # Strophe 4 (HM)
-        strophe4.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        strophe4.construct_scene(self)
 
         # Refrain 5
+        self.wait(26.9 - self.time)
+        fade_out(self)
         refrain1.construct_scene(
             self,
             mObjFade=mn.VGroup(
@@ -93,15 +104,17 @@ class MainSketch(mn.Scene):
                 2: GMHMDreieckC.copy(),
             },
         )
-        fade_out(self)
 
         # Strophe 5 (Ausblick)
-        strophe5.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        strophe5.construct_scene(self)
 
         # Refrain 6
-        refrain6.construct_scene(self)
+        self.wait(26.9 - self.time)
         fade_out(self)
+        refrain6.construct_scene(self)
 
         # Refrain 7
+        self.wait(26.9 - self.time)
         refrain6.construct_scene(self, reverse=True)
