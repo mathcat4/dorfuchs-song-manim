@@ -57,16 +57,15 @@ def construct_scene(scene: mn.Scene):
     #42,34
     scene.play(mn.Write(term20), run_time=1.6)
     scene.wait(0.38)
-    #44,32
+    #3:44,32
     scene.play(mn.TransformMatchingTex(term20,term21))
     scene.play(mn.TransformMatchingTex(term21,term22))
     scene.play(mn.TransformMatchingTex(term22,term23))
     scene.play(mn.TransformMatchingTex(term23,term24))
     scene.play(mn.TransformMatchingShapes(term24,term25))
-
-    #3:50,92
-    #scene.play(mn.Wiggle(hm))
-    
+    scene.wait(1.5)
+    scene.play(mn.Wiggle(hm), scale_valie=1.7)
+   
 
 
 class MainSketch(mn.Scene):
