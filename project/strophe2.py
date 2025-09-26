@@ -66,7 +66,7 @@ def construct_scene(scene: mn.Scene):
     ).move_to(right_half_center)
     
     #ANIMATION START 1:22,97
-    scene.add_sound(trim_audio("finalpremix.wav", start=82.97))
+    
  
     scene.add(construction)
     # vorbereitung
