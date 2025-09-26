@@ -85,7 +85,7 @@ def construct_scene(scene: mn.Scene):
     ).move_to(right_half_center)
     scene.wait(1.08)
     scene.play(mn.Wiggle(am2)) 
-    scene.play(Transform(am2,term10))
+    scene.play(mn.Transform(am2,term10))
     scene.remove(lineMS)
     lineMS.color = mn.RED
     scene.wait(1.06)
