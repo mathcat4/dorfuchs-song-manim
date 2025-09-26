@@ -2,6 +2,7 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
+    #ANIMATION START 1::22,97
     scene.add(construction)
     # vorbereitung
     scene.add(lineMS)
