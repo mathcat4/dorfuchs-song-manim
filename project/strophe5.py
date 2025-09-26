@@ -88,7 +88,12 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
 
-    fade_out(scene)
+    anims = [abr, bbr, abrtxt, bbrtxt]
+    for mobj in scene.mobjects:
+        anims.append(mn.FadeOut(mobj, run_time=1))
+
+    if anims:
+        scene.play(*anims)
 
     scene.clear()
 
