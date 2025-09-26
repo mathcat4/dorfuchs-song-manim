@@ -45,7 +45,6 @@ class MainSketch(mn.Scene):
         if os.path.exists(AUDIO_PATH):
             self.add_sound(AUDIO_PATH, time_offset=0)
 
-
         # Einleitung
         einleitung.construct_scene(self)
 
@@ -138,4 +137,5 @@ class MainSketch(mn.Scene):
 
         # Refrain 7
         self.wait(refrain7_start - self.time)
+        self.clear()
         refrain6.construct_scene(self, reverse=True)
