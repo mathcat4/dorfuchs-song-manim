@@ -24,6 +24,7 @@ def construct_scene(scene: mn.Scene):
     label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.UP)
 
     scene.play(mn.Create(dot_a), mn.Write(label_a))
+    scene.wait(2)
     scene.play(mn.Create(dot_b), mn.Write(label_b))
 
     # Draw moving mean Dot
@@ -32,10 +33,18 @@ def construct_scene(scene: mn.Scene):
     label_mean = mn.MathTex("M", color=AMCOL).next_to(dot_mean, mn.UP)
     label_mean.add_updater(lambda label: label.next_to(dot_mean, mn.UP))
 
+    scene.wait(2)
+
     scene.play(mn.FadeIn(dot_mean), mn.FadeIn(label_mean))
-    scene.play(dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)))
-    scene.play(dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)))
-    scene.play(dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)))
+    scene.play(
+        dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)), run_time=2
+    )
+    scene.play(
+        dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)), run_time=2
+    )
+    scene.play(
+        dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)), run_time=2
+    )
     scene.wait(1)
 
     label_mean.clear_updaters()

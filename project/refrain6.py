@@ -89,16 +89,17 @@ def construct_scene(scene: mn.Scene, reverse=False):
         ]
 
         scene.play(*(fade_out_anims + fade_in_anims))
-        scene.play(mn.Circumscribe(group_anim, color=TXTCOL), run_time=2)
+        scene.play(mn.Circumscribe(group_anim, color=TXTCOL), run_time=2.5)
 
         fade_in = fade_out.copy()
 
-    scene.play(*[mobj.animate.set_opacity(1) for mobj in fade_in])
+    for mobj in fade_in:
+        mobj.set_opacity(1)
 
     # Final text
 
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.6)
-    scene.play(mn.Write(final_text), run_time=2)
+    scene.play(mn.Write(final_text), run_time=3.5)
 
 
 class MainSketch(mn.Scene):
