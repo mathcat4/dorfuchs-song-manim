@@ -10,6 +10,7 @@ def construct_scene(scene: mn.Scene):
         mn.FadeIn(labelAB),
         mn.FadeIn(b2),
     )
+    self.wait(4.13)
     term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
         mn.Transform(firsta, sega),
@@ -29,7 +30,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(
         mn.Create(M), mn.Create(labelM), mn.TransformMatchingShapes(term1, term2)
     )
+    self.wait(1.74)
     scene.play(mn.Create(semikreis))
+    self.wait(0.47)
     term3 = mn.MathTex(r"r =", r"\frac{a + b}{2}", r"= AM(a,b)", color=AMCOL).shift(
         mn.UP * 3
     )
