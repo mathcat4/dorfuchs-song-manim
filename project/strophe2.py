@@ -74,48 +74,51 @@ def construct_scene(scene: mn.Scene):
     tex1 = mn.MathTex(r"QM(a,b) = \sqrt{\frac{a^2+b^2}{2}}", color=QMCOL).shift(
         mn.UP * 3
     )
-    scene.play(mn.Write(tex1))
-    #23,97
-    scene.wait(8.27)
+    scene.play(mn.Write(tex1), run_time=2)
+    #24,97
+    scene.wait(7.27)
     #32,24
-    scene.play(mn.FadeIn(am2), mn.FadeIn(N))
+    scene.play(mn.FadeIn(am2), mn.FadeIn(N), run_time=1)
     scene.wait(1.88)
     #35,12
-    scene.play(mn.Create(qm))
-    scene.play(mn.Create(labelN))
-    scene.play(mn.Create(rightM))
-    scene.wait(1.86)
-    #39,98
-    scene.play(mn.Wiggle(QMAMDreieck))
+    scene.play(mn.Create(qm), run_time=1)
+    scene.play(mn.Create(labelN), run_time=1)
+    scene.play(mn.Create(rightM), run_time=1)
+    scene.wait(2.49)
+    #40,61
+    scene.play(mn.Wiggle(QMAMDreieck), run_time=1.7)
     scene.add(am2)  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
-    scene.play(mn.FadeOut(tex1, duration_time=0.82))
+    scene.play(mn.FadeOut(tex1, run_time=0.5))
     zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
-    #42,8
-    scene.play(mn.Wiggle(am2))
+    scene.wait(0.25)
+    #44,06
+    scene.play(mn.Wiggle(am2), run_time=1.7)
     am2_copy = am2.copy() 
-    scene.play(mn.Transform(am2_copy,term10, replace_mobject_with_target_in_scene=True))
+    scene.play(mn.Transform(am2_copy,term10, replace_mobject_with_target_in_scene=True), run_time=1)
+    scene.wait(1.02)
+    #47,78
     scene.remove(lineMS)
     lineMS.color = mn.RED
-    scene.wait(1.06)
-
-    scene.play(mn.FadeIn(am3), run_time=0.5)
-    scene.play(mn.Write(term11))
-    scene.play(mn.TransformMatchingShapes(term11, term12))
-    scene.play(mn.ReplacementTransform(am3, lineMS))
-    scene.play(mn.Wiggle(lineMS, scale_value=1.5))
-    scene.play(lineMS.animate.set_color(TXTCOL))
-    scene.wait(0.7)
-    scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13))
-    scene.wait(0.21)
-    scene.play(mn.TransformMatchingTex(term13, term135))
-    scene.wait(0.21)
-    scene.play(mn.TransformMatchingTex(term135, term14))
-    scene.wait(0.21)
-    scene.play(TransformMatchingTexNoReplace(term14, term15))
-    scene.play(mn.TransformMatchingTex(term15, term16))
-    scene.play(mn.TransformMatchingTex(term16, term17))
-    scene.play(TransformMatchingTexNoReplace(term17, term18))
-    scene.play(mn.TransformMatchingTex(term18, term19), mn.FadeOut(term17), mn.FadeOut(term14))
+    scene.play(mn.Write(term11), run_time=1)
+    scene.play(mn.TransformMatchingShapes(term11, term12), run_time=1)
+    scene.play(mn.FadeIn(am3), run_time=0.14)
+    scene.play(mn.ReplacementTransform(am3, lineMS), run_time=0.3)
+    scene.play(mn.Wiggle(lineMS, scale_value=1.5), run_time=1.5)
+    scene.play(lineMS.animate.set_color(TXTCOL), run_time=0.14)
+    #51,86
+    scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13), run_time=1)
+    scene.wait(0.03)
+    scene.play(mn.TransformMatchingTex(term13, term135), run_time=1)
+    scene.wait(0.03)
+    scene.play(mn.TransformMatchingTex(term135, term14), run_time=1)
+    scene.wait(0.03)
+    #54,95
+    scene.play(TransformMatchingTexNoReplace(term14, term15), run_time=1)
+    scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
+    scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
+    scene.play(TransformMatchingTexNoReplace(term17, term18), run_time=1)
+    scene.play(mn.TransformMatchingTex(term18, term19), mn.FadeOut(term17), mn.FadeOut(term14), run_time=1)
+    #59.95
     #fertig, ich stehl noch zeit von Michaels undundund
     # Maybe das hier unten nicht mehr nötig, da es zum Refrain gecuttet wird?
     #scene.wait(1)
