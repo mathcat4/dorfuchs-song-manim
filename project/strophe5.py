@@ -10,7 +10,9 @@ def construct_scene(scene: mn.Scene):
 
     X.add_updater(
         lambda dot: dot.move_to(
-            np.array([S.get_x(), M.get_y() + math.sqrt(r**2 - (S.get_x()) ** 2), 0])
+            np.array(
+                [S.get_x(), M.get_y() + math.sqrt(abs(r**2 - (S.get_x()) ** 2)), 0]
+            )
         )
     )
 
