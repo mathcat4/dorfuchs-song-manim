@@ -16,10 +16,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(qm))
     scene.play(mn.Create(labelN))
     scene.play(mn.Create(rightM))
+    scene.wait(1.86)
     scene.play(mn.Wiggle(QMAMDreieck))
-    scene.add(
-        am2
-    )  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
+    scene.add(am2)  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
     scene.play(mn.FadeOut(tex1))
     zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
     term10 = (
@@ -84,9 +83,13 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SM}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
         color=QMCOL,
     ).move_to(right_half_center)
-    scene.play(mn.Wiggle(am2), mn.Write(term10))
+    scene.wait(1.08)
+    scene.play(mn.Wiggle(am2)) 
+    scene.play(Transform(am2,term10))
     scene.remove(lineMS)
     lineMS.color = mn.RED
+    scene.wait(1.06)
+
     scene.play(mn.FadeIn(am3), run_time=0.5)
     scene.play(mn.ReplacementTransform(am3, lineMS), mn.Write(term11))
     scene.play(mn.Wiggle(lineMS))
