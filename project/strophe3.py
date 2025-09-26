@@ -33,7 +33,7 @@ def construct_scene(scene: mn.Scene):
     #47,68
     scene.play(mn.Create(X), run_time=1)
     scene.play(mn.Create(labelX), run_time=1)
-    scene.play(mn.AnimationGroup(mn.Create(lineAX), mn.Create(lineBX)), run_time=1)
+    scene.play(mn.AnimationGroup(mn.Create(lineAX), mn.Create(lineBX), mn.Create(am1)), run_time=1)
     scene.wait(1.17)
     #51,85
     scene.play(mn.AnimationGroup(mn.Create(rightAXB)), run_time=1)
