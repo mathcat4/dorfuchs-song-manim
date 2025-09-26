@@ -123,27 +123,27 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
             group_text.animate.shift(1.5 * mn.DOWN),
         ]
 
-    scene.play(*all_final_anims, run_time=4)
+    scene.play(*all_final_anims, run_time=3.5)
 
 
 class MainSketch(mn.Scene):
     def construct(self):
-        # construct_scene(self)
+        construct_scene(self)
 
-        construct_scene(
-            self,
-            mObjFade=mn.VGroup(
-                construction.copy(),
-                N.copy(),
-                labelN.copy(),
-                X.copy(),
-                labelX.copy(),
-                G.copy(),
-                labelG.copy(),
-            ),
-            mObjsWiggle={
-                0: QMAMDreieck.copy(),
-                1: AMGMDreieck.copy(),
-                2: GMHMDreieck.copy(),
-            },
-        )
+        # construct_scene(
+        #     self,
+        #     mObjFade=mn.VGroup(
+        #         construction.copy(),
+        #         N.copy(),
+        #         labelN.copy(),
+        #         X.copy(),
+        #         labelX.copy(),
+        #         G.copy(),
+        #         labelG.copy(),
+        #     ),
+        #     mObjsWiggle={
+        #         0: QMAMDreieck.copy(),
+        #         1: AMGMDreieck.copy(),
+        #         2: GMHMDreieck.copy(),
+        #     },
+        # )
