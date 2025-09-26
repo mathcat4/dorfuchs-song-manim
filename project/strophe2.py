@@ -19,7 +19,7 @@ def construct_scene(scene: mn.Scene):
     )
     term13 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
+            r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
             color=TXTCOL,
         )
         .move_to(right_half_center)
@@ -27,7 +27,7 @@ def construct_scene(scene: mn.Scene):
     )
     term135 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
+            r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
             color=TXTCOL,
         )
         .move_to(right_half_center)
@@ -35,33 +35,33 @@ def construct_scene(scene: mn.Scene):
     )
     term14 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
+            r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
         .shift(mn.UP * 1.5)
     )
     term15 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
         color=TXTCOL,
         font_size=36,
     ).move_to(right_half_center)
     term16 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}", color=TXTCOL
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}", color=TXTCOL
     ).move_to(right_half_center)
     term17 = mn.MathTex(
-        r"{{|\overline{SM}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ", color=TXTCOL
+        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ", color=TXTCOL
     ).move_to(right_half_center)
     term18 = (
         mn.MathTex(
-            r"{{|\overline{SM}|}} {{=}} {{ \sqrt{  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} }  } }}",
+            r"{{|\overline{SN}|}} {{=}} {{ \sqrt{  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} }  } }}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
         .shift(mn.DOWN * 1.5)
     )
     term19 = mn.MathTex(
-        r"{{|\overline{SM}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
+        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
         color=QMCOL,
     ).move_to(right_half_center)
     
