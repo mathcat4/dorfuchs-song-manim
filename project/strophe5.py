@@ -2,102 +2,102 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
-    scene.add(construction, qm, gm, N, X, S, labelN, labelX, am1)
+    # scene.add(construction, qm, gm, N, X, S, labelN, labelX, am1)
 
-    labelN.next_to(N, mn.UR, buff=0.05)
-    labelS.add_updater(lambda label: label.next_to(S, mn.UL, buff=0.05))
-    labelX.add_updater(lambda label: label.next_to(X, mn.UL, buff=0.05))
+    # labelN.next_to(N, mn.UR, buff=0.05)
+    # labelS.add_updater(lambda label: label.next_to(S, mn.UL, buff=0.05))
+    # labelX.add_updater(lambda label: label.next_to(X, mn.UL, buff=0.05))
 
-    X.add_updater(
-        lambda dot: dot.move_to(
-            np.array(
-                [S.get_x(), M.get_y() + math.sqrt(abs(r**2 - (S.get_x()) ** 2)), 0]
-            )
-        )
-    )
+    # X.add_updater(
+    #     lambda dot: dot.move_to(
+    #         np.array(
+    #             [S.get_x(), M.get_y() + math.sqrt(abs(r**2 - (S.get_x()) ** 2)), 0]
+    #         )
+    #     )
+    # )
 
-    qm.add_updater(
-        lambda line: line.put_start_and_end_on(S.get_center(), N.get_center())
-    )
-    gm.add_updater(
-        lambda line: line.put_start_and_end_on(S.get_center(), X.get_center())
-    )
-    am1.add_updater(
-        lambda line: line.put_start_and_end_on(M.get_center(), X.get_center())
-    )
+    # qm.add_updater(
+    #     lambda line: line.put_start_and_end_on(S.get_center(), N.get_center())
+    # )
+    # gm.add_updater(
+    #     lambda line: line.put_start_and_end_on(S.get_center(), X.get_center())
+    # )
+    # am1.add_updater(
+    #     lambda line: line.put_start_and_end_on(M.get_center(), X.get_center())
+    # )
 
-    abr.add_updater(
-        lambda brace: brace.become(
-            mn.Brace(
-                mn.Line(start=A.get_center(), end=S.get_center()),
-                direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
-                color=TXTCOL,
-            )
-        )
-    )
+    # abr.add_updater(
+    #     lambda brace: brace.become(
+    #         mn.Brace(
+    #             mn.Line(start=A.get_center(), end=S.get_center()),
+    #             direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+    #             color=TXTCOL,
+    #         )
+    #     )
+    # )
 
-    abrtxt.add_updater(lambda mobj: mobj.become(abr.get_tex("a").set_color(TXTCOL)))
+    # abrtxt.add_updater(lambda mobj: mobj.become(abr.get_tex("a").set_color(TXTCOL)))
 
-    bbr.add_updater(
-        lambda brace: brace.become(
-            mn.Brace(
-                mn.Line(start=S.get_center(), end=B.get_center()),
-                direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
-                color=TXTCOL,
-            )
-        )
-    )
+    # bbr.add_updater(
+    #     lambda brace: brace.become(
+    #         mn.Brace(
+    #             mn.Line(start=S.get_center(), end=B.get_center()),
+    #             direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+    #             color=TXTCOL,
+    #         )
+    #     )
+    # )
 
-    bbrtxt.add_updater(lambda mobj: mobj.become(bbr.get_tex("b").set_color(TXTCOL)))
+    # bbrtxt.add_updater(lambda mobj: mobj.become(bbr.get_tex("b").set_color(TXTCOL)))
 
-    eq_mean_equal = mn.MathTex(
-        r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
-        color=TXTCOL,
-        tex_to_color_map={
-            "QM(a,b)": QMCOL,
-            "AM(a,b)": AMCOL,
-            "GM(a,b)": GMCOL,
-            "HM(a,b)": HMCOL,
-        },
-    ).shift(3 * mn.UP)
-    scene.wait(1)
-    scene.play(mn.Write(eq_mean_equal, run_time=3))
+    # eq_mean_equal = mn.MathTex(
+    #     r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
+    #     color=TXTCOL,
+    #     tex_to_color_map={
+    #         "QM(a,b)": QMCOL,
+    #         "AM(a,b)": AMCOL,
+    #         "GM(a,b)": GMCOL,
+    #         "HM(a,b)": HMCOL,
+    #     },
+    # ).shift(3 * mn.UP)
+    # scene.wait(1)
+    # scene.play(mn.Write(eq_mean_equal, run_time=3))
 
-    scene.play(
-        S.animate.move_to(M.get_center()),
-        rate_func=lambda t: 1 - (1 - t) ** 2,
-        run_time=5,
-    )
+    # scene.play(
+    #     S.animate.move_to(M.get_center()),
+    #     rate_func=lambda t: 1 - (1 - t) ** 2,
+    #     run_time=5,
+    # )
 
-    eq_equal = (
-        mn.MathTex(r"\implies a = b", color=TXTCOL)
-        .scale(1.5)
-        .shift(3 * mn.DOWN)
-        .shift(0.75 * mn.LEFT)
-    )
-    scene.play(mn.Write(eq_equal), run_time=1.5)
+    # eq_equal = (
+    #     mn.MathTex(r"\implies a = b", color=TXTCOL)
+    #     .scale(1.5)
+    #     .shift(3 * mn.DOWN)
+    #     .shift(0.75 * mn.LEFT)
+    # )
+    # scene.play(mn.Write(eq_equal), run_time=1.5)
 
-    eq_mean_equal_2 = mn.MathTex(
-        r"QM(a,b) = AM(a,b) = GM(a,b) = HM(a,b)",
-        color=TXTCOL,
-        tex_to_color_map={
-            "QM(a,b)": QMCOL,
-            "AM(a,b)": AMCOL,
-            "GM(a,b)": GMCOL,
-            "HM(a,b)": HMCOL,
-        },
-    ).shift(3 * mn.UP)
+    # eq_mean_equal_2 = mn.MathTex(
+    #     r"QM(a,b) = AM(a,b) = GM(a,b) = HM(a,b)",
+    #     color=TXTCOL,
+    #     tex_to_color_map={
+    #         "QM(a,b)": QMCOL,
+    #         "AM(a,b)": AMCOL,
+    #         "GM(a,b)": GMCOL,
+    #         "HM(a,b)": HMCOL,
+    #     },
+    # ).shift(3 * mn.UP)
 
-    scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
+    # scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
 
-    anims = [mn.FadeOut(abr), mn.FadeOut(bbr), mn.FadeOut(abrtxt), mn.FadeOut(bbrtxt)]
-    for mobj in scene.mobjects:
-        anims.append(mn.FadeOut(mobj))
+    # anims = [mn.FadeOut(abr), mn.FadeOut(bbr), mn.FadeOut(abrtxt), mn.FadeOut(bbrtxt)]
+    # for mobj in scene.mobjects:
+    #     anims.append(mn.FadeOut(mobj))
 
-    if anims:
-        scene.play(*anims)
+    # if anims:
+    #     scene.play(*anims)
 
-    scene.clear()
+    # scene.clear()
 
     # Two variable means
     # 4:22,33
@@ -124,9 +124,13 @@ def construct_scene(scene: mn.Scene):
     )
 
     group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
-
+    # scene.wait(
+    #     17,
+    # )
     scene.add(group_eq, group_rel)
     scene.wait(1)
+    scene.wait(13.77)
+    # return
 
     # Multi-variable means
 
