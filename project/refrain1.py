@@ -61,6 +61,12 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
         group_text.shift(2 * mn.UP)
 
         scene.add(mObjFade)
+    else:
+        scene.add(
+            mn.MathTex(
+                r"\text{Für alle } a,b \in \mathbb{R}^+ \text{ gilt:}", color=TXTCOL
+            ).shift(3 * mn.UP)
+        )
 
     # Fade and scale animations
 
@@ -85,11 +91,9 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
 
             scene.play(
                 group_anim.animate.scale(5 / 4),
+                mn.Wiggle(wiggle_obj, scale_value=1.25),
                 rate_func=mn.rate_functions.rush_from,
-            )
-            scene.play(
-                mn.Wiggle(wiggle_obj, scale_value=1.25, n_wiggles=4),
-                run_time=wiggle_duration,
+                run_time=1 + wiggle_duration,
             )
             scene.play(
                 group_anim.animate.scale(4 / 5),
@@ -128,22 +132,22 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
 
 class MainSketch(mn.Scene):
     def construct(self):
-        construct_scene(self)
+        # construct_scene(self)
 
-        # construct_scene(
-        #     self,
-        #     mObjFade=mn.VGroup(
-        #         construction.copy(),
-        #         N.copy(),
-        #         labelN.copy(),
-        #         X.copy(),
-        #         labelX.copy(),
-        #         G.copy(),
-        #         labelG.copy(),
-        #     ),
-        #     mObjsWiggle={
-        #         0: QMAMDreieck.copy(),
-        #         1: AMGMDreieck.copy(),
-        #         2: GMHMDreieck.copy(),
-        #     },
-        # )
+        construct_scene(
+            self,
+            mObjFade=mn.VGroup(
+                construction.copy(),
+                N.copy(),
+                labelN.copy(),
+                X.copy(),
+                labelX.copy(),
+                G.copy(),
+                labelG.copy(),
+            ),
+            mObjsWiggle={
+                0: QMAMDreieck.copy(),
+                1: AMGMDreieck.copy(),
+                2: GMHMDreieck.copy(),
+            },
+        )
