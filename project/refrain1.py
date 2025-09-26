@@ -51,20 +51,16 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
     final_text.next_to(group_eq, mn.DOWN, buff=1.5)
 
-    fade_obj = None
-    shift_amount = 1.2
-
     if mObjFade is not None:
         mObjFade.shift(1.2 * mn.DOWN)
         for wiggle_obj in mObjsWiggle.values():
             wiggle_obj.shift(1.2 * mn.DOWN)
+            scene.add(wiggle_obj)
 
-        scene.play(
-            mn.FadeIn(mObjFade),
-            *[mn.FadeIn(wiggle_obj) for wiggle_obj in mObjsWiggle.values()],
-            group_eq.animate.shift(2 * mn.UP),
-            group_text.animate.shift(2 * mn.UP),
-        )
+        group_eq.shift(2 * mn.UP)
+        group_text.shift(2 * mn.UP)
+
+        scene.add(mObjFade)
 
     # Fade and scale animations
 
@@ -81,7 +77,7 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
             mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
         ]
 
-        scene.play(*(fade_out_anims + fade_in_anims))
+        scene.play(*(fade_out_anims + fade_in_anims), run_time=0.7)
 
         wiggle_duration = 1
         if iteration in mObjsWiggle.keys():
@@ -91,7 +87,10 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
                 group_anim.animate.scale(5 / 4),
                 rate_func=mn.rate_functions.rush_from,
             )
-            scene.play(mn.Wiggle(wiggle_obj), run_time=wiggle_duration)
+            scene.play(
+                mn.Wiggle(wiggle_obj, scale_value=1.25, n_wiggles=3),
+                run_time=wiggle_duration,
+            )
             scene.play(
                 group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
@@ -108,7 +107,6 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
 
         fade_in = fade_out.copy()
 
-        # scene.wait(1)
         iteration += 1
 
     # Final animation
@@ -125,9 +123,27 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
             group_text.animate.shift(1.5 * mn.DOWN),
         ]
 
-    scene.play(*all_final_anims, run_time=3)
+    scene.play(*all_final_anims, run_time=4)
 
 
 class MainSketch(mn.Scene):
     def construct(self):
-        construct_scene(self)
+        # construct_scene(self)
+
+        construct_scene(
+            self,
+            mObjFade=mn.VGroup(
+                construction.copy(),
+                N.copy(),
+                labelN.copy(),
+                X.copy(),
+                labelX.copy(),
+                G.copy(),
+                labelG.copy(),
+            ),
+            mObjsWiggle={
+                0: QMAMDreieck.copy(),
+                1: AMGMDreieck.copy(),
+                2: GMHMDreieck.copy(),
+            },
+        )
