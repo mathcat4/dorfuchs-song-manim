@@ -10,7 +10,9 @@ def construct_scene(scene: mn.Scene):
         mn.UP * 3
     )
     scene.play(mn.Write(tex1))
+    scene.wait(8.27)
     scene.play(mn.FadeIn(am2), mn.FadeIn(N))
+    scene.wait(1.88)
     scene.play(mn.Create(qm))
     scene.play(mn.Create(labelN))
     scene.play(mn.Create(rightM))
