@@ -84,7 +84,10 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(qm), run_time=1)
     scene.play(mn.Create(labelN), run_time=1)
     scene.play(mn.Create(rightM), run_time=1)
-    scene.wait(2.49)
+    scene.play(mn.FadeIn(bquestion, bqtext), run_time=0.33)
+    scene.wait(0.33)
+    scene.play(mn.FadeOut(bquestion, bqtext), run_time=0.33)
+    scene.wait(1.5)
     #40,61
     scene.play(mn.Wiggle(QMAMDreieck), run_time=1.7)
     scene.add(am2)  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.

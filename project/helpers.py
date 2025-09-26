@@ -125,6 +125,13 @@ abrtxt = abr.get_tex("a")
 abrtxt.set_color(TXTCOL)
 bbrtxt = bbr.get_tex("b")
 bbrtxt.set_color(TXTCOL)
+bquestion = mn.Brace(
+    qm,
+    direction=qm.copy().rotate(mn.PI / 2).get_unit_vector(),
+    color=TXTCOL,
+)
+bqtext = bquestion.get_tex("?")
+bqtext.set_color(TXTCOL)
 
 # Winkel
 rightAXB = mn.Angle(
