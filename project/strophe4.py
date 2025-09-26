@@ -55,7 +55,7 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Wiggle(AMGMDreieck), run_time=1.83)
     scene.play(mn.Wiggle(GMHMDreieck), run_time=1.83)
     #42,34
-    scene.play(mn.Write(term20), run_time=1,6)
+    scene.play(mn.Write(term20), run_time=1.6)
     scene.wait(0.38)
     #44,32
     scene.play(mn.TransformMatchingTex(term20,term21))
