@@ -2,102 +2,128 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
-    # scene.add(construction, qm, gm, N, X, S, labelN, labelX, am1)
+    """Konstruktion QM"""
+    geo = Geo()
 
-    # labelN.next_to(N, mn.UR, buff=0.05)
-    # labelS.add_updater(lambda label: label.next_to(S, mn.UL, buff=0.05))
-    # labelX.add_updater(lambda label: label.next_to(X, mn.UL, buff=0.05))
+    scene.add(
+        geo.construction,
+        geo.qm,
+        geo.gm,
+        geo.N,
+        geo.X,
+        geo.S,
+        geo.labelN,
+        geo.labelX,
+        geo.am1,
+    )
 
-    # X.add_updater(
-    #     lambda dot: dot.move_to(
-    #         np.array(
-    #             [S.get_x(), M.get_y() + math.sqrt(abs(r**2 - (S.get_x()) ** 2)), 0]
-    #         )
-    #     )
-    # )
+    geo.labelN.next_to(geo.N, mn.UR, buff=0.05)
+    geo.labelS.add_updater(lambda label: label.next_to(geo.S, mn.UL, buff=0.05))
+    geo.labelX.add_updater(lambda label: label.next_to(geo.X, mn.UL, buff=0.05))
 
-    # qm.add_updater(
-    #     lambda line: line.put_start_and_end_on(S.get_center(), N.get_center())
-    # )
-    # gm.add_updater(
-    #     lambda line: line.put_start_and_end_on(S.get_center(), X.get_center())
-    # )
-    # am1.add_updater(
-    #     lambda line: line.put_start_and_end_on(M.get_center(), X.get_center())
-    # )
+    geo.X.add_updater(
+        lambda dot: dot.move_to(
+            np.array(
+                [
+                    geo.S.get_x(),
+                    geo.M.get_y() + math.sqrt(r**2 - (geo.S.get_x()) ** 2),
+                    0,
+                ]
+            )
+        )
+    )
 
-    # abr.add_updater(
-    #     lambda brace: brace.become(
-    #         mn.Brace(
-    #             mn.Line(start=A.get_center(), end=S.get_center()),
-    #             direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
-    #             color=TXTCOL,
-    #         )
-    #     )
-    # )
+    geo.qm.add_updater(
+        lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.N.get_center())
+    )
+    geo.gm.add_updater(
+        lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.X.get_center())
+    )
+    geo.am1.add_updater(
+        lambda line: line.put_start_and_end_on(geo.M.get_center(), geo.X.get_center())
+    )
 
-    # abrtxt.add_updater(lambda mobj: mobj.become(abr.get_tex("a").set_color(TXTCOL)))
+    geo.abr.add_updater(
+        lambda brace: brace.become(
+            mn.Brace(
+                mn.Line(start=geo.A.get_center(), end=geo.S.get_center()),
+                direction=geo.firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+                color=TXTCOL,
+            )
+        )
+    )
 
-    # bbr.add_updater(
-    #     lambda brace: brace.become(
-    #         mn.Brace(
-    #             mn.Line(start=S.get_center(), end=B.get_center()),
-    #             direction=firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
-    #             color=TXTCOL,
-    #         )
-    #     )
-    # )
+    geo.abrtxt.add_updater(
+        lambda mobj: mobj.become(geo.abr.get_tex("a").set_color(TXTCOL))
+    )
 
-    # bbrtxt.add_updater(lambda mobj: mobj.become(bbr.get_tex("b").set_color(TXTCOL)))
+    geo.bbr.add_updater(
+        lambda brace: brace.become(
+            mn.Brace(
+                mn.Line(start=geo.S.get_center(), end=geo.B.get_center()),
+                direction=geo.firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+                color=TXTCOL,
+            )
+        )
+    )
 
-    # eq_mean_equal = mn.MathTex(
-    #     r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
-    #     color=TXTCOL,
-    #     tex_to_color_map={
-    #         "QM(a,b)": QMCOL,
-    #         "AM(a,b)": AMCOL,
-    #         "GM(a,b)": GMCOL,
-    #         "HM(a,b)": HMCOL,
-    #     },
-    # ).shift(3 * mn.UP)
-    # scene.wait(1)
-    # scene.play(mn.Write(eq_mean_equal, run_time=3))
+    geo.bbrtxt.add_updater(
+        lambda mobj: mobj.become(geo.bbr.get_tex("b").set_color(TXTCOL))
+    )
 
-    # scene.play(
-    #     S.animate.move_to(M.get_center()),
-    #     rate_func=lambda t: 1 - (1 - t) ** 2,
-    #     run_time=5,
-    # )
+    eq_mean_equal = mn.MathTex(
+        r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
+        color=TXTCOL,
+        tex_to_color_map={
+            "QM(a,b)": QMCOL,
+            "AM(a,b)": AMCOL,
+            "GM(a,b)": GMCOL,
+            "HM(a,b)": HMCOL,
+        },
+    ).shift(3 * mn.UP)
+    scene.wait(1)
+    scene.play(mn.Write(eq_mean_equal, run_time=3))
 
-    # eq_equal = (
-    #     mn.MathTex(r"\implies a = b", color=TXTCOL)
-    #     .scale(1.5)
-    #     .shift(3 * mn.DOWN)
-    #     .shift(0.75 * mn.LEFT)
-    # )
-    # scene.play(mn.Write(eq_equal), run_time=1.5)
+    scene.play(
+        geo.S.animate.move_to(geo.M.get_center()),
+        rate_func=lambda t: 1 - (1 - t) ** 2,
+        run_time=5,
+    )
 
-    # eq_mean_equal_2 = mn.MathTex(
-    #     r"QM(a,b) = AM(a,b) = GM(a,b) = HM(a,b)",
-    #     color=TXTCOL,
-    #     tex_to_color_map={
-    #         "QM(a,b)": QMCOL,
-    #         "AM(a,b)": AMCOL,
-    #         "GM(a,b)": GMCOL,
-    #         "HM(a,b)": HMCOL,
-    #     },
-    # ).shift(3 * mn.UP)
+    eq_equal = (
+        mn.MathTex(r"\implies a = b", color=TXTCOL)
+        .scale(1.5)
+        .shift(3 * mn.DOWN)
+        .shift(0.75 * mn.LEFT)
+    )
+    scene.play(mn.Write(eq_equal), run_time=1.5)
 
-    # scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
+    eq_mean_equal_2 = mn.MathTex(
+        r"QM(a,b) = AM(a,b) = GM(a,b) = HM(a,b)",
+        color=TXTCOL,
+        tex_to_color_map={
+            "QM(a,b)": QMCOL,
+            "AM(a,b)": AMCOL,
+            "GM(a,b)": GMCOL,
+            "HM(a,b)": HMCOL,
+        },
+    ).shift(3 * mn.UP)
 
-    # anims = [mn.FadeOut(abr), mn.FadeOut(bbr), mn.FadeOut(abrtxt), mn.FadeOut(bbrtxt)]
-    # for mobj in scene.mobjects:
-    #     anims.append(mn.FadeOut(mobj))
+    scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
 
-    # if anims:
-    #     scene.play(*anims)
+    anims = [
+        mn.FadeOut(geo.abr),
+        mn.FadeOut(geo.bbr),
+        mn.FadeOut(geo.abrtxt),
+        mn.FadeOut(geo.bbrtxt),
+    ]
+    for mobj in scene.mobjects:
+        anims.append(mn.FadeOut(mobj))
 
-    # scene.clear()
+    if anims:
+        scene.play(*anims)
+
+    scene.clear()
 
     # Two variable means
     # 4:22,33
@@ -124,13 +150,8 @@ def construct_scene(scene: mn.Scene):
     )
 
     group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
-    # scene.wait(
-    #     17,
-    # )
     scene.add(group_eq, group_rel)
     scene.wait(1)
-    scene.wait(13.77)
-    # return
 
     # Multi-variable means
 

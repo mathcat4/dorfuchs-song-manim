@@ -2,37 +2,41 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
-    # Konstruktion Kreis + AM
+    """Konstruktion Kreis + AM"""
+    geo = Geo()
+
     # ANIMATIONSSTART 44,69s
     scene.play(
-        mn.FadeIn(firsta),
-        mn.FadeIn(firstb),
-        mn.FadeIn(b1),
-        mn.FadeIn(labelAB),
-        mn.FadeIn(b2),
+        mn.FadeIn(geo.firsta),
+        mn.FadeIn(geo.firstb),
+        mn.FadeIn(geo.b1),
+        mn.FadeIn(geo.labelAB),
+        mn.FadeIn(geo.b2),
     )
     scene.wait(4.13)
     term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
-        mn.Transform(firsta, sega),
-        mn.FadeOut(b1),
-        mn.FadeOut(b2),
-        mn.TransformMatchingShapes(labelAB, term1),
-        mn.Transform(firstb, segb),
+        mn.Transform(geo.firsta, geo.sega),
+        mn.FadeOut(geo.b1),
+        mn.FadeOut(geo.b2),
+        mn.TransformMatchingShapes(geo.labelAB, term1),
+        mn.Transform(geo.firstb, geo.segb),
     )
     term2 = mn.MathTex(r"\frac{a + b}{2}", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
-        mn.Create(S),
-        mn.FadeIn(abr),
-        mn.FadeIn(bbr),
-        mn.FadeIn(abrtxt),
-        mn.FadeIn(bbrtxt),
+        mn.Create(geo.S),
+        mn.FadeIn(geo.abr),
+        mn.FadeIn(geo.bbr),
+        mn.FadeIn(geo.abrtxt),
+        mn.FadeIn(geo.bbrtxt),
     )
     scene.play(
-        mn.Create(M), mn.Create(labelM), mn.TransformMatchingShapes(term1, term2)
+        mn.Create(geo.M),
+        mn.Create(geo.labelM),
+        mn.TransformMatchingShapes(term1, term2),
     )
     scene.wait(1.74)
-    scene.play(mn.Create(semikreis))
+    scene.play(mn.Create(geo.semikreis))
     scene.wait(0.47)
     term3 = mn.MathTex(r"r =", r"\frac{a + b}{2}", r"= AM(a,b)", color=AMCOL).shift(
         mn.UP * 3
@@ -43,10 +47,10 @@ def construct_scene(scene: mn.Scene):
     term2.target.set_color(AMCOL)
     # scene.play()
     # bitte bite funktuniertre
-    moving_dot = mn.Dot(semikreis.point_from_proportion(0), color=mn.RED)
+    moving_dot = mn.Dot(geo.semikreis.point_from_proportion(0), color=mn.RED)
     moving_dot.set_opacity(0)
     line = mn.always_redraw(
-        lambda: mn.Line(M.get_center(), moving_dot.get_center(), color=AMCOL)
+        lambda: mn.Line(geo.M.get_center(), moving_dot.get_center(), color=AMCOL)
     )
     scene.add(moving_dot)
     scene.add(line)
@@ -55,12 +59,15 @@ def construct_scene(scene: mn.Scene):
         mn.FadeIn(term3[0]),  # r =
         mn.FadeIn(term3[2]),  # = AM(a,b)
         mn.MoveAlongPath(
-            moving_dot, semikreis, rate_func=lambda t: 1 - (1 - t) ** 2, run_time=2.8
+            moving_dot,
+            geo.semikreis,
+            rate_func=lambda t: 1 - (1 - t) ** 2,
+            run_time=2.8,
         ),
     )
     scene.remove(line)
     scene.wait(1.5)
-    scene.play(mn.Create(labelS))
+    scene.play(mn.Create(geo.labelS))
     # scene.wait(4.5)
     # ANIMATION END 65,33s
 

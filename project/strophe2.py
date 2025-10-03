@@ -2,6 +2,9 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
+    """Konstruktion QM"""
+    geo = Geo()
+
     term10 = (
         mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL)
         .move_to(right_half_center)
@@ -47,10 +50,12 @@ def construct_scene(scene: mn.Scene):
         font_size=36,
     ).move_to(right_half_center)
     term16 = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}", color=TXTCOL
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}",
+        color=TXTCOL,
     ).move_to(right_half_center)
     term17 = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ", color=TXTCOL
+        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ",
+        color=TXTCOL,
     ).move_to(right_half_center)
     term18 = (
         mn.MathTex(
@@ -64,69 +69,78 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
         color=QMCOL,
     ).move_to(right_half_center)
-    
-    #ANIMATION START 1:22,97
-    
- 
-    scene.add(construction)
+
+    # ANIMATION START 1:22,97
+
+    scene.add(geo.construction)
     # vorbereitung
-    scene.add(lineMS)
+    scene.add(geo.lineMS)
     tex1 = mn.MathTex(r"QM(a,b) = \sqrt{\frac{a^2+b^2}{2}}", color=QMCOL).shift(
         mn.UP * 3
     )
     scene.play(mn.Write(tex1), run_time=2)
-    #24,97
+    # 24,97
     scene.wait(7.27)
-    #32,24
-    scene.play(mn.FadeIn(am2), mn.FadeIn(N), run_time=1)
+    # 32,24
+    scene.play(mn.FadeIn(geo.am2), mn.FadeIn(geo.N), run_time=1)
     scene.wait(1.88)
-    #35,12
-    scene.play(mn.Create(qm), run_time=1)
-    scene.play(mn.Create(labelN), run_time=1)
-    scene.play(mn.Create(rightM), run_time=1)
-    scene.play(mn.FadeIn(bquestion, bqtext), run_time=0.33)
+    # 35,12
+    scene.play(mn.Create(geo.qm), run_time=1)
+    scene.play(mn.Create(geo.labelN), run_time=1)
+    scene.play(mn.Create(geo.rightM), run_time=1)
+    scene.play(mn.FadeIn(geo.bquestion, geo.bqtext), run_time=0.33)
     scene.wait(0.33)
-    scene.play(mn.FadeOut(bquestion, bqtext), run_time=0.33)
+    scene.play(mn.FadeOut(geo.bquestion, geo.bqtext), run_time=0.33)
     scene.wait(1.5)
-    #40,61
-    scene.play(mn.Wiggle(QMAMDreieck), run_time=1.7)
-    scene.add(am2)  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
+    # 40,61
+    scene.play(mn.Wiggle(geo.QMAMDreieck), run_time=1.7)
+    scene.add(
+        geo.am2
+    )  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
     scene.play(mn.FadeOut(tex1, run_time=0.5))
-    zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
+    zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
     scene.wait(0.25)
-    #44,06
-    scene.play(mn.Wiggle(am2), run_time=1.7)
-    am2_copy = am2.copy() 
-    scene.play(mn.Transform(am2_copy,term10, replace_mobject_with_target_in_scene=True), run_time=1)
+    # 44,06
+    scene.play(mn.Wiggle(geo.am2), run_time=1.7)
+    am2_copy = geo.am2.copy()
+    scene.play(
+        mn.Transform(am2_copy, term10, replace_mobject_with_target_in_scene=True),
+        run_time=1,
+    )
     scene.wait(1.02)
-    #47,78
-    scene.remove(lineMS)
-    lineMS.color = mn.RED
+    # 47,78
+    scene.remove(geo.lineMS)
+    geo.lineMS.color = mn.RED
     scene.play(mn.Write(term11), run_time=1)
     scene.play(mn.TransformMatchingShapes(term11, term12), run_time=1)
-    scene.play(mn.FadeIn(am3), run_time=0.14)
-    scene.play(mn.ReplacementTransform(am3, lineMS), run_time=0.3)
-    scene.play(mn.Wiggle(lineMS, scale_value=1.5), run_time=1.5)
-    scene.play(lineMS.animate.set_color(TXTCOL), run_time=0.14)
-    #51,86
+    scene.play(mn.FadeIn(geo.am3), run_time=0.14)
+    scene.play(mn.ReplacementTransform(geo.am3, geo.lineMS), run_time=0.3)
+    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.5)
+    scene.play(geo.lineMS.animate.set_color(TXTCOL), run_time=0.14)
+    # 51,86
     scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13), run_time=1)
     scene.wait(0.03)
     scene.play(mn.TransformMatchingTex(term13, term135), run_time=1)
     scene.wait(0.03)
     scene.play(mn.TransformMatchingTex(term135, term14), run_time=1)
     scene.wait(0.03)
-    #54,95
+    # 54,95
     scene.play(TransformMatchingTexNoReplace(term14, term15), run_time=1)
     scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
     scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
     scene.play(TransformMatchingTexNoReplace(term17, term18), run_time=1)
-    scene.play(mn.TransformMatchingTex(term18, term19), mn.FadeOut(term17), mn.FadeOut(term14), run_time=1)
-    #59.95
-    #fertig, ich stehl noch zeit von Michaels undundund
+    scene.play(
+        mn.TransformMatchingTex(term18, term19),
+        mn.FadeOut(term17),
+        mn.FadeOut(term14),
+        run_time=1,
+    )
+    # 59.95
+    # fertig, ich stehl noch zeit von Michaels undundund
     # Maybe das hier unten nicht mehr nötig, da es zum Refrain gecuttet wird?
-    #scene.wait(1)
-    #scene.play(mn.FadeOut(term19))
-    #zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.RIGHT * 3))
+    # scene.wait(1)
+    # scene.play(mn.FadeOut(term19))
+    # zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.RIGHT * 3))
 
 
 class MainSketch(mn.Scene):

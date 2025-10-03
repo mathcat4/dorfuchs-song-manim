@@ -132,22 +132,23 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
 
 class MainSketch(mn.Scene):
     def construct(self):
+        geo = Geo()
         # construct_scene(self)
 
         construct_scene(
             self,
             mObjFade=mn.VGroup(
-                construction.copy(),
-                N.copy(),
-                labelN.copy(),
-                X.copy(),
-                labelX.copy(),
-                G.copy(),
-                labelG.copy(),
+                geo.construction.copy(),
+                geo.N.copy(),
+                geo.labelN.copy(),
+                geo.X.copy(),
+                geo.labelX.copy(),
+                geo.G.copy(),
+                geo.labelG.copy(),
             ),
             mObjsWiggle={
-                0: QMAMDreieck.copy(),
-                1: AMGMDreieck.copy(),
-                2: GMHMDreieck.copy(),
+                0: geo.QMAMDreieck.copy(),
+                1: geo.AMGMDreieck.copy(),
+                2: geo.GMHMDreieck.copy(),
             },
         )

@@ -21,16 +21,6 @@ class MainSketch(mn.Scene):
     def construct(self):
         fade_duration = 1
 
-        # Some var
-        constructionC = construction.copy()
-        NC, XC, GC = N.copy(), X.copy(), G.copy()
-        labelNC, labelXC = labelN.copy(), labelX.copy()
-        labelGC = labelG.copy().next_to(G, mn.UP, buff=0.05).shift(0.1 * mn.RIGHT)
-        QMAMDreieckC, AMGMDreieckC, GMHMDreieckC = (
-            QMAMDreieck.copy(),
-            AMGMDreieck.copy(),
-            GMHMDreieck.copy(),
-        )
         AUDIO_PATH = "media/Audio/finalpremixv2.wav"
         if os.path.exists(AUDIO_PATH):
             self.add_sound(AUDIO_PATH, time_offset=0)
@@ -63,10 +53,11 @@ class MainSketch(mn.Scene):
         # Refrain 3
         self.wait(refrain3_start - self.time - fade_duration)
         fade_out(self)
+        geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjFade=mn.VGroup(constructionC.copy(), NC.copy(), labelNC.copy()),
-            mObjsWiggle={0: QMAMDreieckC.copy()},
+            mObjFade=mn.VGroup(geo.construction, geo.N, geo.labelN),
+            mObjsWiggle={0: geo.QMAMDreieck},
         )
 
         # Strophe 3 (GM)
@@ -77,16 +68,17 @@ class MainSketch(mn.Scene):
         # Refrain 4
         self.wait(refrain4_start - self.time - fade_duration)
         fade_out(self)
+        geo = Geo()
         refrain1.construct_scene(
             self,
             mObjFade=mn.VGroup(
-                constructionC.copy(),
-                NC.copy(),
-                labelNC.copy(),
-                XC.copy(),
-                labelXC.copy(),
+                geo.construction,
+                geo.N,
+                geo.labelN,
+                geo.X,
+                geo.labelX,
             ),
-            mObjsWiggle={0: QMAMDreieckC.copy(), 1: AMGMDreieckC.copy()},
+            mObjsWiggle={0: geo.QMAMDreieck, 1: geo.AMGMDreieck},
         )
 
         # Strophe 4 (HM)
@@ -97,21 +89,22 @@ class MainSketch(mn.Scene):
         # Refrain 5
         self.wait(refrain5_start - self.time - fade_duration)
         fade_out(self)
+        geo = Geo()
         refrain1.construct_scene(
             self,
             mObjFade=mn.VGroup(
-                constructionC.copy(),
-                NC.copy(),
-                labelNC.copy(),
-                XC.copy(),
-                labelXC.copy(),
-                GC.copy(),
-                labelGC.copy(),
+                geo.construction,
+                geo.N,
+                geo.labelN,
+                geo.X,
+                geo.labelX,
+                geo.G,
+                geo.labelG,
             ),
             mObjsWiggle={
-                0: QMAMDreieckC.copy(),
-                1: AMGMDreieckC.copy(),
-                2: GMHMDreieckC.copy(),
+                0: geo.QMAMDreieck,
+                1: geo.AMGMDreieck,
+                2: geo.GMHMDreieck,
             },
         )
 
