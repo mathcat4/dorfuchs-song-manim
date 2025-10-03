@@ -2,5 +2,3 @@
 .vscode/
 media/
 __pycache__/
-mpv_preview.sh
-manim_test/
