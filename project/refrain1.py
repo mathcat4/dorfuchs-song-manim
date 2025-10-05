@@ -1,9 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
-    if mObjsWiggle is None:
-        mObjsWiggle = {}
+def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
 
     # Equation and Relation objects
 
@@ -51,16 +49,13 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
     final_text.next_to(group_eq, mn.DOWN, buff=1.5)
 
-    if mObjFade is not None:
-        mObjFade.shift(1.2 * mn.DOWN)
-        for wiggle_obj in mObjsWiggle.values():
-            wiggle_obj.shift(1.2 * mn.DOWN)
-            scene.add(wiggle_obj)
+    if mObjs is not None:
+        mObjs.shift(1.2 * mn.DOWN)
 
         group_eq.shift(2 * mn.UP)
         group_text.shift(2 * mn.UP)
 
-        scene.add(mObjFade)
+        scene.add(mObjs)
     else:
         scene.add(
             mn.MathTex(
@@ -86,7 +81,7 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
         scene.play(*(fade_out_anims + fade_in_anims), run_time=0.7)
 
         wiggle_duration = 1
-        if iteration in mObjsWiggle.keys():
+        if iteration in mObjsWiggle:
             wiggle_obj = mObjsWiggle[iteration]
 
             scene.play(
@@ -120,8 +115,8 @@ def construct_scene(scene: mn.Scene, mObjFade=None, mObjsWiggle=None):
 
     all_final_anims = [mn.Write(final_text)]
 
-    if mObjFade is not None:
-        scene.remove(*[wiggle_obj for wiggle_obj in mObjsWiggle.values()], mObjFade)
+    if mObjs is not None:
+        scene.remove(mObjs)
         all_final_anims += [
             group_eq.animate.shift(1.5 * mn.DOWN),
             group_text.animate.shift(1.5 * mn.DOWN),
@@ -137,18 +132,21 @@ class MainSketch(mn.Scene):
 
         construct_scene(
             self,
-            mObjFade=mn.VGroup(
-                geo.construction.copy(),
-                geo.N.copy(),
-                geo.labelN.copy(),
-                geo.X.copy(),
-                geo.labelX.copy(),
-                geo.G.copy(),
-                geo.labelG.copy(),
+            mObjs=mn.VGroup(
+                geo.construction,
+                geo.N,
+                geo.labelN,
+                geo.X,
+                geo.labelX,
+                geo.G,
+                geo.labelG,
+                geo.QMAMDreieck,
+                geo.AMGMDreieck,
+                geo.GMHMDreieck,
             ),
             mObjsWiggle={
-                0: geo.QMAMDreieck.copy(),
-                1: geo.AMGMDreieck.copy(),
-                2: geo.GMHMDreieck.copy(),
+                0: geo.QMAMDreieck,
+                1: geo.AMGMDreieck,
+                2: geo.GMHMDreieck,
             },
         )

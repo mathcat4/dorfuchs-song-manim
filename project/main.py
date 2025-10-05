@@ -21,7 +21,7 @@ class MainSketch(mn.Scene):
     def construct(self):
         fade_duration = 1
 
-        AUDIO_PATH = "media/Audio/finalpremixv2.wav"
+        AUDIO_PATH = "media/Audio/audio.wav"
         if os.path.exists(AUDIO_PATH):
             self.add_sound(AUDIO_PATH, time_offset=0)
 
@@ -56,7 +56,7 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjFade=mn.VGroup(geo.construction, geo.N, geo.labelN),
+            mObjs=mn.VGroup(geo.construction, geo.N, geo.labelN, geo.QMAMDreieck),
             mObjsWiggle={0: geo.QMAMDreieck},
         )
 
@@ -71,12 +71,14 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjFade=mn.VGroup(
+            mObjs=mn.VGroup(
                 geo.construction,
                 geo.N,
                 geo.labelN,
                 geo.X,
                 geo.labelX,
+                geo.QMAMDreieck,
+                geo.AMGMDreieck,
             ),
             mObjsWiggle={0: geo.QMAMDreieck, 1: geo.AMGMDreieck},
         )
@@ -92,7 +94,7 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjFade=mn.VGroup(
+            mObjs=mn.VGroup(
                 geo.construction,
                 geo.N,
                 geo.labelN,
@@ -100,6 +102,9 @@ class MainSketch(mn.Scene):
                 geo.labelX,
                 geo.G,
                 geo.labelG,
+                geo.QMAMDreieck,
+                geo.AMGMDreieck,
+                geo.GMHMDreieck,
             ),
             mObjsWiggle={
                 0: geo.QMAMDreieck,

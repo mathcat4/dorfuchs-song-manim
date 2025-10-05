@@ -227,16 +227,16 @@ class Geo:
         )
 
         # Dreiecke und Groups
-        self.QMAMDreieck = mn.Group(
+        self.QMAMDreieck = mn.VGroup(
             self.qm, self.am2, self.lineMS, self.S, self.M, self.N, self.rightM
         )
-        self.AMGMDreieck = mn.Group(
+        self.AMGMDreieck = mn.VGroup(
             self.gm, self.am1, self.lineMS, self.S, self.M, self.X, self.rightS
         )  # auch Dreieck für Ähnlichkeit
-        self.GMHMDreieck = mn.Group(
+        self.GMHMDreieck = mn.VGroup(
             self.hm, self.gm, self.dashed1, self.S, self.G, self.X, self.rightG
         )
-        self.angXl = mn.Group(self.angleX, self.angleXlabel)
+        self.angXl = mn.VGroup(self.angleX, self.angleXlabel)
         self.GanzeSkizze = mn.VGroup(
             # Punkte
             *[self.M, self.A, self.B, self.S, self.N, self.X, self.G],
