@@ -127,9 +127,13 @@ def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
 
 class MainSketch(mn.Scene):
     def construct(self):
-        geo = Geo()
+        START = int(Audio.refrain1 * 1000)
+        STOP = int(Audio.strophe1 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
+
         # construct_scene(self)
 
+        geo = Geo()
         construct_scene(
             self,
             mObjs=mn.VGroup(

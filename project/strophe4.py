@@ -87,4 +87,7 @@ def construct_scene(scene: mn.Scene):
 
 class MainSketch(mn.Scene):
     def construct(self):
+        START = int(Audio.strophe4 * 1000)
+        STOP = int(Audio.refrain5 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)

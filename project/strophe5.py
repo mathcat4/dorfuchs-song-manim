@@ -169,7 +169,7 @@ def construct_scene(scene: mn.Scene):
     )
 
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
-    # scene.wait(13.77)
+
     # 36,1
     scene.play(
         mn.Transform(eq_QM, eq2_QM),
@@ -282,4 +282,7 @@ def construct_scene(scene: mn.Scene):
 
 class MainSketch(mn.Scene):
     def construct(self):
+        START = int(Audio.strophe5 * 1000)
+        STOP = int(Audio.refrain6 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)

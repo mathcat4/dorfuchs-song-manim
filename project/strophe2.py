@@ -136,13 +136,11 @@ def construct_scene(scene: mn.Scene):
         run_time=1,
     )
     # 59.95
-    # fertig, ich stehl noch zeit von Michaels undundund
-    # Maybe das hier unten nicht mehr nötig, da es zum Refrain gecuttet wird?
-    # scene.wait(1)
-    # scene.play(mn.FadeOut(term19))
-    # zauberfunktion(scene, GanzeSkizze, lambda m: m.shift(mn.RIGHT * 3))
 
 
 class MainSketch(mn.Scene):
     def construct(self):
+        START = int(Audio.strophe2 * 1000)
+        STOP = int(Audio.refrain3 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)

@@ -68,10 +68,11 @@ def construct_scene(scene: mn.Scene):
     scene.remove(line)
     scene.wait(1.5)
     scene.play(mn.Create(geo.labelS))
-    # scene.wait(4.5)
-    # ANIMATION END 65,33s
 
 
 class MainSketch(mn.Scene):
     def construct(self):
+        START = int(Audio.strophe1 * 1000)
+        STOP = int(Audio.refrain2 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)

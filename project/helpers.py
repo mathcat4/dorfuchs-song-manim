@@ -1,6 +1,7 @@
 import manim as mn
 import numpy as np
 import math
+import pydub
 import typing
 
 # Constants
@@ -13,7 +14,6 @@ QMCOL = mn.BLUE_D
 HMCOL = mn.PURPLE_D
 RIGHTANGLECOL = mn.GREY
 r = 3
-# positions
 right_half_center = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 left_half_center = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
 
@@ -298,3 +298,21 @@ class Geo:
             self.abrtxt,
             self.bbrtxt,
         )
+
+
+class Audio:
+    path = "media/Audio/audio.wav"
+    song = pydub.AudioSegment.from_file(path)
+
+    refrain1 = 26.9
+    strophe1 = 44.69
+    refrain2 = 1 * 60 + 5.39
+    strophe2 = 1 * 60 + 22.97
+    refrain3 = 2 * 60 + 7
+    strophe3 = 2 * 60 + 24.97
+    refrain4 = 3 * 60 + 6.5
+    strophe4 = 3 * 60 + 24.04
+    refrain5 = 4 * 60 + 4
+    strophe5 = 4 * 60 + 22.33
+    refrain6 = 5 * 60 + 00.58
+    refrain7 = 5 * 60 + 16.6

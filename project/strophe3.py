@@ -50,15 +50,18 @@ def construct_scene(scene: mn.Scene):
         r"{{ |\overline{SX}| }}", r"^2 {{=}}", r"{{a}} \cdot", r"{{b}}", color=TXTCOL
     ).shift(mn.UP * 3)
 
-    # term70 = typing.cast(mn.VMobject, term7[0]) # usw. shuts pylance tf up, but kinda unnecessary
-    scene.play(mn.Write(term7[0]), mn.Wiggle(geo.gm), run_time=0.9)
-    scene.play(mn.Write(term7[1]), mn.Wiggle(geo.gm), run_time=0.9)
-    scene.play(
-        mn.Write(term7[2]), mn.Write(term7[3]), mn.Wiggle(geo.sega), run_time=0.9
-    )
-    scene.play(
-        mn.Write(term7[4]), mn.Write(term7[5]), mn.Wiggle(geo.segb), run_time=0.9
-    )
+    # einfach ignorieren sonst errort alles
+    term70 = typing.cast(mn.VMobject, term7[0])
+    term71 = typing.cast(mn.VMobject, term7[1])
+    term72 = typing.cast(mn.VMobject, term7[2])
+    term73 = typing.cast(mn.VMobject, term7[3])
+    term74 = typing.cast(mn.VMobject, term7[4])
+    term75 = typing.cast(mn.VMobject, term7[5])
+
+    scene.play(mn.Write(term70), mn.Wiggle(geo.gm), run_time=0.9)
+    scene.play(mn.Write(term71), mn.Wiggle(geo.gm), run_time=0.9)
+    scene.play(mn.Write(term72), mn.Write(term73), mn.Wiggle(geo.sega), run_time=0.9)
+    scene.play(mn.Write(term74), mn.Write(term75), mn.Wiggle(geo.segb), run_time=0.9)
     scene.wait(0.5)
     term8 = mn.MathTex(
         r"{{|\overline{SX}|}} {{=}} \sqrt{{{a}}{{b}}}", color=TXTCOL
@@ -72,18 +75,11 @@ def construct_scene(scene: mn.Scene):
     term8.target.move_to(term9[0].get_center())  # move into place
     term8.target.set_color(GMCOL)
     scene.play(mn.FadeIn(term9[1]), mn.MoveToTarget(term8))
-    # scene.wait(20)
-
-    # scene.play(
-    #    mn.FadeOut(term8),
-    #    mn.FadeOut(term9),
-    #    mn.FadeOut(lineAX),
-    #    mn.FadeOut(lineBX),
-    #    mn.FadeOut(rightAXB),
-    # )
-    # scene.play(mn.ReplacementTransform(am2, am1))
 
 
 class MainSketch(mn.Scene):
     def construct(self):
+        START = int(Audio.strophe3 * 1000)
+        STOP = int(Audio.refrain4 * 1000)
+        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)
