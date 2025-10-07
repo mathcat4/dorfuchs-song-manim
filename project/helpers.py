@@ -84,19 +84,19 @@ class Geo:
             color=TXTCOL,
         )
 
-        self.gm = mn.Line(self.S, self.X, color=GMCOL)
-        self.am1 = mn.Line(self.M, self.X, color=AMCOL)
-        self.am2 = mn.Line(self.M, self.N, color=AMCOL)
-        self.am3 = mn.Line(self.M, self.A, color=AMCOL)
-        self.qm = mn.Line(self.S, self.N, color=QMCOL)
+        self.gm = mn.Line(self.S.get_center(), self.X.get_center(), color=GMCOL)
+        self.am1 = mn.Line(self.M.get_center(), self.X.get_center(), color=AMCOL)
+        self.am2 = mn.Line(self.M.get_center(), self.N.get_center(), color=AMCOL)
+        self.am3 = mn.Line(self.M.get_center(), self.A.get_center(), color=AMCOL)
+        self.qm = mn.Line(self.S.get_center(), self.N.get_center(), color=QMCOL)
         self.G = mn.Dot(
             self.am1.get_projection(self.S.get_center()), color=TXTCOL
         )  # defintiv auch eine linie
-        self.hm = mn.Line(self.X, self.G.get_center(), color=HMCOL)
+        self.hm = mn.Line(self.X.get_center(), self.G.get_center(), color=HMCOL)
 
         self.lineAX = mn.Line(self.A.get_center(), self.X.get_center(), color=TXTCOL)
         self.lineBX = mn.Line(self.B.get_center(), self.X.get_center(), color=TXTCOL)
-        self.lineMS = mn.Line(self.M, self.S, color=TXTCOL)
+        self.lineMS = mn.Line(self.M.get_center(), self.S.get_center(), color=TXTCOL)
         self.dashed1 = mn.DashedLine(
             self.S.get_center(), self.G.get_center(), color=TXTCOL, stroke_width=3
         )

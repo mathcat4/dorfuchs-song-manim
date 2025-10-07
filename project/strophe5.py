@@ -5,21 +5,31 @@ def construct_scene(scene: mn.Scene):
     """Konstruktion QM"""
     geo = Geo()
 
+    # Part one
+
     scene.add(
-        geo.construction,
         geo.qm,
         geo.gm,
+        geo.am1,
+        geo.hm,
+        geo.dashed1,
+        geo.construction,
         geo.N,
         geo.X,
-        geo.S,
+        geo.G,
         geo.labelN,
         geo.labelX,
-        geo.am1,
+        geo.labelG,
     )
+
+    geo.GanzeSkizze.shift(mn.DOWN)
+
+    # Updaters for animation
 
     geo.labelN.next_to(geo.N, mn.UR, buff=0.05)
     geo.labelS.add_updater(lambda label: label.next_to(geo.S, mn.UL, buff=0.05))
     geo.labelX.add_updater(lambda label: label.next_to(geo.X, mn.UL, buff=0.05))
+    # geo.labelG.add_updater(lambda label: label.next_to(geo.G, mn.UR, buff=0.05))
 
     geo.X.add_updater(
         lambda dot: dot.move_to(
@@ -32,15 +42,24 @@ def construct_scene(scene: mn.Scene):
             )
         )
     )
+    geo.G.add_updater(
+        lambda dot: dot.move_to(geo.am1.get_projection(geo.S.get_center()))
+    )
 
     geo.qm.add_updater(
         lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.N.get_center())
     )
+    geo.am1.add_updater(
+        lambda line: line.put_start_and_end_on(geo.M.get_center(), geo.X.get_center())
+    )
     geo.gm.add_updater(
         lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.X.get_center())
     )
-    geo.am1.add_updater(
-        lambda line: line.put_start_and_end_on(geo.M.get_center(), geo.X.get_center())
+    geo.hm.add_updater(
+        lambda line: line.put_start_and_end_on(geo.X.get_center(), geo.G.get_center())
+    )
+    geo.dashed1.add_updater(
+        lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.G.get_center())
     )
 
     geo.abr.add_updater(
@@ -71,6 +90,8 @@ def construct_scene(scene: mn.Scene):
         lambda mobj: mobj.become(geo.bbr.get_tex("b").set_color(TXTCOL))
     )
 
+    scene.wait(1)
+
     eq_mean_equal = mn.MathTex(
         r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
         color=TXTCOL,
@@ -81,21 +102,19 @@ def construct_scene(scene: mn.Scene):
             "HM(a,b)": HMCOL,
         },
     ).shift(3 * mn.UP)
-    scene.wait(1)
+
     scene.play(mn.Write(eq_mean_equal, run_time=3))
+    scene.wait(1)
 
     scene.play(
         geo.S.animate.move_to(geo.M.get_center()),
+        geo.labelG.animate.next_to(geo.M, mn.UP, buff=0.05),
         rate_func=lambda t: 1 - (1 - t) ** 2,
         run_time=5,
     )
 
-    eq_equal = (
-        mn.MathTex(r"\implies a = b", color=TXTCOL)
-        .scale(1.5)
-        .shift(3 * mn.DOWN)
-        .shift(0.75 * mn.LEFT)
-    )
+    eq_equal = mn.MathTex(r"\iff a", "=", "b", color=TXTCOL).shift(2 * mn.UP)
+    eq_equal.shift(np.array([-eq_equal[1].get_x(), 0, 0]))
     scene.play(mn.Write(eq_equal), run_time=1.5)
 
     eq_mean_equal_2 = mn.MathTex(
@@ -111,6 +130,8 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
 
+    scene.wait(1)
+
     anims = [
         mn.FadeOut(geo.abr),
         mn.FadeOut(geo.bbr),
@@ -124,6 +145,8 @@ def construct_scene(scene: mn.Scene):
         scene.play(*anims)
 
     scene.clear()
+
+    # Part two
 
     # Two variable means
     # 4:22,33
@@ -169,7 +192,6 @@ def construct_scene(scene: mn.Scene):
     )
 
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
-
     # 36,1
     scene.play(
         mn.Transform(eq_QM, eq2_QM),
@@ -259,7 +281,10 @@ def construct_scene(scene: mn.Scene):
         (eq_HM, eq_PM_HM),
         (eq_GM, eq_PM_GM),
     ]:
-        scene.play(mn.ReplacementTransform(eq_PM, PM_mean))
+        if mean != eq_GM:
+            scene.play(mn.ReplacementTransform(eq_PM, PM_mean))
+        else:
+            scene.play(mn.TransformMatchingShapes(eq_PM, PM_mean))
         eq_PM = eq_PM_original.copy()
         scene.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM), run_time=0.7)
         scene.remove(PM_mean)

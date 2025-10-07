@@ -82,9 +82,11 @@ def construct_scene(scene: mn.Scene):
     # 24,97
     scene.wait(7.27)
     # 32,24
+    scene.bring_to_back(geo.am2)
     scene.play(mn.FadeIn(geo.am2), mn.FadeIn(geo.N), run_time=1)
     scene.wait(1.88)
     # 35,12
+    scene.bring_to_back(geo.qm)
     scene.play(mn.Create(geo.qm), run_time=1)
     scene.play(mn.Create(geo.labelN), run_time=1)
     scene.play(mn.Create(geo.rightM), run_time=1)
@@ -97,6 +99,7 @@ def construct_scene(scene: mn.Scene):
     scene.add(
         geo.am2
     )  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
+    scene.bring_to_back(geo.am2)
     scene.play(mn.FadeOut(tex1, run_time=0.5))
     zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
     scene.wait(0.25)
