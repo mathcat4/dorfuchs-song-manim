@@ -2,10 +2,12 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
-    qm.set_opacity(0.5)
-    scene.add(construction, qm, N)
-    GanzeSkizze.shift(mn.RIGHT*3)
-    
+    """Konstruktion GM"""
+    geo = Geo()
+
+    geo.qm.set_opacity(0.5)
+    scene.add(geo.construction, geo.qm, geo.N)
+    # geo.GanzeSkizze.shift(mn.RIGHT * 3)
 
     # scene.play(mn.FadeOut(am2), mn.FadeOut(rightM), qm.animate.set_opacity(0.5)) # nehme an das gehört noch zur transition qm-gm, deshalb nicht nötig?
     term4 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
@@ -17,37 +19,46 @@ def construct_scene(scene: mn.Scene):
     term5.target.set_color(GMCOL)
     # ANIMATION START 2:24,97
     scene.wait(1.77)
-    #26:74
+    # 26:74
     scene.play(mn.Write(term4), run_time=1.5)
     scene.wait(1.62)
-    #29,86
+    # 29,86
     scene.play(mn.TransformMatchingShapes(term4, term5), run_time=1)
     scene.play(mn.FadeIn(term6[0]), mn.MoveToTarget(term5), run_time=1.5)
     scene.wait(4.7)
-    #37,06
+    # 37,06
     scene.play(mn.FadeOut(term6), mn.FadeOut(term5), run_time=1)
     scene.wait(6.14)
-    #44,2
-    scene.play(mn.Create(gm), mn.Create(rightS), run_time=1)
+    # 44,2
+    scene.play(mn.Create(geo.gm), mn.Create(geo.rightS), run_time=1)
     scene.wait(2.48)
-    #47,68
-    scene.play(mn.Create(X), run_time=1)
-    scene.play(mn.Create(labelX), run_time=1)
-    scene.play(mn.AnimationGroup(mn.Create(lineAX), mn.Create(lineBX), mn.Create(am1)), run_time=1)
+    # 47,68
+    scene.play(mn.Create(geo.X), run_time=1)
+    scene.play(mn.Create(geo.labelX), run_time=1)
+    scene.play(
+        mn.AnimationGroup(
+            mn.Create(geo.lineAX), mn.Create(geo.lineBX), mn.Create(geo.am1)
+        ),
+        run_time=1,
+    )
     scene.wait(1.17)
-    #51,85
-    scene.play(mn.AnimationGroup(mn.Create(rightAXB)), run_time=1)
+    # 51,85
+    scene.play(mn.AnimationGroup(mn.Create(geo.rightAXB)), run_time=1)
     scene.wait(2.72)
-    #55,57
+    # 55,57
     term7 = mn.MathTex(
         r"{{ |\overline{SX}| }}", r"^2 {{=}}", r"{{a}} \cdot", r"{{b}}", color=TXTCOL
     ).shift(mn.UP * 3)
 
     # term70 = typing.cast(mn.VMobject, term7[0]) # usw. shuts pylance tf up, but kinda unnecessary
-    scene.play(mn.Write(term7[0]), mn.Wiggle(gm), run_time=0.9)
-    scene.play(mn.Write(term7[1]), mn.Wiggle(gm), run_time=0.9)
-    scene.play(mn.Write(term7[2]), mn.Write(term7[3]), mn.Wiggle(sega), run_time=0.9)
-    scene.play(mn.Write(term7[4]), mn.Write(term7[5]), mn.Wiggle(segb), run_time=0.9)
+    scene.play(mn.Write(term7[0]), mn.Wiggle(geo.gm), run_time=0.9)
+    scene.play(mn.Write(term7[1]), mn.Wiggle(geo.gm), run_time=0.9)
+    scene.play(
+        mn.Write(term7[2]), mn.Write(term7[3]), mn.Wiggle(geo.sega), run_time=0.9
+    )
+    scene.play(
+        mn.Write(term7[4]), mn.Write(term7[5]), mn.Wiggle(geo.segb), run_time=0.9
+    )
     scene.wait(0.5)
     term8 = mn.MathTex(
         r"{{|\overline{SX}|}} {{=}} \sqrt{{{a}}{{b}}}", color=TXTCOL
@@ -61,21 +72,16 @@ def construct_scene(scene: mn.Scene):
     term8.target.move_to(term9[0].get_center())  # move into place
     term8.target.set_color(GMCOL)
     scene.play(mn.FadeIn(term9[1]), mn.MoveToTarget(term8))
-    #scene.wait(20)
+    # scene.wait(20)
 
-
-
-    #scene.play(
+    # scene.play(
     #    mn.FadeOut(term8),
     #    mn.FadeOut(term9),
     #    mn.FadeOut(lineAX),
     #    mn.FadeOut(lineBX),
     #    mn.FadeOut(rightAXB),
-    #)
-    #scene.play(mn.ReplacementTransform(am2, am1))
-    
-
-    
+    # )
+    # scene.play(mn.ReplacementTransform(am2, am1))
 
 
 class MainSketch(mn.Scene):
