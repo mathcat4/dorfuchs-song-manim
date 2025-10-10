@@ -41,8 +41,8 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjs=mn.VGroup(geo.construction, geo.N, geo.labelN, geo.QMAMDreieck),
-            mObjsWiggle={0: geo.QMAMDreieck},
+            ext_objs=mn.VGroup(geo.construction, geo.N, geo.labelN, geo.QMAMDreieck),
+            mObjsFocus={0: geo.QMAMDreieck},
         )
 
         # Strophe 3 (GM)
@@ -56,7 +56,7 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjs=mn.VGroup(
+            ext_objs=mn.VGroup(
                 geo.construction,
                 geo.N,
                 geo.labelN,
@@ -65,7 +65,7 @@ class MainSketch(mn.Scene):
                 geo.QMAMDreieck,
                 geo.AMGMDreieck,
             ),
-            mObjsWiggle={0: geo.QMAMDreieck, 1: geo.AMGMDreieck},
+            mObjsFocus={0: geo.QMAMDreieck, 1: geo.AMGMDreieck},
         )
 
         # Strophe 4 (HM)
@@ -79,7 +79,7 @@ class MainSketch(mn.Scene):
         geo = Geo()
         refrain1.construct_scene(
             self,
-            mObjs=mn.VGroup(
+            ext_objs=mn.VGroup(
                 geo.construction,
                 geo.N,
                 geo.labelN,
@@ -91,7 +91,7 @@ class MainSketch(mn.Scene):
                 geo.AMGMDreieck,
                 geo.GMHMDreieck,
             ),
-            mObjsWiggle={
+            mObjsFocus={
                 0: geo.QMAMDreieck,
                 1: geo.AMGMDreieck,
                 2: geo.GMHMDreieck,

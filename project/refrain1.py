@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
+def construct_scene(scene: mn.Scene, ext_objs: mn.VGroup | None = None, mObjsFocus=()):
 
     # Equation and Relation objects
 
@@ -49,13 +49,13 @@ def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
     final_text.next_to(group_eq, mn.DOWN, buff=1.5)
 
-    if mObjs is not None:
-        mObjs.shift(1.2 * mn.DOWN)
+    if isinstance(ext_objs, mn.VGroup):
+        ext_objs.shift(1.2 * mn.DOWN)
 
         group_eq.shift(2 * mn.UP)
         group_text.shift(2 * mn.UP)
 
-        scene.add(mObjs)
+        scene.add(ext_objs)
     else:
         scene.add(
             mn.MathTex(
@@ -80,25 +80,47 @@ def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
 
         scene.play(*(fade_out_anims + fade_in_anims), run_time=0.7)
 
-        wiggle_duration = 1
-        if iteration in mObjsWiggle:
-            wiggle_obj = mObjsWiggle[iteration]
+        focus_duration = 1
+        if iteration in mObjsFocus:
+            assert isinstance(ext_objs, mn.VGroup)
+            focus_obj: mn.VMobject = mObjsFocus[iteration]
+
+            # print(list(mObjs), list(focus_obj))
+            # fade_group = [obj for obj in mObjs if obj != focus_obj]
+            # print(list(fade_group))
+            ngroup = ext_objs.copy()
+            ngroup.remove(focus_obj)
+            scene.remove(ext_objs)
+            scene.add(ngroup)
 
             scene.play(
                 group_anim.animate.scale(5 / 4),
-                mn.Wiggle(wiggle_obj, scale_value=1.25),
+                ngroup.animate.fade(0.8),
+                focus_obj.animate.scale(
+                    5 / 4, about_point=focus_obj.get_center_of_mass()
+                ),
                 rate_func=mn.rate_functions.rush_from,
-                run_time=1 + wiggle_duration,
+                run_time=1,
             )
+            # focus_obj.set_opacity(1)
+            scene.wait(focus_duration)
             scene.play(
                 group_anim.animate.scale(4 / 5),
+                ngroup.animate.fade(0),
+                focus_obj.animate.scale(
+                    4 / 5, about_point=focus_obj.get_center_of_mass()
+                ),
                 rate_func=mn.rate_functions.rush_into,
             )
+
+            scene.remove(ngroup)
+            scene.add(ext_objs)
+
         else:
             scene.play(
                 group_anim.animate.scale(5 / 4), rate_func=mn.rate_functions.rush_from
             )
-            scene.wait(wiggle_duration)
+            scene.wait(focus_duration)
             scene.play(
                 group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
@@ -115,8 +137,8 @@ def construct_scene(scene: mn.Scene, mObjs=None, mObjsWiggle=()):
 
     all_final_anims = [mn.Write(final_text)]
 
-    if mObjs is not None:
-        scene.remove(mObjs)
+    if isinstance(ext_objs, mn.VGroup):
+        scene.remove(ext_objs)
         all_final_anims += [
             group_eq.animate.shift(1.5 * mn.DOWN),
             group_text.animate.shift(1.5 * mn.DOWN),
@@ -136,7 +158,7 @@ class MainSketch(mn.Scene):
         geo = Geo()
         construct_scene(
             self,
-            mObjs=mn.VGroup(
+            ext_objs=mn.VGroup(
                 geo.construction,
                 geo.N,
                 geo.labelN,
@@ -148,7 +170,7 @@ class MainSketch(mn.Scene):
                 geo.AMGMDreieck,
                 geo.GMHMDreieck,
             ),
-            mObjsWiggle={
+            mObjsFocus={
                 0: geo.QMAMDreieck,
                 1: geo.AMGMDreieck,
                 2: geo.GMHMDreieck,
