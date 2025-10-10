@@ -73,11 +73,7 @@ def construct_scene(scene: mn.Scene):
         mn.UP * 3
     )
     scene.play(mn.TransformMatchingTex(term7, term8))
-    term8.generate_target()
-    assert term8.target is not None
-    term8.target.move_to(term9[0].get_center())  # move into place
-    term8.target.set_color(GMCOL)
-    scene.play(mn.FadeIn(term9[1]), mn.MoveToTarget(term8))
+    scene.play(mn.FadeIn(term9[1]), term8.animate.move_to(term9[0]).set_color(GMCOL))
 
 
 class MainSketch(mn.Scene):
