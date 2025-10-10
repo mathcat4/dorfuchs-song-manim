@@ -6,10 +6,8 @@ def construct_scene(scene: mn.Scene):
     geo = Geo()
 
     geo.qm.set_opacity(0.5)
-    scene.add(geo.construction, geo.qm, geo.N)
-    # geo.GanzeSkizze.shift(mn.RIGHT * 3)
+    scene.add(geo.qm, geo.construction, geo.N)
 
-    # scene.play(mn.FadeOut(am2), mn.FadeOut(rightM), qm.animate.set_opacity(0.5)) # nehme an das gehört noch zur transition qm-gm, deshalb nicht nötig?
     term4 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
     term5 = mn.MathTex(r"\sqrt{ab}", color=TXTCOL).shift(mn.UP * 3)
     term6 = mn.MathTex(r"GM(a,b) =", r"\sqrt{ab}", color=GMCOL).shift(mn.UP * 3)
@@ -30,27 +28,32 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.FadeOut(term6), mn.FadeOut(term5), run_time=1)
     scene.wait(6.14)
     # 44,2
+    scene.bring_to_back(geo.gm, geo.rightS)
     scene.play(mn.Create(geo.gm), mn.Create(geo.rightS), run_time=1)
     scene.wait(2.48)
     # 47,68
     scene.play(mn.Create(geo.X), run_time=1)
     scene.play(mn.Create(geo.labelX), run_time=1)
+    scene.bring_to_back(geo.am1)
     scene.play(
-        mn.AnimationGroup(
-            mn.Create(geo.lineAX), mn.Create(geo.lineBX), mn.Create(geo.am1)
-        ),
+        mn.Create(geo.lineAX),
+        mn.Create(geo.lineBX),
+        mn.Create(geo.am1),
         run_time=1,
     )
     scene.wait(1.17)
     # 51,85
-    scene.play(mn.AnimationGroup(mn.Create(geo.rightAXB)), run_time=1)
+    scene.bring_to_front(geo.construction)
+    scene.mobjects.insert(4, geo.rightAXB)  # viel hacky aber klappt lmao
+    print(scene.mobjects)
+    scene.play(mn.Create(geo.rightAXB), run_time=1)
     scene.wait(2.72)
     # 55,57
     term7 = mn.MathTex(
         r"{{ |\overline{SX}| }}", r"^2 {{=}}", r"{{a}} \cdot", r"{{b}}", color=TXTCOL
     ).shift(mn.UP * 3)
 
-    # einfach ignorieren sonst errort alles
+    # einfach ignorieren aber sonst errort alles
     term70 = typing.cast(mn.VMobject, term7[0])
     term71 = typing.cast(mn.VMobject, term7[1])
     term72 = typing.cast(mn.VMobject, term7[2])
