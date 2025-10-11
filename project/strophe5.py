@@ -33,13 +33,7 @@ def construct_scene(scene: mn.Scene):
 
     geo.X.add_updater(
         lambda dot: dot.move_to(
-            np.array(
-                [
-                    geo.S.get_x(),
-                    geo.M.get_y() + math.sqrt(r**2 - (geo.S.get_x()) ** 2),
-                    0,
-                ]
-            )
+            (geo.S.get_x(), geo.M.get_y() + math.sqrt(r**2 - (geo.S.get_x()) ** 2), 0)
         )
     )
     geo.G.add_updater(

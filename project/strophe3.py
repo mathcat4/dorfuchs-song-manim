@@ -54,12 +54,12 @@ def construct_scene(scene: mn.Scene):
     ).shift(mn.UP * 3)
 
     # einfach ignorieren aber sonst errort alles
-    term70 = typing.cast(mn.VMobject, term7[0])
-    term71 = typing.cast(mn.VMobject, term7[1])
-    term72 = typing.cast(mn.VMobject, term7[2])
-    term73 = typing.cast(mn.VMobject, term7[3])
-    term74 = typing.cast(mn.VMobject, term7[4])
-    term75 = typing.cast(mn.VMobject, term7[5])
+    term70 = typ.cast(mn.VMobject, term7[0])
+    term71 = typ.cast(mn.VMobject, term7[1])
+    term72 = typ.cast(mn.VMobject, term7[2])
+    term73 = typ.cast(mn.VMobject, term7[3])
+    term74 = typ.cast(mn.VMobject, term7[4])
+    term75 = typ.cast(mn.VMobject, term7[5])
 
     scene.play(mn.Write(term70), mn.Wiggle(geo.gm), run_time=0.9)
     scene.play(mn.Write(term71), mn.Wiggle(geo.gm), run_time=0.9)

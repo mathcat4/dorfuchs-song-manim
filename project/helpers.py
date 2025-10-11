@@ -1,8 +1,8 @@
 import manim as mn
 import numpy as np
+import typing as typ
 import math
 import pydub
-import typing
 
 # Constants
 
@@ -18,7 +18,7 @@ right_half_center = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 left_half_center = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
 
 
-def fade_out(scene: mn.Scene, run_time=1):
+def fade_out(scene: mn.Scene, run_time: int = 1):
     anims = []
     for mobj in scene.mobjects:
         anims.append(mn.FadeOut(mobj, run_time=run_time))
@@ -27,7 +27,7 @@ def fade_out(scene: mn.Scene, run_time=1):
         scene.play(*anims)
 
 
-def zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn):
+def zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn: typ.Callable):
     # please only use homogenous animations
     visible_parts = [m for m in group if m in scene.mobjects]
     hidden_parts = [m for m in group if m not in scene.mobjects]
@@ -40,7 +40,7 @@ def zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn):
     scene.play(*[anim_fn(m.animate) for m in visible_parts])
 
 
-def TransformMatchingTexNoReplace(src, target, **kwargs):
+def TransformMatchingTexNoReplace(src: mn.Mobject, target: mn.Mobject, **kwargs):
     """
     Transform a *copy* of `src` into `target`, leaving `src` unchanged.
     """
@@ -48,7 +48,7 @@ def TransformMatchingTexNoReplace(src, target, **kwargs):
     return mn.TransformMatchingTex(src_copy, target, **kwargs)
 
 
-def TransformMatchingShapesNoReplace(src, target, **kwargs):
+def TransformMatchingShapesNoReplace(src: mn.Mobject, target: mn.Mobject, **kwargs):
     """
     Transform a *copy* of `src` into `target`, leaving `src` unchanged.
     """
@@ -61,13 +61,13 @@ class Geo:
         # Wrapping construct in a function is necessary, otherweise vars get overwritten in main.py
 
         # Punkte
-        self.M = mn.Dot(np.array([0, -1.5, 0]), color=TXTCOL)  # kinda variable
-        self.A = mn.Dot([-r, 0, 0] + self.M.get_center(), color=TXTCOL)
-        self.B = mn.Dot([r, 0, 0] + self.M.get_center(), color=TXTCOL)
-        self.S = mn.Dot([-1.3, 0, 0] + self.M.get_center(), color=TXTCOL)
-        self.N = mn.Dot([0, r, 0] + self.M.get_center(), color=TXTCOL)
+        self.M = mn.Dot((0, -1.5, 0), color=TXTCOL)  # kinda variable
+        self.A = mn.Dot((-r, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.B = mn.Dot((r, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.S = mn.Dot((-1.3, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.N = mn.Dot((0, r, 0) + self.M.get_center(), color=TXTCOL)
         cord = self.M.get_y() + math.sqrt(r**2 - (self.S.get_x()) ** 2)
-        self.X = mn.Dot(np.array([self.S.get_x(), cord, 0]), color=TXTCOL)
+        self.X = mn.Dot((self.S.get_x(), cord, 0), color=TXTCOL)
 
         # Linienundso
         self.sega = mn.Line(
@@ -122,13 +122,13 @@ class Geo:
 
         # nur zum animieren (dont judge me als ich das geschrieben hat kannt ich manim seit 30minuten)
         self.firsta = mn.Line(
-            self.A.get_center() + [-0.25, 0.5, 0],
-            self.S.get_center() + [-0.25, 0.5, 0],
+            self.A.get_center() + (-0.25, 0.5, 0),
+            self.S.get_center() + (-0.25, 0.5, 0),
             color=TXTCOL,
         )
         self.firstb = mn.Line(
-            self.S.get_center() + [0.25, 0.5, 0],
-            self.B.get_center() + [0.25, 0.5, 0],
+            self.S.get_center() + (0.25, 0.5, 0),
+            self.B.get_center() + (0.25, 0.5, 0),
             color=TXTCOL,
         )
 
