@@ -132,16 +132,25 @@ def construct_scene(
 
         else:
             scene.play(
-                group_anim.animate.scale(5/4),
+                group_anim.animate.scale(5 / 4),
                 rate_func=mn.rate_functions.rush_from,
                 run_time=1,
             )
             scene.wait(wait_duration)
-            scene.play(
-                group_anim.animate.scale(4 / 5),
-                rate_func=mn.rate_functions.rush_into,
-                run_time=1,
-            )
+
+            if iteration == 2 and isinstance(ext_objs, mn.VGroup):
+                scene.play(
+                    group_anim.animate.scale(4 / 5),
+                    mn.FadeOut(ext_objs),
+                    rate_func=mn.rate_functions.rush_into,
+                    run_time=1,
+                )
+            else:
+                scene.play(
+                    group_anim.animate.scale(4 / 5),
+                    rate_func=mn.rate_functions.rush_into,
+                    run_time=1,
+                )
 
         fade_in = fade_out.copy()
 

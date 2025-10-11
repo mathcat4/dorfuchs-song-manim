@@ -22,7 +22,7 @@ def construct_scene(scene: mn.Scene, reverse=False):
     # Relations
 
     rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL).move_to(
-        (eq_QM.get_right() + eq_AM.get_left()) / 2
+        (eq_QM.get_right() + eq_AM.get_left())/2
     )
     rel_AM_GM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
         (eq_AM.get_bottom() + eq_GM.get_top()) / 2
