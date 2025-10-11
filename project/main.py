@@ -8,7 +8,8 @@ class MainSketch(mn.Scene):
     def construct(self):
         fade_duration = 1
 
-        self.add_sound(Audio.path)
+        # manim kinda doesn't cook otherwise
+        self.renderer.file_writer.add_audio_segment(Audio.song)
 
         # Einleitung
         einleitung.construct_scene(self)

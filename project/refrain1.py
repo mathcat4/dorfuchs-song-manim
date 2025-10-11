@@ -105,18 +105,30 @@ def construct_scene(
             )
 
             scene.wait(wait_duration)
-            scene.play(
-                group_anim.animate.scale(4 / 5),
-                fade_group.animate.fade(0),
-                focus_obj.animate.scale(
-                    4 / 5, about_point=focus_obj.get_center_of_mass()
-                ),
-                rate_func=mn.rate_functions.rush_into,
-                run_time=1,
-            )
-
-            scene.add(ext_objs)
-            scene.remove(fade_group)
+            if iteration != 2:
+                scene.play(
+                    group_anim.animate.scale(4 / 5),
+                    fade_group.animate.fade(
+                        -4
+                    ),  # fu manim I had to solve a fricking equation to figure this value
+                    focus_obj.animate.scale(
+                        4 / 5, about_point=focus_obj.get_center_of_mass()
+                    ),
+                    rate_func=mn.rate_functions.rush_into,
+                    run_time=1,
+                )
+                scene.add(ext_objs)
+                scene.remove(fade_group)
+            else:
+                scene.play(
+                    group_anim.animate.scale(4 / 5),
+                    focus_obj.animate.scale(
+                        4 / 5, about_point=focus_obj.get_center_of_mass()
+                    ).fade(1),
+                    mn.FadeOut(fade_group),
+                    rate_func=mn.rate_functions.rush_into,
+                    run_time=1,
+                )
 
         else:
             scene.play(
