@@ -50,23 +50,26 @@ def construct_scene(scene: mn.Scene):
         font_size=36,
     ).move_to(right_half_center)
     term16 = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} + 2{{b^2}} {{\over}} {{2^2}}}",
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} {{+}} 2{{b^2}} {{\over}} {{2^2}}}",
         color=TXTCOL,
     ).move_to(right_half_center)
     term17 = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{{a^2}} {{+}} {{b^2}} {{\over}} {{2}}} ",
+        r"{{|\overline{SN}|}}{{^2}} {{=}}  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} } ",
         color=TXTCOL,
     ).move_to(right_half_center)
+    term17skid = mn.MathTex(r"{{|\overline{SN}|}}{{^2}} {{=}}  {{ {a^2 + b^2 \over 2} }}")
     term18 = (
         mn.MathTex(
-            r"{{|\overline{SN}|}} {{=}} {{ \sqrt{  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} }  } }}",
+            r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
             color=TXTCOL,
         )
         .move_to(right_half_center)
         .shift(mn.DOWN * 1.5)
     )
+    
+    
     term19 = mn.MathTex(
-        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{  {{{a^2}} + {{b^2}} \over 2}  } }} = QM(a,b)",
+        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
     ).move_to(right_half_center)
 
@@ -131,7 +134,17 @@ def construct_scene(scene: mn.Scene):
     scene.play(TransformMatchingTexNoReplace(term14, term15), run_time=1)
     scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
     scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
-    scene.play(TransformMatchingTexNoReplace(term17, term18), run_time=1)
+    #alt
+    scene.add(mn.index_labels(term17))
+    scene.add(mn.index_labels(term18))
+    scene.play(
+        mn.TransformMatchingShapes(term17[0].copy(), term18[0]),
+        mn.TransformMatchingShapes(term17[3].copy(), term18[2]),
+        mn.TransformMatchingShapes(mn.VGroup(term17[5], term17[7], term17[9], term17[11], term17[13]).copy(), term18[4]),
+        run_time=1)
+
+    
+        
     scene.play(
         mn.TransformMatchingTex(term18, term19),
         mn.FadeOut(term17),
