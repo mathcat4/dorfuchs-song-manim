@@ -132,7 +132,7 @@ def construct_scene(
 
         else:
             scene.play(
-                group_anim.animate.scale(5 / 4),
+                group_anim.animate.scale(5/4),
                 rate_func=mn.rate_functions.rush_from,
                 run_time=1,
             )
