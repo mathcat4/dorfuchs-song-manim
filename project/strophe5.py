@@ -230,7 +230,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(0.75)
 
-    eq_equality = mn.MathTex(r"\implies a_1 = a_2 = \dots = a_n", color=TXTCOL)
+    eq_equality = mn.MathTex(r"\iff a_1 = a_2 = \dots = a_n", color=TXTCOL)
     scene.play(mn.Write(eq_equality), run_time=1.5)
     scene.wait(0.75)
 

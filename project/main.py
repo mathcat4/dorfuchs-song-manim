@@ -110,6 +110,6 @@ class MainSketch(mn.Scene):
         refrain6.construct_scene(self)
 
         # Refrain 7
-        self.wait(Audio.refrain7 - self.time)
-        self.clear()
+        self.wait(Audio.refrain7 - self.time - fade_duration)
+        fade_out(self, run_time=fade_duration)
         refrain6.construct_scene(self, reverse=True)

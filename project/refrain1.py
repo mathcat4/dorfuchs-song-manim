@@ -64,7 +64,7 @@ def construct_scene(
         scene.add(
             mn.MathTex(
                 r"\text{Für alle } a,b \in \mathbb{R}^+ \text{ gilt:}", color=TXTCOL
-            ).shift(2.8 * mn.UP)
+            ).shift(2.5 * mn.UP)
         )
 
     # Fade and scale animations
@@ -184,21 +184,21 @@ class MainSketch(mn.Scene):
         geo = Geo()
         construct_scene(
             self,
-            ext_objs=mn.VGroup(
-                geo.construction,
-                geo.N,
-                geo.labelN,
-                geo.X,
-                geo.labelX,
-                geo.G,
-                geo.labelG,
-                geo.QMAMDreieck,
-                geo.AMGMDreieck,
-                geo.GMHMDreieck,
-            ),
-            mObjsFocus={
-                0: geo.QMAMDreieck,
-                1: geo.AMGMDreieck,
-                2: geo.GMHMDreieck,
-            },
+            # ext_objs=mn.VGroup(
+            #     geo.construction,
+            #     geo.N,
+            #     geo.labelN,
+            #     geo.X,
+            #     geo.labelX,
+            #     geo.G,
+            #     geo.labelG,
+            #     geo.QMAMDreieck,
+            #     geo.AMGMDreieck,
+            #     geo.GMHMDreieck,
+            # ),
+            # mObjsFocus={
+            #     # 0: geo.QMAMDreieck,
+            #     # 1: geo.AMGMDreieck,
+            #     # 2: geo.GMHMDreieck,
+            # },
         )
