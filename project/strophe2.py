@@ -57,7 +57,9 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SN}|}}{{^2}} {{=}}  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} } ",
         color=TXTCOL,
     ).move_to(right_half_center)
-    term17skid = mn.MathTex(r"{{|\overline{SN}|}}{{^2}} {{=}}  {{ {a^2 + b^2 \over 2} }}")
+    term17skid = mn.MathTex(
+        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{ {a^2 + b^2 \over 2} }}"
+    )
     term18 = (
         mn.MathTex(
             r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
@@ -66,8 +68,7 @@ def construct_scene(scene: mn.Scene):
         .move_to(right_half_center)
         .shift(mn.DOWN * 1.5)
     )
-    
-    
+
     term19 = mn.MathTex(
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
@@ -134,17 +135,19 @@ def construct_scene(scene: mn.Scene):
     scene.play(TransformMatchingTexNoReplace(term14, term15), run_time=1)
     scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
     scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
-    #alt
+    # alt
     scene.add(mn.index_labels(term17))
     scene.add(mn.index_labels(term18))
     scene.play(
         mn.TransformMatchingShapes(term17[0].copy(), term18[0]),
         mn.TransformMatchingShapes(term17[3].copy(), term18[2]),
-        mn.TransformMatchingShapes(mn.VGroup(term17[5], term17[7], term17[9], term17[11], term17[13]).copy(), term18[4]),
-        run_time=1)
+        mn.TransformMatchingShapes(
+            mn.VGroup(term17[5], term17[7], term17[9], term17[11], term17[13]).copy(),
+            term18[4],
+        ),
+        run_time=1,
+    )
 
-    
-        
     scene.play(
         mn.TransformMatchingTex(term18, term19),
         mn.FadeOut(term17),
