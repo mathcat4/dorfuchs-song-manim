@@ -1,4 +1,4 @@
-name: Format and lint python files
+name: Lint and format python files
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
            git config --global user.email "actions@github.com"
 
            git add .
-           git commit -m "Format and lint"
+           git commit -m "Lint and format"
            git push origin HEAD
            }
       
