@@ -34,19 +34,20 @@ def construct_scene(scene: mn.Scene):
     label_mean = mn.MathTex("M", color=AMCOL).next_to(dot_mean, mn.UP)
     label_mean.add_updater(lambda label: label.next_to(dot_mean, mn.UP))
 
-    scene.wait(1.5)
+    scene.wait(3.5)
 
     scene.play(mn.FadeIn(dot_mean), mn.FadeIn(label_mean))
     scene.play(
-        dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)), run_time=2
+        dot_mean.animate.move_to(number_line.n2p(0.2 * num_a + 0.8 * num_b)),
+        run_time=1.5,
     )
     scene.play(
-        dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)), run_time=2
+        dot_mean.animate.move_to(number_line.n2p(0.8 * num_a + 0.2 * num_b)),
+        run_time=1.5,
     )
     scene.play(
-        dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)), run_time=2
+        dot_mean.animate.move_to(number_line.n2p((num_a + num_b) / 2)), run_time=1.5
     )
-    scene.wait(1)
 
     label_mean.clear_updaters()
 
@@ -90,6 +91,7 @@ def construct_scene(scene: mn.Scene):
     )
     group_desc.scale(0.5).shift(2 * mn.UP)
 
+    scene.wait(0.5)
     scene.play(
         mn.Transform(dot_mean, dot_am),
         mn.Transform(label_mean, label_am),
