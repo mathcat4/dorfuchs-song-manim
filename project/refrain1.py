@@ -1,7 +1,11 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene, ext_objs: mn.VGroup | None = None, mObjsFocus=()):
+def construct_scene(
+    scene: mn.Scene, ext_objs: mn.VGroup | None = None, mObjsFocus=None
+):
+    if mObjsFocus is None:
+        mObjsFocus = {}
 
     # Equation and Relation objects
 
@@ -80,47 +84,43 @@ def construct_scene(scene: mn.Scene, ext_objs: mn.VGroup | None = None, mObjsFoc
 
         scene.play(*(fade_out_anims + fade_in_anims), run_time=0.7)
 
-        focus_duration = 1
+        wait_duration = 1
         if iteration in mObjsFocus:
             assert isinstance(ext_objs, mn.VGroup)
             focus_obj: mn.VMobject = mObjsFocus[iteration]
 
-            # print(list(mObjs), list(focus_obj))
-            # fade_group = [obj for obj in mObjs if obj != focus_obj]
-            # print(list(fade_group))
-            ngroup = ext_objs.copy()
-            ngroup.remove(focus_obj)
+            # this is so hacky I hate that it works
+            fade_group = ext_objs.copy().remove(focus_obj)
+            scene.add(fade_group)
             scene.remove(ext_objs)
-            scene.add(ngroup)
 
             scene.play(
                 group_anim.animate.scale(5 / 4),
-                ngroup.animate.fade(0.8),
+                fade_group.animate.fade(0.8),
                 focus_obj.animate.scale(
                     5 / 4, about_point=focus_obj.get_center_of_mass()
                 ),
                 rate_func=mn.rate_functions.rush_from,
-                run_time=1,
             )
-            # focus_obj.set_opacity(1)
-            scene.wait(focus_duration)
+
+            scene.wait(wait_duration)
             scene.play(
                 group_anim.animate.scale(4 / 5),
-                ngroup.animate.fade(0),
+                fade_group.animate.fade(0),
                 focus_obj.animate.scale(
                     4 / 5, about_point=focus_obj.get_center_of_mass()
                 ),
                 rate_func=mn.rate_functions.rush_into,
             )
 
-            scene.remove(ngroup)
             scene.add(ext_objs)
+            scene.remove(fade_group)
 
         else:
             scene.play(
                 group_anim.animate.scale(5 / 4), rate_func=mn.rate_functions.rush_from
             )
-            scene.wait(focus_duration)
+            scene.wait(wait_duration)
             scene.play(
                 group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
