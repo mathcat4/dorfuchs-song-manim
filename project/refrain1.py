@@ -64,7 +64,7 @@ def construct_scene(
         scene.add(
             mn.MathTex(
                 r"\text{Für alle } a,b \in \mathbb{R}^+ \text{ gilt:}", color=TXTCOL
-            ).shift(3 * mn.UP)
+            ).shift(2.8 * mn.UP)
         )
 
     # Fade and scale animations
@@ -82,7 +82,7 @@ def construct_scene(
             mobj.animate.set_opacity(1) for mobj in fade_in if mobj not in fade_out
         ]
 
-        scene.play(*(fade_out_anims + fade_in_anims), run_time=0.7)
+        scene.play(*(fade_out_anims + fade_in_anims), run_time=1)
 
         wait_duration = 1
         if iteration in mObjsFocus:
@@ -101,6 +101,7 @@ def construct_scene(
                     5 / 4, about_point=focus_obj.get_center_of_mass()
                 ),
                 rate_func=mn.rate_functions.rush_from,
+                run_time=1,
             )
 
             scene.wait(wait_duration)
@@ -111,6 +112,7 @@ def construct_scene(
                     4 / 5, about_point=focus_obj.get_center_of_mass()
                 ),
                 rate_func=mn.rate_functions.rush_into,
+                run_time=1,
             )
 
             scene.add(ext_objs)
@@ -118,12 +120,15 @@ def construct_scene(
 
         else:
             scene.play(
-                group_anim.animate.scale(5 / 4), rate_func=mn.rate_functions.rush_from
+                group_anim.animate.scale(5 / 4),
+                rate_func=mn.rate_functions.rush_from,
+                run_time=1,
             )
             scene.wait(wait_duration)
             scene.play(
                 group_anim.animate.scale(4 / 5),
                 rate_func=mn.rate_functions.rush_into,
+                run_time=1,
             )
 
         fade_in = fade_out.copy()
@@ -139,12 +144,13 @@ def construct_scene(
 
     if isinstance(ext_objs, mn.VGroup):
         scene.remove(ext_objs)
+        scene.wait(0.13)
         all_final_anims += [
-            group_eq.animate.shift(1.5 * mn.DOWN),
-            group_text.animate.shift(1.5 * mn.DOWN),
+            group_eq.animate.shift(2 * mn.DOWN),
+            group_text.animate.shift(2 * mn.DOWN),
         ]
 
-    scene.play(*all_final_anims, run_time=3.5)
+    scene.play(*all_final_anims, run_time=3.2)
 
 
 class MainSketch(mn.Scene):
