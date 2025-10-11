@@ -144,13 +144,12 @@ def construct_scene(
 
     if isinstance(ext_objs, mn.VGroup):
         scene.remove(ext_objs)
-        scene.wait(0.13)
         all_final_anims += [
             group_eq.animate.shift(2 * mn.DOWN),
             group_text.animate.shift(2 * mn.DOWN),
         ]
 
-    scene.play(*all_final_anims, run_time=3.2)
+    scene.play(*all_final_anims, run_time=3.3)
 
 
 class MainSketch(mn.Scene):
