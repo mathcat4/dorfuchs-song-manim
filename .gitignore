@@ -2,3 +2,4 @@
 .vscode/
 media/
 __pycache__/
+tests/
