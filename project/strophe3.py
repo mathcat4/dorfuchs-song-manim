@@ -50,7 +50,7 @@ def construct_scene(scene: mn.Scene):
     scene.wait(2.72)
     # 55,57
     term7 = mn.MathTex(
-        r"{{ |\overline{SX}| }}", r"^2 {{=}}", r"{{a}} \cdot", r"{{b}}", color=TXTCOL
+        r"{{|\overline{SX}|}}{{^2}}{{=}}{{a}}{{\cdot}}{{b}}", color=TXTCOL
     ).shift(mn.UP * 3)
 
     # einfach ignorieren aber sonst errort alles
@@ -61,13 +61,24 @@ def construct_scene(scene: mn.Scene):
     term74 = typ.cast(mn.VMobject, term7[4])
     term75 = typ.cast(mn.VMobject, term7[5])
 
-    scene.play(mn.Write(term70), mn.Wiggle(geo.gm), run_time=0.9)
-    scene.play(mn.Write(term71), mn.Wiggle(geo.gm), run_time=0.9)
-    scene.play(mn.Write(term72), mn.Write(term73), mn.Wiggle(geo.sega), run_time=0.9)
-    scene.play(mn.Write(term74), mn.Write(term75), mn.Wiggle(geo.segb), run_time=0.9)
-    scene.wait(0.5)
+    # ZEITEN ÄNDERN WENN MICHAEL RAP FIXT
+    scene.play(mn.Wiggle(geo.gm), run_time=0.5)
+    scene.play(mn.Transform(geo.gm.copy(),term7[0]), run_time=0.5)
+    scene.play(mn.Wiggle(geo.gm), run_time=0.5)
+    scene.play(mn.Transform(geo.gm.copy(),term7[1]), mn.Write(term7[2]), run_time=0.5)
+    scene.play(mn.Wiggle(geo.sega), run_time=0.5)
+    scene.play(mn.Transform(geo.sega.copy(),term7[3]), run_time=0.5)
+    scene.play(mn.Wiggle(geo.gm), run_time=0.5)
+    scene.play(mn.Transform(geo.segb.copy(),term7[5]), mn.Write(term7[4]), run_time=0.5)
+    scene.wait(0.1)
+    scene.add(term7)
+    #%scene.play(mn.Write(term70), mn.Wiggle(geo.gm), run_time=0.9)
+    #%scene.play(mn.Write(term71), mn.Wiggle(geo.gm), run_time=0.9)
+    #%scene.play(mn.Write(term72), mn.Write(term73), mn.Wiggle(geo.sega), run_time=0.9)
+    #%scene.play(mn.Write(term74), mn.Write(term75), mn.Wiggle(geo.segb), run_time=0.9)
+    #scene.wait(0.5)
     term8 = mn.MathTex(
-        r"{{|\overline{SX}|}} {{=}} \sqrt{{{a}}{{b}}}", color=TXTCOL
+        r"{{|\overline{SX}|}}{{=}}\sqrt{{{a}}{{b}}}", color=TXTCOL
     ).shift(mn.UP * 3)
     term9 = mn.MathTex(r"|\overline{SX}| = \sqrt{ab}", r"= GM(a,b)", color=GMCOL).shift(
         mn.UP * 3
