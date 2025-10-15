@@ -155,14 +155,14 @@ def construct_scene(scene: mn.Scene):
 
     # Relations
 
-    rel_QM_AM = mn.MathTex(r"\geq", color=mn.BLACK).move_to(
+    rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL).move_to(
         (eq_QM.get_right() + eq_AM.get_left()) / 2
     )
-    rel_AM_GM = mn.MathTex(r"\leq", color=mn.BLACK).move_to(
+    rel_AM_GM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
         (eq_AM.get_bottom() + eq_GM.get_top()) / 2
     )
     rel_AM_GM.rotate(mn.PI / 2)
-    rel_GM_HM = mn.MathTex(r"\leq", color=mn.BLACK).move_to(
+    rel_GM_HM = mn.MathTex(r"\leq", color=TXTCOL).move_to(
         (eq_GM.get_left() + eq_HM.get_right()) / 2
     )
 
@@ -203,14 +203,14 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Wiggle(group_rel), run_time=1.5)
 
     # Equation Relations
-    rel2_QM_AM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+    rel2_QM_AM = mn.MathTex(r"=", color=TXTCOL).move_to(
         (eq_QM.get_right() + eq_AM.get_left()) / 2
     )
-    rel2_AM_GM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+    rel2_AM_GM = mn.MathTex(r"=", color=TXTCOL).move_to(
         (eq_AM.get_bottom() + eq_GM.get_top()) / 2
     )
     rel2_AM_GM.rotate(mn.PI / 2)
-    rel2_GM_HM = mn.MathTex(r"=", color=mn.BLACK).move_to(
+    rel2_GM_HM = mn.MathTex(r"=", color=TXTCOL).move_to(
         (eq_GM.get_left() + eq_HM.get_right()) / 2
     )
 
@@ -247,52 +247,75 @@ def construct_scene(scene: mn.Scene):
     # 4:46,0
 
     eq_PM = mn.MathTex(
-        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=mn.BLACK
+        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=TXTCOL
     )
-    eq_PM_original = eq_PM.copy()
     scene.play(mn.Write(eq_PM))
 
-    eq_PM_QM = mn.MathTex(
-        r"\sqrt[2]{ \frac{{a_1}^2 + {a_2}^2 + \dots + {a_n}^2}{n} }",
-        color=QMCOL,
+    eq_implies_QM = mn.MathTex(r"\implies", color=QMCOL)
+    eq_p_QM = (
+        mn.MathTex(r"p = 2", color=QMCOL).scale(-0.75).next_to(eq_implies_QM, mn.DOWN)
     )
-    eq_PM_AM = mn.MathTex(
-        r"\sqrt[1]{ \frac{{a_1}^1 + {a_2}^1 + \dots + {a_n}^1}{n} }",
-        color=AMCOL,
-    )
-    eq_PM_GM = mn.MathTex(
-        r"\lim_{p \to 0} {{ \sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } }}",
-        color=GMCOL,
-    )
-    eq_PM_HM = mn.MathTex(
-        r"\sqrt[-1]{ \frac{{a_1}^{-1} + {a_2}^{-1} + \dots + {a_n}^{-1} }{n} }",
-        color=HMCOL,
-    )
+    group_implies_QM = mn.VGroup(eq_implies_QM, eq_p_QM)
+    group_implies_QM.move_to(eq_PM.get_corner(mn.UL)).shift(0.5 * mn.UL)
+    group_implies_QM.rotate(3 / 4 * mn.PI)
 
-    for mean, PM_mean in [
-        (eq_QM, eq_PM_QM),
-        (eq_AM, eq_PM_AM),
-        (eq_HM, eq_PM_HM),
-        (eq_GM, eq_PM_GM),
-    ]:
-        if mean != eq_GM:
-            scene.play(mn.ReplacementTransform(eq_PM, PM_mean))
-        else:
-            scene.play(mn.TransformMatchingShapes(eq_PM, PM_mean))
-        eq_PM = eq_PM_original.copy()
-        scene.play(mn.Transform(PM_mean, mean), mn.FadeIn(eq_PM), run_time=0.7)
-        scene.remove(PM_mean)
+    eq_implies_AM = mn.MathTex(r"\implies", color=AMCOL)
+    eq_p_AM = (
+        mn.MathTex(r"p = 1", color=AMCOL).scale(0.75).next_to(eq_implies_AM, mn.UP)
+    )
+    group_implies_AM = mn.VGroup(eq_implies_AM, eq_p_AM)
+    group_implies_AM.move_to(eq_PM.get_corner(mn.UR)).shift(0.5 * mn.UR)
+    group_implies_AM.rotate(1 / 4 * mn.PI)
 
-    scene.play(mn.FadeOut(group_eq), mn.FadeOut(group_rel))
+    eq_implies_GM = mn.MathTex(r"\implies", color=GMCOL)
+    eq_p_GM = (
+        mn.MathTex(r"p \to 0", color=GMCOL).scale(0.75).next_to(eq_implies_GM, mn.UP)
+    )
+    group_implies_GM = mn.VGroup(eq_implies_GM, eq_p_GM)
+    group_implies_GM.move_to(eq_PM.get_corner(mn.DR)).shift(0.5 * mn.DR)
+    group_implies_GM.rotate(-1 / 4 * mn.PI)
+
+    eq_implies_HM = mn.MathTex(r"\implies", color=HMCOL)
+    eq_p_HM = (
+        mn.MathTex(r"p = -1", color=HMCOL).scale(-0.75).next_to(eq_implies_HM, mn.DOWN)
+    )
+    group_implies_HM = mn.VGroup(eq_implies_HM, eq_p_HM)
+    group_implies_HM.move_to(eq_PM.get_corner(mn.DL)).shift(0.5 * mn.DL)
+    group_implies_HM.rotate(-3 / 4 * mn.PI)
+
+    scene.play(mn.Write(group_implies_QM))
+    scene.play(mn.Write(group_implies_AM))
+    scene.play(mn.Write(group_implies_GM))
+    scene.play(mn.Write(group_implies_HM))
+
+    scene.wait(1)
+
+    # scene.play(
+    #     mn.Indicate(group_implies_QM, color="red"),
+    #     mn.Indicate(group_implies_AM, color="red"),
+    #     mn.Indicate(group_implies_GM, color="red"),
+    #     mn.Indicate(group_implies_HM, color="red"),
+    # )
+
+    scene.play(
+        mn.FadeOut(
+            group_eq,
+            group_rel,
+            group_implies_QM,
+            group_implies_AM,
+            group_implies_GM,
+            group_implies_HM,
+        )
+    )
 
     # Power mean inequality
 
-    text = mn.MathTex(r"\text{Für alle } p \geq q \text{ gilt:}", color=mn.BLACK).shift(
+    text = mn.MathTex(r"\text{Für alle } p \geq q \text{ gilt:}", color=TXTCOL).shift(
         mn.UP
     )
     ineq_PM = mn.MathTex(
         r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } \geq \sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }",
-        color=mn.BLACK,
+        color=TXTCOL,
     ).shift(mn.DOWN)
 
     scene.play(mn.Write(text), eq_PM.animate.shift(mn.DOWN))
