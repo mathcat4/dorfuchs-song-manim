@@ -50,28 +50,31 @@ def construct_scene(scene: mn.Scene):
     scene.wait(2.72)
     # 55,57
     term7 = mn.MathTex(
-        r"{{|\overline{SX}|}}{{^2}}{{=}}{{a}}{{\cdot}}{{b}}", color=TXTCOL
+        r"|\overline{SX}|",r"^2", r"=", r"a", r"\cdot", r"b", color=TXTCOL
     ).shift(mn.UP * 3)
 
     # einfach ignorieren aber sonst errort alles
-    term70 = typ.cast(mn.VMobject, term7[0])
-    term71 = typ.cast(mn.VMobject, term7[1])
-    term72 = typ.cast(mn.VMobject, term7[2])
-    term73 = typ.cast(mn.VMobject, term7[3])
-    term74 = typ.cast(mn.VMobject, term7[4])
-    term75 = typ.cast(mn.VMobject, term7[5])
-
+    #term70 = typ.cast(mn.VMobject, term7[0])
+    #term71 = typ.cast(mn.VMobject, term7[1])
+    #term72 = typ.cast(mn.VMobject, term7[2])
+    #term73 = typ.cast(mn.VMobject, term7[3])
+    #term74 = typ.cast(mn.VMobject, term7[4])
+    #term75 = typ.cast(mn.VMobject, term7[5])
+   
     # ZEITEN ÄNDERN WENN MICHAEL RAP FIXT
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
-    scene.play(mn.Transform(geo.gm.copy(),term7[0]), run_time=0.5)
+    scene.play(mn.ReplacementTransform(geo.gm.copy(),term7[0]), run_time=0.5)
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
-    scene.play(mn.Transform(geo.gm.copy(),term7[1]), mn.Write(term7[2]), run_time=0.5)
+    scene.play(mn.ReplacementTransform(geo.gm.copy(),term7[1]), mn.Write(term7[2]), run_time=0.5)
     scene.play(mn.Wiggle(geo.sega), run_time=0.5)
-    scene.play(mn.Transform(geo.sega.copy(),term7[3]), run_time=0.5)
-    scene.play(mn.Wiggle(geo.gm), run_time=0.5)
-    scene.play(mn.Transform(geo.segb.copy(),term7[5]), mn.Write(term7[4]), run_time=0.5)
+    scene.play(mn.ReplacementTransform(geo.sega.copy(),term7[3]), run_time=0.5)
+    scene.play(mn.Wiggle(geo.segb), run_time=0.5)
+    scene.play(mn.ReplacementTransform(geo.segb.copy(),term7[5]), mn.Write(term7[4]), run_time=0.5)
+    
     scene.wait(0.1)
-    scene.add(term7)
+    #scene.add(term7)
+    
+
     #%scene.play(mn.Write(term70), mn.Wiggle(geo.gm), run_time=0.9)
     #%scene.play(mn.Write(term71), mn.Wiggle(geo.gm), run_time=0.9)
     #%scene.play(mn.Write(term72), mn.Write(term73), mn.Wiggle(geo.sega), run_time=0.9)
