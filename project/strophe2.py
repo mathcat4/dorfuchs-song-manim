@@ -118,12 +118,13 @@ def construct_scene(scene: mn.Scene):
     # 47,78
     scene.remove(geo.lineMS)
     geo.lineMS.color = mn.RED
-    scene.play(mn.Write(term11), run_time=1)
-    scene.play(mn.TransformMatchingShapes(term11, term12), run_time=1)
-    scene.play(mn.FadeIn(geo.am3), run_time=0.14)
-    scene.play(mn.ReplacementTransform(geo.am3, geo.lineMS), run_time=0.3)
-    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.5)
-    scene.play(geo.lineMS.animate.set_color(TXTCOL), run_time=0.14)
+    scene.play(mn.FadeIn(geo.am3), run_time=0.4)
+    scene.play(mn.ReplacementTransform(geo.am3, geo.lineMS), run_time=1.2)
+    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.3)
+    scene.play(mn.ReplacementTransform(geo.lineMS,term11), run_time=0.76)
+    scene.play(mn.TransformMatchingShapes(term11, term12), run_time=0.5)
+    
+    #scene.play(geo.lineMS.animate.set_color(TXTCOL), run_time=0.14)
     # 51,86
     scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13), run_time=1)
     scene.wait(0.03)
@@ -136,8 +137,8 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
     scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
     # alt
-    scene.add(mn.index_labels(term17))
-    scene.add(mn.index_labels(term18))
+    #scene.add(mn.index_labels(term17))
+    #scene.add(mn.index_labels(term18))
     scene.play(
         mn.TransformMatchingShapes(term17[0].copy(), term18[0]),
         mn.TransformMatchingShapes(term17[3].copy(), term18[2]),
