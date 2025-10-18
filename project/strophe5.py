@@ -29,7 +29,6 @@ def construct_scene(scene: mn.Scene):
     geo.labelN.next_to(geo.N, mn.UR, buff=0.05)
     geo.labelS.add_updater(lambda label: label.next_to(geo.S, mn.UL, buff=0.05))
     geo.labelX.add_updater(lambda label: label.next_to(geo.X, mn.UL, buff=0.05))
-    # geo.labelG.add_updater(lambda label: label.next_to(geo.G, mn.UR, buff=0.05))
 
     geo.X.add_updater(
         lambda dot: dot.move_to(
@@ -84,6 +83,33 @@ def construct_scene(scene: mn.Scene):
         lambda mobj: mobj.become(geo.bbr.get_tex("b").set_color(TXTCOL))
     )
 
+    # Numberline
+
+    number_line = mn.NumberLine(
+        x_range=[0, 10, 1],
+        length=5,
+        # include_numbers=True,
+        color=TXTCOL,
+        rotation=mn.PI / 2,
+        label_direction=mn.LEFT,  # type: ignore
+        # numbers_to_include=(0, 10),
+    ).shift(5 * mn.RIGHT + mn.DOWN)
+    # for num in number_line.numbers:
+    #     num.set_color(TXTCOL)
+
+    num_a = 2.83  # magic value
+    num_b = 10 - 2.83
+
+    dot_a = mn.Dot(number_line.n2p(num_a), color=TXTCOL)
+    label_a = mn.MathTex("a", color=TXTCOL).next_to(dot_a, mn.LEFT)
+    label_a.add_updater(lambda label: label.next_to(dot_a, mn.LEFT))
+
+    dot_b = mn.Dot(number_line.n2p(num_b), color=TXTCOL)
+    label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.RIGHT)
+    label_b.add_updater(lambda label: label.next_to(dot_b, mn.RIGHT))
+
+    scene.add(number_line, dot_a, label_a, dot_b, label_b)
+
     scene.wait(1)
 
     eq_mean_equal = mn.MathTex(
@@ -103,6 +129,8 @@ def construct_scene(scene: mn.Scene):
     scene.play(
         geo.S.animate.move_to(geo.M.get_center()),
         geo.labelG.animate.next_to(geo.M, mn.UP, buff=0.05),
+        dot_a.animate.move_to(number_line.n2p(5)),
+        dot_b.animate.move_to(number_line.n2p(5)),
         rate_func=lambda t: 1 - (1 - t) ** 2,
         run_time=5,
     )
@@ -143,7 +171,6 @@ def construct_scene(scene: mn.Scene):
     # Part two
 
     # Two variable means
-    # 4:22,33
     eq_QM = mn.MathTex(r"\sqrt{ {{ {{ a^2 + b^2 }} \over {{ 2 }} }} }", color=QMCOL)
     eq_AM = mn.MathTex(r"{{ a + b }} \over {{ 2 }}", color=AMCOL)
     eq_GM = mn.MathTex(r"\sqrt[2]{ \hspace{0.1pt} {{ ab }} }", color=GMCOL)
@@ -186,7 +213,6 @@ def construct_scene(scene: mn.Scene):
     )
 
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
-    # 36,1
     scene.play(
         mn.ReplacementTransform(eq_QM, eq2_QM),
         mn.ReplacementTransform(eq_AM, eq2_AM),
@@ -196,8 +222,6 @@ def construct_scene(scene: mn.Scene):
         rel_AM_GM.animate.move_to((eq2_AM.get_bottom() + eq2_GM.get_top()) / 2),
         rel_GM_HM.animate.move_to((eq2_GM.get_bottom() + eq2_HM.get_top()) / 2),
     )
-
-    # 4:41,14
 
     # Wiggle Relations
     scene.play(mn.Wiggle(group_rel), run_time=1.5)
@@ -243,8 +267,6 @@ def construct_scene(scene: mn.Scene):
     )
 
     # Power means
-
-    # 4:46,0
 
     eq_PM = mn.MathTex(
         r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=TXTCOL
@@ -314,13 +336,20 @@ def construct_scene(scene: mn.Scene):
 
     # Power mean inequality
 
-    text = mn.MathTex(r"\text{Für alle } p \geq q \text{ gilt:}", color=TXTCOL).shift(
-        mn.UP
-    )
+    text = mn.MathTex(
+        r"\text{Für alle } {{ p }} \geq {{ q }} \text{ gilt:}",
+        color=TXTCOL,
+    ).shift(mn.UP)
+    text[1].set_color(mn.RED)
+    text[3].set_color(mn.DARK_BLUE)
     ineq_PM = mn.MathTex(
-        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } \geq \sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }",
+        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }",
+        r"\geq",
+        r"\sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }",
         color=TXTCOL,
     ).shift(0.5 * mn.DOWN)
+    ineq_PM[0].set_color(mn.RED)
+    ineq_PM[2].set_color(mn.DARK_BLUE)
 
     scene.play(mn.Write(text), eq_PM.animate.shift(0.5 * mn.DOWN), run_time=2)
     scene.play(mn.TransformMatchingShapes(eq_PM, ineq_PM))
