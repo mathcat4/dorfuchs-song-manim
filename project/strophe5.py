@@ -188,10 +188,10 @@ def construct_scene(scene: mn.Scene):
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
     # 36,1
     scene.play(
-        mn.Transform(eq_QM, eq2_QM),
-        mn.Transform(eq_AM, eq2_AM),
-        mn.Transform(eq_GM, eq2_GM),
-        mn.Transform(eq_HM, eq2_HM),
+        mn.ReplacementTransform(eq_QM, eq2_QM),
+        mn.ReplacementTransform(eq_AM, eq2_AM),
+        mn.ReplacementTransform(eq_GM, eq2_GM),
+        mn.ReplacementTransform(eq_HM, eq2_HM),
         rel_QM_AM.animate.move_to((eq2_QM.get_bottom() + eq2_AM.get_top()) / 2),
         rel_AM_GM.animate.move_to((eq2_AM.get_bottom() + eq2_GM.get_top()) / 2),
         rel_GM_HM.animate.move_to((eq2_GM.get_bottom() + eq2_HM.get_top()) / 2),
@@ -283,19 +283,22 @@ def construct_scene(scene: mn.Scene):
     group_implies_HM.move_to(eq_PM.get_corner(mn.DL)).shift(0.5 * mn.DL)
     group_implies_HM.rotate(-3 / 4 * mn.PI)
 
+    scene.wait(1)
+
     scene.play(mn.Write(group_implies_QM))
     scene.play(mn.Write(group_implies_AM))
-    scene.play(mn.Write(group_implies_GM))
     scene.play(mn.Write(group_implies_HM))
+    scene.play(mn.Write(group_implies_GM))
 
     scene.wait(1)
 
-    # scene.play(
-    #     mn.Indicate(group_implies_QM, color="red"),
-    #     mn.Indicate(group_implies_AM, color="red"),
-    #     mn.Indicate(group_implies_GM, color="red"),
-    #     mn.Indicate(group_implies_HM, color="red"),
-    # )
+    scene.play(
+        eq2_QM.animate.scale(1.2),
+        eq2_AM.animate.scale(1.2),
+        eq2_GM.animate.scale(1.2),
+        eq2_HM.animate.scale(1.2),
+        rate_func=mn.rate_functions.there_and_back,
+    )
 
     scene.play(
         mn.FadeOut(
@@ -305,7 +308,8 @@ def construct_scene(scene: mn.Scene):
             group_implies_AM,
             group_implies_GM,
             group_implies_HM,
-        )
+        ),
+        run_time=0.8,
     )
 
     # Power mean inequality
@@ -316,9 +320,9 @@ def construct_scene(scene: mn.Scene):
     ineq_PM = mn.MathTex(
         r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} } \geq \sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }",
         color=TXTCOL,
-    ).shift(mn.DOWN)
+    ).shift(0.5 * mn.DOWN)
 
-    scene.play(mn.Write(text), eq_PM.animate.shift(mn.DOWN))
+    scene.play(mn.Write(text), eq_PM.animate.shift(0.5 * mn.DOWN), run_time=2)
     scene.play(mn.TransformMatchingShapes(eq_PM, ineq_PM))
 
 
