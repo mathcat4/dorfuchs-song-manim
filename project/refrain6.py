@@ -50,9 +50,7 @@ def construct_scene(scene: mn.Scene, reverse=False):
     )
     group_AM = mn.VGroup(eq_AM, text_AM)
 
-    text_GM = mn.MathTex(
-        r"\textbf{GM } (\textstyle p \to 0)", color=GMCOL
-    ).scale(0.75)
+    text_GM = mn.MathTex(r"\textbf{GM } (\textstyle p \to 0)", color=GMCOL).scale(0.75)
     text_GM.move_to(eq_GM).align_to(mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP)
     group_GM = mn.VGroup(eq_GM, text_GM)
 
