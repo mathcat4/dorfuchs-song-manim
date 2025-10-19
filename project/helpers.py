@@ -13,7 +13,8 @@ GMCOL = mn.GREEN_D
 QMCOL = mn.BLUE_D
 HMCOL = mn.PURPLE_D
 RIGHTANGLECOL = mn.GREY
-r = 3
+RADIUS = 3
+A_VAL = 1.3
 right_half_center = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 left_half_center = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
 
@@ -62,11 +63,13 @@ class Geo:
 
         # Punkte
         self.M = mn.Dot((0, -1.5, 0), color=TXTCOL)  # kinda variable
-        self.A = mn.Dot((-r, 0, 0) + self.M.get_center(), color=TXTCOL)
-        self.B = mn.Dot((r, 0, 0) + self.M.get_center(), color=TXTCOL)
-        self.S = mn.Dot((-1.3, 0, 0) + self.M.get_center(), color=TXTCOL)
-        self.N = mn.Dot((0, r, 0) + self.M.get_center(), color=TXTCOL)
-        cord = self.M.get_y() + math.sqrt(r**2 - (self.S.get_x()) ** 2)
+        self.A = mn.Dot((-RADIUS, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.B = mn.Dot((RADIUS, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.S = mn.Dot((-A_VAL, 0, 0) + self.M.get_center(), color=TXTCOL)
+        self.N = mn.Dot((0, RADIUS, 0) + self.M.get_center(), color=TXTCOL)
+        cord = self.M.get_y() + math.sqrt(
+            RADIUS**2 - (self.M.get_x() - self.S.get_x()) ** 2
+        )
         self.X = mn.Dot((self.S.get_x(), cord, 0), color=TXTCOL)
 
         # Linienundso
@@ -77,7 +80,7 @@ class Geo:
             start=self.S.get_center(), end=self.B.get_center(), color=TXTCOL
         )
         self.semikreis = mn.Arc(
-            radius=r,
+            radius=RADIUS,
             start_angle=0,
             angle=mn.PI,
             arc_center=self.M.get_center(),

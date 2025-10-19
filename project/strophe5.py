@@ -11,6 +11,7 @@ def construct_scene(scene: mn.Scene):
         geo.qm,
         geo.gm,
         geo.am1,
+        geo.am2,
         geo.hm,
         geo.dashed1,
         geo.construction,
@@ -22,7 +23,7 @@ def construct_scene(scene: mn.Scene):
         geo.labelG,
     )
 
-    geo.GanzeSkizze.shift(mn.DOWN)
+    geo.GanzeSkizze.shift(mn.DOWN + 2 * mn.LEFT)
 
     # Updaters for animation
 
@@ -32,7 +33,12 @@ def construct_scene(scene: mn.Scene):
 
     geo.X.add_updater(
         lambda dot: dot.move_to(
-            (geo.S.get_x(), geo.M.get_y() + math.sqrt(r**2 - (geo.S.get_x()) ** 2), 0)
+            (
+                geo.S.get_x(),
+                geo.M.get_y()
+                + math.sqrt(RADIUS**2 - (geo.M.get_x() - geo.S.get_x()) ** 2),
+                0,
+            )
         )
     )
     geo.G.add_updater(
@@ -44,6 +50,9 @@ def construct_scene(scene: mn.Scene):
     )
     geo.am1.add_updater(
         lambda line: line.put_start_and_end_on(geo.M.get_center(), geo.X.get_center())
+    )
+    geo.am2.add_updater(
+        lambda line: line.put_start_and_end_on(geo.M.get_center(), geo.N.get_center())
     )
     geo.gm.add_updater(
         lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.X.get_center())
@@ -86,31 +95,62 @@ def construct_scene(scene: mn.Scene):
     # Numberline
 
     number_line = mn.NumberLine(
-        x_range=[0, 10, 1],
+        x_range=[1, 5, 1],
         length=5,
-        # include_numbers=True,
         color=TXTCOL,
         rotation=mn.PI / 2,
         label_direction=mn.LEFT,  # type: ignore
-        # numbers_to_include=(0, 10),
-    ).shift(5 * mn.RIGHT + mn.DOWN)
-    # for num in number_line.numbers:
-    #     num.set_color(TXTCOL)
+    ).shift(4 * mn.RIGHT + 0.5 * mn.DOWN)
 
-    num_a = 2.83  # magic value
-    num_b = 10 - 2.83
-
-    dot_a = mn.Dot(number_line.n2p(num_a), color=TXTCOL)
+    dot_a = mn.Dot(number_line.n2p(A_VAL), color=TXTCOL)
     label_a = mn.MathTex("a", color=TXTCOL).next_to(dot_a, mn.LEFT)
     label_a.add_updater(lambda label: label.next_to(dot_a, mn.LEFT))
 
-    dot_b = mn.Dot(number_line.n2p(num_b), color=TXTCOL)
+    dot_b = mn.Dot(number_line.n2p(2 * RADIUS - A_VAL), color=TXTCOL)
     label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.RIGHT)
     label_b.add_updater(lambda label: label.next_to(dot_b, mn.RIGHT))
 
-    scene.add(number_line, dot_a, label_a, dot_b, label_b)
+    num_a = lambda: number_line.p2n(tuple(dot_a.get_center()))
+    num_b = lambda: number_line.p2n(tuple(dot_b.get_center()))
 
-    scene.wait(1)
+    num_qm = lambda: ((num_a() ** 2 + num_b() ** 2) / 2) ** 0.5
+    num_am = lambda: (num_a() + num_b()) / 2
+    num_gm = lambda: (num_a() * num_b()) ** 0.5
+    num_hm = lambda: 2 / (1 / num_a() + 1 / num_b())
+
+    dot_qm = mn.Dot(number_line.n2p(num_qm()), color=QMCOL)
+    dot_qm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_qm())))
+    label_qm = mn.MathTex("QM", color=QMCOL).scale(0.5).next_to(dot_qm, mn.LEFT)
+
+    dot_am = mn.Dot(number_line.n2p(num_am()), color=AMCOL)
+    dot_am.add_updater(lambda dot: dot.move_to(number_line.n2p(num_am())))
+    label_am = mn.MathTex("AM", color=AMCOL).scale(0.5).next_to(dot_am, mn.RIGHT)
+
+    dot_gm = mn.Dot(number_line.n2p(num_gm()), color=GMCOL)
+    dot_gm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_gm())))
+    label_gm = mn.MathTex("GM", color=GMCOL).scale(0.5).next_to(dot_gm, mn.LEFT)
+
+    dot_hm = mn.Dot(number_line.n2p(num_hm()), color=HMCOL)
+    dot_hm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_hm())))
+    label_hm = mn.MathTex("HM", color=HMCOL).scale(0.5).next_to(dot_hm, mn.RIGHT)
+
+    scene.add(
+        number_line,
+        dot_qm,
+        label_qm,
+        dot_am,
+        label_am,
+        dot_gm,
+        label_gm,
+        dot_hm,
+        label_hm,
+        dot_a,
+        label_a,
+        dot_b,
+        label_b,
+    )
+
+    # Equality animations
 
     eq_mean_equal = mn.MathTex(
         r"QM(a,b) \overset{?}{=} AM(a,b) \overset{?}{=} GM(a,b) \overset{?}{=} HM(a,b)",
@@ -123,14 +163,16 @@ def construct_scene(scene: mn.Scene):
         },
     ).shift(3 * mn.UP)
 
-    scene.play(mn.Write(eq_mean_equal, run_time=3))
     scene.wait(1)
+
+    scene.play(mn.Write(eq_mean_equal, run_time=3))
+    scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
 
     scene.play(
         geo.S.animate.move_to(geo.M.get_center()),
         geo.labelG.animate.next_to(geo.M, mn.UP, buff=0.05),
-        dot_a.animate.move_to(number_line.n2p(5)),
-        dot_b.animate.move_to(number_line.n2p(5)),
+        dot_a.animate.move_to(number_line.n2p(RADIUS)),
+        dot_b.animate.move_to(number_line.n2p(RADIUS)),
         rate_func=lambda t: 1 - (1 - t) ** 2,
         run_time=5,
     )
