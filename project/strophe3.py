@@ -10,10 +10,6 @@ def construct_scene(scene: mn.Scene):
     term4 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
     term5 = mn.MathTex(r"\sqrt{ab}", color=TXTCOL).shift(mn.UP * 3)
     term6 = mn.MathTex(r"GM(a,b) =", r"\sqrt{ab}", color=GMCOL).shift(mn.UP * 3)
-    term5.generate_target()
-    assert term5.target is not None
-    term5.target.move_to(term6[1].get_center())  # move into place
-    term5.target.set_color(GMCOL)
     # ANIMATION START 2:24,97
     scene.wait(1.77)
     # 26:74
@@ -21,19 +17,24 @@ def construct_scene(scene: mn.Scene):
     scene.wait(1.62)
     # 29,86
     scene.play(mn.TransformMatchingShapes(term4, term5), run_time=1)
-    scene.play(mn.FadeIn(term6[0]), mn.MoveToTarget(term5), run_time=1.5)
+    scene.play(
+        mn.FadeIn(term6[0]),
+        term5.animate.move_to(term6[1].get_center()).set_color(GMCOL),
+        run_time=1.5,
+    )
     scene.wait(4.7)
     # 37,06
     scene.play(mn.FadeOut(term6), mn.FadeOut(term5), run_time=1)
     scene.wait(6.14)
     # 44,2
-    scene.bring_to_back(geo.gm, geo.rightS)
+    scene.mobjects.insert(1, geo.rightS)
+    scene.mobjects.insert(1, geo.gm)
     scene.play(mn.Create(geo.gm), mn.Create(geo.rightS), run_time=1)
     scene.wait(2.48)
     # 47,68
     scene.play(mn.Create(geo.X), run_time=1)
     scene.play(mn.Create(geo.labelX), run_time=1)
-    scene.bring_to_back(geo.am1)
+    scene.mobjects.insert(1, geo.am1)
     scene.play(
         mn.Create(geo.lineAX),
         mn.Create(geo.lineBX),
@@ -42,9 +43,7 @@ def construct_scene(scene: mn.Scene):
     )
     scene.wait(1.17)
     # 51,85
-    scene.bring_to_front(geo.construction)
     scene.mobjects.insert(4, geo.rightAXB)  # viel hacky aber klappt lmao
-    print(scene.mobjects)
     scene.play(mn.Create(geo.rightAXB), run_time=1)
     scene.wait(2.72)
     # 55,57
@@ -55,6 +54,7 @@ def construct_scene(scene: mn.Scene):
     # ZEITEN ÄNDERN WENN MICHAEL RAP FIXT
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(mn.ReplacementTransform(geo.gm.copy(), term7[0]), run_time=0.5)
+    scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(
         mn.ReplacementTransform(geo.gm.copy(), term7[1]),
         mn.Write(typ.cast(mn.VMobject, term7[2])),

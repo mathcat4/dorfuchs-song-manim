@@ -51,7 +51,7 @@ def construct_scene(
     scene.add(group_eq, group_text)
 
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
-    final_text.next_to(group_eq, mn.DOWN, buff=1.5)
+    final_text.next_to(group_eq, mn.DOWN, buff=1.2)
 
     if isinstance(ext_objs, mn.VGroup):
         ext_objs.shift(1.2 * mn.DOWN)
@@ -114,7 +114,7 @@ def construct_scene(
                     focus_obj.animate.scale(
                         4 / 5, about_point=focus_obj.get_center_of_mass()
                     ),
-                    rate_func=mn.rate_functions.rush_from,
+                    rate_func=mn.rate_functions.rush_into,
                     run_time=1,
                 )
                 scene.add(ext_objs)

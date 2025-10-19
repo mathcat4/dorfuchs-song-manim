@@ -6,8 +6,9 @@ def construct_scene(scene: mn.Scene):
     geo = Geo()
 
     scene.add(
-        geo.construction,
         geo.qm,
+        geo.am1,
+        geo.construction,
         geo.gm,
         geo.N,
         geo.X,
@@ -15,7 +16,6 @@ def construct_scene(scene: mn.Scene):
         geo.labelN,
         geo.labelX,
         geo.rightS,
-        geo.am1,
     )
 
     tex1 = mn.MathTex(
@@ -47,17 +47,23 @@ def construct_scene(scene: mn.Scene):
     ).move_to(right_half_center)
 
     # 3:24,04
+    scene.wait(1)
     scene.play(mn.Write(tex1), run_time=2)
-    scene.play(mn.ReplacementTransform(geo.am1, geo.dashedam), run_time=1)
-    scene.wait(1.56)
+    # scene.play(mn.ReplacementTransform(geo.am1, geo.dashedam), run_time=1)
+    scene.wait(2.56)
     # 28,6
-    scene.play(mn.Create(geo.dashed1), run_time=1)
-    scene.play(mn.Create(geo.G), mn.Create(geo.labelG), run_time=1)
-    scene.play(mn.Create(geo.hm), mn.Create(geo.rightG), run_time=1)
+    scene.play(
+        mn.Create(geo.dashed1),
+        mn.Create(geo.G),
+        mn.Create(geo.labelG),
+        run_time=1,
+    )
+    scene.mobjects.insert(2, geo.hm)
+    scene.play(mn.Create(geo.rightG), mn.Create(geo.hm), run_time=1)
     scene.play(mn.Create(geo.angleX), mn.Create(geo.angleXlabel), run_time=1)
-    scene.wait(0.32)
+    scene.wait(0.44)
     # 32.92
-    scene.play(mn.Wiggle(geo.angXl, scale_value=1.5), run_time=1.62)
+    scene.play(mn.Wiggle(geo.angXl, scale_value=1.5), run_time=1.5)
     # 34.54
     scene.play(
         mn.Wiggle(geo.rightG, scale_value=1.5),
@@ -67,10 +73,23 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.FadeOut(tex1), run_time=1)
     scene.add(geo.sega, geo.angleX)  # zauberfunktionfix
     zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
-    scene.wait(0.14)
     # 38,68
-    scene.play(mn.Wiggle(geo.AMGMDreieck), run_time=1.83)
-    scene.play(mn.Wiggle(geo.GMHMDreieck), run_time=1.83)
+    scene.wait(0.64)
+    scene.play(
+        mn.Wiggle(
+            geo.AMGMDreieck,
+            scale_about_point=geo.AMGMDreieck.get_center_of_mass(),
+            run_time=1.33,
+        )
+    )
+    scene.wait(0.5)
+    scene.play(
+        mn.Wiggle(
+            geo.GMHMDreieck,
+            scale_about_point=geo.GMHMDreieck.get_center_of_mass(),
+            run_time=1.33,
+        )
+    )
     # 42,34
     scene.play(mn.Write(term20), run_time=1.6)
     scene.wait(0.38)
@@ -80,8 +99,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.TransformMatchingTex(term22, term23))
     scene.play(mn.TransformMatchingTex(term23, term24))
     scene.play(mn.TransformMatchingShapes(term24, term25))
-    scene.wait(1.5)
-    scene.play(mn.Wiggle(geo.hm), scale_valie=1.7)
+    scene.wait(2)
+    scene.play(mn.Wiggle(geo.hm, scale_value=1.2))
+    scene.wait(5)
 
 
 class MainSketch(mn.Scene):
