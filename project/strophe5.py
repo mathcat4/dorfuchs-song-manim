@@ -7,22 +7,6 @@ def construct_scene(scene: mn.Scene):
 
     # Part one
 
-    scene.add(
-        geo.qm,
-        geo.gm,
-        geo.am1,
-        geo.am2,
-        geo.hm,
-        geo.dashed1,
-        geo.construction,
-        geo.N,
-        geo.X,
-        geo.G,
-        geo.labelN,
-        geo.labelX,
-        geo.labelG,
-    )
-
     geo.GanzeSkizze.shift(mn.DOWN + 2 * mn.LEFT)
 
     # Updaters for animation
@@ -92,26 +76,50 @@ def construct_scene(scene: mn.Scene):
         lambda mobj: mobj.become(geo.bbr.get_tex("b").set_color(TXTCOL))
     )
 
-    # Numberline
+    scene.add(
+        geo.qm,
+        geo.gm,
+        geo.am1,
+        geo.am2,
+        geo.hm,
+        geo.dashed1,
+        geo.construction,
+        geo.N,
+        geo.X,
+        geo.G,
+        geo.labelN,
+        geo.labelX,
+        geo.labelG,
+    )
+
+    # Number line
 
     number_line = mn.NumberLine(
         x_range=[1, 5, 1],
         length=5,
         color=TXTCOL,
         rotation=mn.PI / 2,
-        label_direction=mn.LEFT,  # type: ignore
     ).shift(4 * mn.RIGHT + 0.5 * mn.DOWN)
 
     dot_a = mn.Dot(number_line.n2p(A_VAL), color=TXTCOL)
-    label_a = mn.MathTex("a", color=TXTCOL).next_to(dot_a, mn.LEFT)
-    label_a.add_updater(lambda label: label.next_to(dot_a, mn.LEFT))
-
     dot_b = mn.Dot(number_line.n2p(2 * RADIUS - A_VAL), color=TXTCOL)
-    label_b = mn.MathTex("b", color=TXTCOL).next_to(dot_b, mn.RIGHT)
-    label_b.add_updater(lambda label: label.next_to(dot_b, mn.RIGHT))
 
     num_a = lambda: number_line.p2n(tuple(dot_a.get_center()))
     num_b = lambda: number_line.p2n(tuple(dot_b.get_center()))
+
+    label_a = mn.MathTex(f"a = ", color=TXTCOL).scale(0.75)
+    dec_a = CommaDecimalNumber(color=TXTCOL).scale(0.75).next_to(label_a, buff=0.15)
+    dec_a.set_value(num_a())
+    dec_a.add_updater(lambda dec: dec.set_value(num_a()))
+    group_a = mn.VGroup(label_a, dec_a).next_to(dot_a, mn.LEFT)
+    group_a.add_updater(lambda group: group.set_y(dot_a.get_y()))
+
+    label_b = mn.MathTex(f"b = ", color=TXTCOL).scale(0.75)
+    dec_b = CommaDecimalNumber(color=TXTCOL).scale(0.75).next_to(label_b, buff=0.15)
+    dec_b.set_value(num_b())
+    dec_b.add_updater(lambda dec: dec.set_value(num_b()))
+    group_b = mn.VGroup(label_b, dec_b).next_to(dot_b, mn.RIGHT)
+    group_b.add_updater(lambda group: group.set_y(dot_b.get_y()))
 
     num_qm = lambda: ((num_a() ** 2 + num_b() ** 2) / 2) ** 0.5
     num_am = lambda: (num_a() + num_b()) / 2
@@ -145,9 +153,9 @@ def construct_scene(scene: mn.Scene):
         dot_hm,
         label_hm,
         dot_a,
-        label_a,
+        group_a,
         dot_b,
-        label_b,
+        group_b,
     )
 
     # Equality animations
@@ -196,20 +204,6 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    anims = [
-        mn.FadeOut(geo.abr),
-        mn.FadeOut(geo.bbr),
-        mn.FadeOut(geo.abrtxt),
-        mn.FadeOut(geo.bbrtxt),
-    ]
-    for mobj in scene.mobjects:
-        anims.append(mn.FadeOut(mobj))
-
-    if anims:
-        scene.play(*anims)
-
-    scene.clear()
-
     # Part two
 
     # Two variable means
@@ -236,8 +230,18 @@ def construct_scene(scene: mn.Scene):
     )
 
     group_rel = mn.VGroup(rel_QM_AM, rel_AM_GM, rel_GM_HM)
-    scene.add(group_eq, group_rel)
-    scene.wait(1)
+
+    anims = [
+        mn.FadeOut(
+            geo.abr, geo.bbr, geo.abrtxt, geo.bbrtxt, dec_a, dec_b
+        ),  # cuz manim is buggy
+        mn.FadeIn(group_eq, group_rel),
+    ]
+
+    for mobj in scene.mobjects:
+        anims += [mn.FadeOut(submobj) for submobj in mobj.family_members_with_points()]
+
+    scene.play(*anims)
 
     # Multi-variable means
 
@@ -255,6 +259,8 @@ def construct_scene(scene: mn.Scene):
     )
 
     mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
+
+    scene.wait(1)
     scene.play(
         mn.ReplacementTransform(eq_QM, eq2_QM),
         mn.ReplacementTransform(eq_AM, eq2_AM),
@@ -401,5 +407,6 @@ class MainSketch(mn.Scene):
     def construct(self):
         START = int(Audio.strophe5 * 1000)
         STOP = int(Audio.refrain6 * 1000)
-        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
+        if os.path.exists(Audio.path):
+            self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)

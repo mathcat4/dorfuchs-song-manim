@@ -3,6 +3,8 @@ import numpy as np
 import typing as typ
 import math
 import pydub
+import warnings
+import os
 
 # Constants
 
@@ -55,6 +57,14 @@ def TransformMatchingShapesNoReplace(src: mn.Mobject, target: mn.Mobject, **kwar
     """
     src_copy = src.copy()
     return mn.TransformMatchingShapes(src_copy, target, **kwargs)
+
+
+class CommaDecimalNumber(mn.DecimalNumber):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def _get_num_string(self, number):
+        return super()._get_num_string(number).replace(".", ",")
 
 
 class Geo:
@@ -305,7 +315,10 @@ class Geo:
 
 class Audio:
     path = "media/Audio/audio.wav"
-    song = pydub.AudioSegment.from_file(path)
+    if os.path.exists(path):
+        song = pydub.AudioSegment.from_file(path)
+    else:
+        warnings.warn(f"\033[1;33m{path} not found. Rendering without Audio.\033[0m")
 
     refrain1 = 26.9
     strophe1 = 44.69

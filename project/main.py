@@ -9,7 +9,8 @@ class MainSketch(mn.Scene):
         fade_duration = 1
 
         # manim kinda doesn't cook otherwise
-        self.renderer.file_writer.add_audio_segment(Audio.song)
+        if os.path.exists(Audio.path):
+            self.renderer.file_writer.add_audio_segment(Audio.song)
 
         # Einleitung
         einleitung.construct_scene(self)

@@ -177,28 +177,29 @@ class MainSketch(mn.Scene):
     def construct(self):
         START = int(Audio.refrain1 * 1000)
         STOP = int(Audio.strophe1 * 1000)
-        self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
+        if os.path.exists(Audio.path):
+            self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
 
         # construct_scene(self)
 
         geo = Geo()
         construct_scene(
             self,
-            # ext_objs=mn.VGroup(
-            #     geo.construction,
-            #     geo.N,
-            #     geo.labelN,
-            #     geo.X,
-            #     geo.labelX,
-            #     geo.G,
-            #     geo.labelG,
-            #     geo.QMAMDreieck,
-            #     geo.AMGMDreieck,
-            #     geo.GMHMDreieck,
-            # ),
-            # mObjsFocus={
-            #     # 0: geo.QMAMDreieck,
-            #     # 1: geo.AMGMDreieck,
-            #     # 2: geo.GMHMDreieck,
-            # },
+            ext_objs=mn.VGroup(
+                geo.construction,
+                geo.N,
+                geo.labelN,
+                geo.X,
+                geo.labelX,
+                geo.G,
+                geo.labelG,
+                geo.QMAMDreieck,
+                geo.AMGMDreieck,
+                geo.GMHMDreieck,
+            ),
+            mObjsFocus={
+                # 0: geo.QMAMDreieck,
+                # 1: geo.AMGMDreieck,
+                # 2: geo.GMHMDreieck,
+            },
         )
