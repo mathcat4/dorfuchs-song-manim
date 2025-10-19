@@ -135,7 +135,9 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    eq_rel = mn.MathTex(r"\geq", color=TXTCOL).rotate(3*mn.PI / 2).move_to(2.5 * mn.UP)
+    eq_rel = (
+        mn.MathTex(r"\geq", color=TXTCOL).rotate(3 * mn.PI / 2).move_to(2.5 * mn.UP)
+    )
     eq_rel.next_to(chord2_v2.get_center(), mn.DOWN)
 
     scene.play(mn.Write(eq_rel))
