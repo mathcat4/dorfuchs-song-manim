@@ -100,7 +100,7 @@ def construct_scene(
                 focus_obj.animate.scale(
                     5 / 4, about_point=focus_obj.get_center_of_mass()
                 ),
-                rate_func=lambda t: mn.rate_functions.smooth(2 * t),
+                rate_func=mn.rate_functions.rush_from,
                 run_time=1,
             )
 
@@ -114,7 +114,7 @@ def construct_scene(
                     focus_obj.animate.scale(
                         4 / 5, about_point=focus_obj.get_center_of_mass()
                     ),
-                    rate_func=lambda t: mn.rate_functions.smooth(2 * (1 - t)),
+                    rate_func=mn.rate_functions.rush_from,
                     run_time=1,
                 )
                 scene.add(ext_objs)

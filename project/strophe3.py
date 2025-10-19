@@ -5,7 +5,6 @@ def construct_scene(scene: mn.Scene):
     """Konstruktion GM"""
     geo = Geo()
 
-    geo.qm.set_opacity(0.5)
     scene.add(geo.qm, geo.construction, geo.N)
 
     term4 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
@@ -53,36 +52,34 @@ def construct_scene(scene: mn.Scene):
         r"|\overline{SX}|", r"^2", r"=", r"a", r"\cdot", r"b", color=TXTCOL
     ).shift(mn.UP * 3)
 
-    # einfach ignorieren aber sonst errort alles
-    # term70 = typ.cast(mn.VMobject, term7[0])
-    # term71 = typ.cast(mn.VMobject, term7[1])
-    # term72 = typ.cast(mn.VMobject, term7[2])
-    # term73 = typ.cast(mn.VMobject, term7[3])
-    # term74 = typ.cast(mn.VMobject, term7[4])
-    # term75 = typ.cast(mn.VMobject, term7[5])
-
     # ZEITEN ÄNDERN WENN MICHAEL RAP FIXT
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(mn.Transform(geo.gm.copy(), term7[0]), run_time=0.5)
     scene.play(mn.ReplacementTransform(geo.gm.copy(), term7[0]), run_time=0.5)
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
-    scene.play(mn.Transform(geo.gm.copy(), term7[1]), mn.Write(term7[2]), run_time=0.5)
+    scene.play(
+        mn.Transform(geo.gm.copy(), term7[1]),
+        mn.Write(typ.cast(mn.VMobject, term7[2])),
+        run_time=0.5,
+    )
     scene.play(
         mn.ReplacementTransform(geo.gm.copy(), term7[1]),
-        mn.Write(term7[2]),
+        mn.Write(typ.cast(mn.VMobject, term7[2])),
         run_time=0.5,
     )
     scene.play(mn.Wiggle(geo.sega), run_time=0.5)
     scene.play(mn.Transform(geo.sega.copy(), term7[3]), run_time=0.5)
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(
-        mn.Transform(geo.segb.copy(), term7[5]), mn.Write(term7[4]), run_time=0.5
+        mn.Transform(geo.segb.copy(), term7[5]),
+        mn.Write(typ.cast(mn.VMobject, term7[4])),
+        run_time=0.5,
     )
     scene.play(mn.ReplacementTransform(geo.sega.copy(), term7[3]), run_time=0.5)
     scene.play(mn.Wiggle(geo.segb), run_time=0.5)
     scene.play(
         mn.ReplacementTransform(geo.segb.copy(), term7[5]),
-        mn.Write(term7[4]),
+        mn.Write(typ.cast(mn.VMobject, term7[4])),
         run_time=0.5,
     )
 

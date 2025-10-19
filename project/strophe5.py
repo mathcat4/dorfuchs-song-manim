@@ -399,8 +399,12 @@ def construct_scene(scene: mn.Scene):
     ineq_PM[0].set_color(mn.RED)
     ineq_PM[2].set_color(mn.DARK_BLUE)
 
-    scene.play(mn.Write(text), eq_PM.animate.shift(0.5 * mn.DOWN), run_time=2)
-    scene.play(mn.TransformMatchingShapes(eq_PM, ineq_PM))
+    scene.play(
+        mn.Write(text),
+        eq_PM.animate.shift(0.5 * mn.DOWN),
+        mn.TransformMatchingShapes(eq_PM, ineq_PM),
+        run_time=1,
+    )
 
 
 class MainSketch(mn.Scene):

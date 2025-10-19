@@ -5,7 +5,6 @@ def construct_scene(scene: mn.Scene):
     """Konstruktion QM"""
     geo = Geo()
 
-    geo.qm.set_opacity(0.5)
     scene.add(
         geo.construction,
         geo.qm,

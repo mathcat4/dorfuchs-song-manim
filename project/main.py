@@ -17,29 +17,29 @@ class MainSketch(mn.Scene):
 
         # Refrain 1
         self.wait(Audio.refrain1 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         refrain1.construct_scene(self)
 
         # Strophe 1 (AM)
         self.wait(Audio.strophe1 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         strophe1.construct_scene(self)
 
         # Refrain 2
         self.wait(Audio.refrain2 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         refrain1.construct_scene(self)
 
         # return
 
         # Strophe 2 (QM)
         self.wait(Audio.strophe2 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         strophe2.construct_scene(self)
 
         # Refrain 3
         self.wait(Audio.refrain3 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         geo = Geo()
         refrain1.construct_scene(
             self,
@@ -49,12 +49,12 @@ class MainSketch(mn.Scene):
 
         # Strophe 3 (GM)
         self.wait(Audio.strophe3 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         strophe3.construct_scene(self)
 
         # Refrain 4
         self.wait(Audio.refrain4 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         geo = Geo()
         refrain1.construct_scene(
             self,
@@ -72,12 +72,12 @@ class MainSketch(mn.Scene):
 
         # Strophe 4 (HM)
         self.wait(Audio.strophe4 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         strophe4.construct_scene(self)
 
         # Refrain 5
         self.wait(Audio.refrain5 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         geo = Geo()
         refrain1.construct_scene(
             self,
@@ -102,12 +102,12 @@ class MainSketch(mn.Scene):
 
         # Strophe 5 (Ausblick)
         self.wait(Audio.strophe5 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         strophe5.construct_scene(self)
 
         # Refrain 6
         self.wait(Audio.refrain6 - self.time - fade_duration)
-        fade_out(self, run_time=fade_duration)
+        fadeout_all(self, run_time=fade_duration)
         refrain6.construct_scene(self)
 
         # Refrain 7
