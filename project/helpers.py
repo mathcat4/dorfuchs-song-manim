@@ -331,4 +331,4 @@ class Audio:
     refrain5 = 4 * 60 + 33.57
     strophe5 = 4 * 60 + 51.95
     refrain6 = 5 * 60 + 30.07
-    refrain7 = 5 * 60 + 46.11
+    refrain7 = 5 * 60 + 46.11
