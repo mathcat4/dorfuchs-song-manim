@@ -135,10 +135,13 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    eq_rel = mn.MathTex(r"\geq", color=TXTCOL).rotate(mn.PI).move_to(2.5 * mn.UP)
-    eq_rel.next_to(mn.UP, chord3_v2.get_center())
+    eq_rel = mn.MathTex(r"\geq", color=TXTCOL).rotate(3*mn.PI / 2).move_to(2.5 * mn.UP)
+    eq_rel.next_to(chord2_v2.get_center(), mn.DOWN)
 
     scene.play(mn.Write(eq_rel))
+    scene.play(mn.Transform(eq_rel, eq_rel.copy().shift(mn.RIGHT)))
+
+    eq_gm_copy = eq_gm.copy().next_to(chord3_v2)
 
 
 class MainSketch(mn.Scene):
