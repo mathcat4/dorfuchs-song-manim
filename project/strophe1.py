@@ -102,8 +102,8 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(mn.Write(eq_group))
 
-    chord1_copy = chord1.copy().set_color(QMCOL)
-    question_chord1 = mn.Text("?", color=QMCOL).scale(0.5)
+    chord1_copy = chord1.copy().set_color(GMCOL)
+    question_chord1 = mn.Text("?", color=GMCOL).scale(0.5)
     question_chord1.next_to(chord1.get_center(), mn.LEFT, buff=0.2)
 
     chord2_copy = chord2.copy().set_color(AMCOL)
@@ -111,8 +111,8 @@ def construct_scene(scene: mn.Scene):
     question_chord2.next_to(chord2.get_center(), buff=0.2)
     group_chord2 = mn.VGroup(chord2, question_chord2)
 
-    chord3_copy = chord3.copy().set_color(GMCOL)
-    question_chord3 = mn.Text("?", color=GMCOL).scale(0.5)
+    chord3_copy = chord3.copy().set_color(QMCOL)
+    question_chord3 = mn.Text("?", color=QMCOL).scale(0.5)
     question_chord3.next_to(chord3.get_center(), buff=0.2)
     group_chord3 = mn.VGroup(chord3, question_chord3)
 
@@ -121,18 +121,18 @@ def construct_scene(scene: mn.Scene):
     question_chord4.next_to(chord4.get_center(), buff=0.2)
 
     scene.play(
-        mn.ReplacementTransform(eq_qm.copy(), chord1_copy),
+        mn.ReplacementTransform(eq_qm.copy(), chord3_copy),
         mn.ReplacementTransform(eq_am.copy(), chord2_copy),
-        mn.ReplacementTransform(eq_gm.copy(), chord3_copy),
+        mn.ReplacementTransform(eq_gm.copy(), chord1_copy),
         mn.ReplacementTransform(eq_hm.copy(), chord4_copy),
         mn.FadeIn(question_chord1, question_chord2, question_chord3, question_chord4),
         run_time=1,
     )
     scene.remove(chord1_copy, chord2_copy, chord3_copy, chord4_copy)
 
-    chord1.set_color(QMCOL)
+    chord1.set_color(GMCOL)
     chord2.set_color(AMCOL)
-    chord3.set_color(GMCOL)
+    chord3.set_color(QMCOL)
     chord4.set_color(HMCOL)
 
     scene.wait(1)
@@ -165,7 +165,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(mn.Write(eq_rel))
 
-    eq_gm_copy = mn.MathTex("GM(a, b)?", color=GMCOL).next_to(chord3_v2, buff=1)
+    eq_gm_copy = mn.MathTex("QM(a, b)?", color=QMCOL).next_to(chord3_v2, buff=1)
     eq_am_copy = (
         mn.MathTex("AM(a, b)?", color=AMCOL)
         .next_to(chord2_v2)
