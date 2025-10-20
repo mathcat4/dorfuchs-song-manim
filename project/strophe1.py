@@ -7,7 +7,7 @@ def construct_scene(scene: mn.Scene):
 
     # ANIMATIONSSTART 44,69s
 
-    # Part one
+    ## Part one
 
     scene.play(
         mn.FadeIn(geo.firsta),
@@ -67,13 +67,15 @@ def construct_scene(scene: mn.Scene):
         ),
     )
     scene.remove(line)
-    scene.wait(1.5)
+    scene.wait(3)
     scene.play(mn.Create(geo.labelS))
 
-    # Part two
+    ## Part two
 
-    scene.wait(4)
-    scene.play(mn.FadeOut(term2, term3), geo.construction.animate.shift(mn.DL))
+    scene.wait(2.5)
+    scene.play(
+        mn.FadeOut(term2, term3), geo.construction.animate.shift(mn.DOWN + 2 * mn.LEFT)
+    )
 
     base_point = lambda val: geo.M.get_center() + [RADIUS * (2 * val - 1), 0, 0]
     arc_point = lambda val: geo.M.get_center() + [
@@ -82,15 +84,15 @@ def construct_scene(scene: mn.Scene):
         0,
     ]
 
-    chord1 = mn.Line(base_point(0.5), arc_point(0.5), color=TXTCOL)
-    chord2 = mn.Line(base_point(0.9), arc_point(0.7), color=TXTCOL)
-    chord3 = mn.Line(base_point(0.4), arc_point(0.65), color=TXTCOL)
-    chord4 = mn.Line(base_point(0.1), arc_point(0.4), color=TXTCOL)
-    scene.play(mn.FadeIn(chord1))
-    scene.play(mn.ReplacementTransform(chord1.copy(), chord2))
-    scene.play(mn.ReplacementTransform(chord2.copy(), chord3))
-    scene.play(mn.ReplacementTransform(chord3.copy(), chord4))
-    scene.bring_to_front(geo.construction)
+    chord_qm = mn.Line(base_point(0.35), arc_point(0.75), color=TXTCOL)
+    chord_am = mn.Line(base_point(0.1), arc_point(0.4), color=TXTCOL)
+    chord_gm = mn.Line(base_point(0.4), arc_point(0.45), color=TXTCOL)
+    chord_hm = mn.Line(base_point(0.9), arc_point(0.7), color=TXTCOL)
+
+    scene.play(mn.FadeIn(chord_gm))
+    scene.play(mn.ReplacementTransform(chord_gm.copy(), chord_hm))
+    scene.play(mn.ReplacementTransform(chord_hm.copy(), chord_qm))
+    scene.play(mn.ReplacementTransform(chord_qm.copy(), chord_am))
 
     eq_qm = mn.MathTex("QM(a, b)", color=QMCOL)
     eq_am = mn.MathTex("AM(a, b)", color=AMCOL)
@@ -102,85 +104,88 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(mn.Write(eq_group))
 
-    chord1_copy = chord1.copy().set_color(GMCOL)
-    question_chord1 = mn.Text("?", color=GMCOL).scale(0.5)
-    question_chord1.next_to(chord1.get_center(), mn.LEFT, buff=0.2)
+    chord_qm_copy = chord_qm.copy().set_color(QMCOL)
+    question_chord_qm = mn.Text("?", color=QMCOL).scale(0.5)
+    question_chord_qm.next_to(chord_qm.get_center(), mn.DR, buff=0.15)
+    group_chord_qm = mn.VGroup(chord_qm, question_chord_qm)
 
-    chord2_copy = chord2.copy().set_color(AMCOL)
-    question_chord2 = mn.Text("?", color=AMCOL).scale(0.5)
-    question_chord2.next_to(chord2.get_center(), buff=0.2)
-    group_chord2 = mn.VGroup(chord2, question_chord2)
+    chord_am_copy = chord_am.copy().set_color(AMCOL)
+    question_chord_am = mn.Text("?", color=AMCOL).scale(0.5)
+    question_chord_am.next_to(chord_am.get_center(), buff=0.15)
+    group_chord_am = mn.VGroup(chord_am, question_chord_am)
 
-    chord3_copy = chord3.copy().set_color(QMCOL)
-    question_chord3 = mn.Text("?", color=QMCOL).scale(0.5)
-    question_chord3.next_to(chord3.get_center(), buff=0.2)
-    group_chord3 = mn.VGroup(chord3, question_chord3)
+    chord_gm_copy = chord_gm.copy().set_color(GMCOL)
+    question_chord_gm = mn.Text("?", color=GMCOL).scale(0.5)
+    question_chord_gm.next_to(chord_gm.get_center(), mn.LEFT, buff=0.15)
 
-    chord4_copy = chord4.copy().set_color(HMCOL)
-    question_chord4 = mn.Text("?", color=HMCOL).scale(0.5)
-    question_chord4.next_to(chord4.get_center(), buff=0.2)
+    chord_hm_copy = chord_hm.copy().set_color(HMCOL)
+    question_chord_hm = mn.Text("?", color=HMCOL).scale(0.5)
+    question_chord_hm.next_to(chord_hm.get_center(), buff=0.15)
 
     scene.play(
-        mn.ReplacementTransform(eq_qm.copy(), chord3_copy),
-        mn.ReplacementTransform(eq_am.copy(), chord2_copy),
-        mn.ReplacementTransform(eq_gm.copy(), chord1_copy),
-        mn.ReplacementTransform(eq_hm.copy(), chord4_copy),
-        mn.FadeIn(question_chord1, question_chord2, question_chord3, question_chord4),
+        mn.ReplacementTransform(eq_qm.copy(), chord_qm_copy),
+        mn.ReplacementTransform(eq_am.copy(), chord_am_copy),
+        mn.ReplacementTransform(eq_gm.copy(), chord_gm_copy),
+        mn.ReplacementTransform(eq_hm.copy(), chord_hm_copy),
+        mn.FadeIn(
+            question_chord_qm, question_chord_am, question_chord_gm, question_chord_hm
+        ),
         run_time=1,
     )
-    scene.remove(chord1_copy, chord2_copy, chord3_copy, chord4_copy)
+    scene.bring_to_front(geo.construction)
+    scene.remove(chord_qm_copy, chord_am_copy, chord_gm_copy, chord_hm_copy)
 
-    chord1.set_color(GMCOL)
-    chord2.set_color(AMCOL)
-    chord3.set_color(QMCOL)
-    chord4.set_color(HMCOL)
-
-    scene.wait(1)
-
-    chord2_v2 = chord2.copy().rotate(-chord2.get_angle())
-    question_chord2_v2 = question_chord2.copy().next_to(
-        chord2_v2.get_center(), mn.UP, buff=0.2
-    )
-    group_chord2_v2 = mn.VGroup(chord2_v2, question_chord2_v2).move_to(
-        3 * mn.UP + 2 * mn.LEFT
-    )
-
-    chord3_v2 = chord3.copy().rotate(-chord3.get_angle())
-    question_chord3_v2 = question_chord3.copy().next_to(
-        chord3_v2.get_center(), mn.DOWN, buff=0.2
-    )
-    group_chord3_v2 = (
-        mn.VGroup(chord3_v2, question_chord3_v2)
-        .move_to(1 * mn.UP)
-        .align_to(group_chord2_v2, mn.LEFT)
-    )
-
-    scene.play(mn.ReplacementTransform(group_chord2.copy(), group_chord2_v2))
-    scene.play(mn.ReplacementTransform(group_chord3.copy(), group_chord3_v2))
+    chord_qm.set_color(QMCOL)
+    chord_am.set_color(AMCOL)
+    chord_gm.set_color(GMCOL)
+    chord_hm.set_color(HMCOL)
 
     scene.wait(1)
 
-    eq_rel = mn.MathTex(r"\geq", color=TXTCOL).rotate(mn.PI / 2)
-    eq_rel.move_to((chord2_v2.get_center() + chord3_v2.get_center()) / 2)
+    chord_am2 = chord_am.copy().rotate(-chord_am.get_angle())
+    question_chord_am2 = question_chord_am.copy().next_to(
+        chord_am2.get_center(), mn.UP, buff=0.15
+    )
+    group_chord_am2 = mn.VGroup(chord_am2, question_chord_am2).move_to(
+        3.5 * mn.UP + 2 * mn.LEFT
+    )
+
+    chord_qm2 = chord_qm.copy().rotate(-chord_qm.get_angle())
+    question_chord_qm2 = question_chord_qm.copy().next_to(
+        chord_qm2.get_center(), mn.DOWN, buff=0.15
+    )
+    group_chord_qm2 = (
+        mn.VGroup(chord_qm2, question_chord_qm2)
+        .next_to(group_chord_am2, mn.DOWN, buff=1.5)
+        .align_to(group_chord_am2, mn.LEFT)
+    )
+
+    scene.play(mn.ReplacementTransform(group_chord_am.copy(), group_chord_am2))
+    scene.play(mn.ReplacementTransform(group_chord_qm.copy(), group_chord_qm2))
+
+    scene.wait(1)
+
+    eq_rel = mn.MathTex(r"\leq", color=TXTCOL).rotate(-mn.PI / 2)
+    eq_rel.move_to((chord_am2.get_center() + chord_qm2.get_center()) / 2)
 
     scene.play(mn.Write(eq_rel))
 
-    eq_gm_copy = mn.MathTex("QM(a, b)?", color=QMCOL).next_to(chord3_v2, buff=1)
+    eq_qm_copy = mn.MathTex("QM(a, b)?", color=QMCOL).next_to(chord_qm2, buff=1)
     eq_am_copy = (
         mn.MathTex("AM(a, b)?", color=AMCOL)
-        .next_to(chord2_v2)
-        .set_x(eq_gm_copy.get_x())
+        .next_to(chord_am2)
+        .set_x(eq_qm_copy.get_x())
     )
 
     eq_rel_copy = eq_rel.copy()
-    eq_rel_copy.move_to((eq_am_copy.get_center() + eq_gm_copy.get_center()) / 2)
+    eq_rel_copy.move_to((eq_am_copy.get_center() + eq_qm_copy.get_center()) / 2)
 
     scene.wait(2)
 
     scene.play(
-        mn.ReplacementTransform(chord2_v2.copy(), eq_am_copy),
+        mn.ReplacementTransform(chord_am2.copy(), eq_am_copy),
         mn.ReplacementTransform(eq_rel.copy(), eq_rel_copy),
-        mn.ReplacementTransform(chord3_v2.copy(), eq_gm_copy),
+        mn.ReplacementTransform(chord_qm2.copy(), eq_qm_copy),
     )
 
     scene.wait(3)
@@ -209,9 +214,9 @@ def construct_scene(scene: mn.Scene):
         color=RIGHTANGLECOL,
     )
 
-    label_a = mn.MathTex("a", color=TXTCOL).next_to(side_BC, mn.LEFT)
-    label_b = mn.MathTex("b", color=TXTCOL).next_to(side_CA, mn.DOWN)
-    label_c = mn.MathTex("c", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
+    label_a = mn.MathTex("k_1", color=TXTCOL).next_to(side_BC, mn.LEFT)
+    label_b = mn.MathTex("k_2", color=TXTCOL).next_to(side_CA, mn.DOWN)
+    label_c = mn.MathTex("h", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
 
     scene.wait(0.5)
     scene.bring_to_back(rightangle)
@@ -219,35 +224,43 @@ def construct_scene(scene: mn.Scene):
         mn.Create(rightangle), mn.Write(label_a), mn.Write(label_b), mn.Write(label_c)
     )
 
-    term1 = mn.MathTex("c^2 = a^2 + b^2", color=TXTCOL).next_to(triangle).shift(mn.UP)
-    term2 = mn.MathTex(r"c^2 \geq a^2", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
-    term3 = mn.MathTex(r"c^2 \geq b^2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
+    term1 = (
+        mn.MathTex(r"h^2 = {k_1}^2 + {k_2}^2", color=TXTCOL)
+        .next_to(triangle)
+        .shift(mn.UP)
+    )
+    term2 = mn.MathTex(r"h^2 \geq {k_1}^2", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
+    term3 = mn.MathTex(r"h^2 \geq {k_2}^2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
 
-    term2_v2 = mn.MathTex(r"c \geq a", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
-    term3_v2 = mn.MathTex(r"c \geq b", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
-    group_v2 = mn.VGroup(term2_v2, term3_v2)
+    term2_2 = mn.MathTex(r"h \geq k_1", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
+    term3_2 = mn.MathTex(r"h \geq k_2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
+    group_2 = mn.VGroup(term2_2, term3_2)
 
-    eq_thm = mn.Text("Satz im rechtwinkligen Dreieck:", font_size=28, color=TXTCOL)
-
-    eq_thm2 = mn.Text(
-        "Die Hypotenuse ist stets länger als eine Kathete.", font_size=28, color=TXTCOL
+    eq_thm = (
+        mn.Paragraph(
+            "Satz im rechtwinkligen Dreieck:",
+            "Die Hypotenuse ist stets länger als eine Kathete.",
+            alignment="center",
+            line_spacing=1,
+            color=mn.RED,
+        )
+        .scale(0.6)
+        .shift(3 * mn.UP)
     )
 
-    group_thm = mn.VGroup(eq_thm, eq_thm2).arrange(mn.DOWN).shift(3 * mn.UP)
-
+    scene.play(mn.Write(term1))
     scene.play(
         mn.Succession(
-            mn.Write(term1),
             mn.TransformMatchingShapes(term1.copy(), term2),
             mn.TransformMatchingShapes(term1.copy(), term3),
         ),
-        mn.Write(group_thm),
+        mn.Write(eq_thm),
     )
 
     scene.play(
-        mn.Transform(term2, term2_v2),
-        mn.Transform(term3, term3_v2),
-        mn.Create(mn.SurroundingRectangle(group_v2, color=TXTCOL)),
+        mn.Transform(term2, term2_2),
+        mn.Transform(term3, term3_2),
+        mn.Create(mn.SurroundingRectangle(group_2, color=mn.RED)),
     )
 
 
