@@ -69,12 +69,11 @@ def construct_scene(scene: mn.Scene):
     scene.remove(line)
     scene.wait(1.5)
     scene.play(mn.Create(geo.labelS))
-    # scene.remove(geo.sega, geo.segb)
 
     # Part two
 
-    scene.wait(1)
-    scene.play(mn.FadeOut(term2, term3), geo.construction.animate.shift(mn.LEFT))
+    scene.wait(4)
+    scene.play(mn.FadeOut(term2, term3), geo.construction.animate.shift(mn.DL))
 
     base_point = lambda val: geo.M.get_center() + [RADIUS * (2 * val - 1), 0, 0]
     arc_point = lambda val: geo.M.get_center() + [
@@ -99,57 +98,163 @@ def construct_scene(scene: mn.Scene):
     eq_hm = mn.MathTex("HM(a, b)", color=HMCOL)
 
     eq_group = mn.VGroup(eq_qm, eq_am, eq_gm, eq_hm).arrange(mn.DOWN)
-    eq_group.shift(4 * mn.RIGHT)
+    eq_group.shift(4 * mn.RIGHT + mn.DOWN)
 
     scene.play(mn.Write(eq_group))
 
     chord1_copy = chord1.copy().set_color(QMCOL)
+    question_chord1 = mn.Text("?", color=QMCOL).scale(0.5)
+    question_chord1.next_to(chord1.get_center(), mn.LEFT, buff=0.2)
+
     chord2_copy = chord2.copy().set_color(AMCOL)
+    question_chord2 = mn.Text("?", color=AMCOL).scale(0.5)
+    question_chord2.next_to(chord2.get_center(), buff=0.2)
+    group_chord2 = mn.VGroup(chord2, question_chord2)
+
     chord3_copy = chord3.copy().set_color(GMCOL)
+    question_chord3 = mn.Text("?", color=GMCOL).scale(0.5)
+    question_chord3.next_to(chord3.get_center(), buff=0.2)
+    group_chord3 = mn.VGroup(chord3, question_chord3)
+
     chord4_copy = chord4.copy().set_color(HMCOL)
+    question_chord4 = mn.Text("?", color=HMCOL).scale(0.5)
+    question_chord4.next_to(chord4.get_center(), buff=0.2)
 
-    scene.play(mn.ReplacementTransform(eq_qm.copy(), chord1_copy))
-    scene.remove(chord1_copy)
+    scene.play(
+        mn.ReplacementTransform(eq_qm.copy(), chord1_copy),
+        mn.ReplacementTransform(eq_am.copy(), chord2_copy),
+        mn.ReplacementTransform(eq_gm.copy(), chord3_copy),
+        mn.ReplacementTransform(eq_hm.copy(), chord4_copy),
+        mn.FadeIn(question_chord1, question_chord2, question_chord3, question_chord4),
+        run_time=1,
+    )
+    scene.remove(chord1_copy, chord2_copy, chord3_copy, chord4_copy)
+
     chord1.set_color(QMCOL)
-
-    scene.play(mn.ReplacementTransform(eq_am.copy(), chord2_copy))
-    scene.remove(chord2_copy)
     chord2.set_color(AMCOL)
-
-    scene.play(mn.ReplacementTransform(eq_gm.copy(), chord3_copy))
-    scene.remove(chord3_copy)
     chord3.set_color(GMCOL)
-
-    scene.play(mn.ReplacementTransform(eq_hm.copy(), chord4_copy))
-    scene.remove(chord4_copy)
     chord4.set_color(HMCOL)
 
     scene.wait(1)
 
-    chord2_v2 = chord2.copy().rotate(-chord2.get_angle()).move_to(3 * mn.UP + mn.LEFT)
-    chord3_v2 = chord3.copy().rotate(-chord3.get_angle())
-    chord3_v2.move_to(2 * mn.UP).align_to(chord2_v2, mn.LEFT)
+    chord2_v2 = chord2.copy().rotate(-chord2.get_angle())
+    question_chord2_v2 = question_chord2.copy().next_to(
+        chord2_v2.get_center(), mn.UP, buff=0.2
+    )
+    group_chord2_v2 = mn.VGroup(chord2_v2, question_chord2_v2).move_to(
+        3 * mn.UP + 2 * mn.LEFT
+    )
 
-    scene.play(mn.ReplacementTransform(chord2.copy(), chord2_v2))
-    scene.play(mn.ReplacementTransform(chord3.copy(), chord3_v2))
+    chord3_v2 = chord3.copy().rotate(-chord3.get_angle())
+    question_chord3_v2 = question_chord3.copy().next_to(
+        chord3_v2.get_center(), mn.DOWN, buff=0.2
+    )
+    group_chord3_v2 = (
+        mn.VGroup(chord3_v2, question_chord3_v2)
+        .move_to(1 * mn.UP)
+        .align_to(group_chord2_v2, mn.LEFT)
+    )
+
+    scene.play(mn.ReplacementTransform(group_chord2.copy(), group_chord2_v2))
+    scene.play(mn.ReplacementTransform(group_chord3.copy(), group_chord3_v2))
 
     scene.wait(1)
 
-    eq_rel = (
-        mn.MathTex(r"\geq", color=TXTCOL).rotate(3 * mn.PI / 2).move_to(2.5 * mn.UP)
-    )
-    eq_rel.next_to(chord2_v2.get_center(), mn.DOWN)
+    eq_rel = mn.MathTex(r"\geq", color=TXTCOL).rotate(mn.PI / 2)
+    eq_rel.move_to((chord2_v2.get_center() + chord3_v2.get_center()) / 2)
 
     scene.play(mn.Write(eq_rel))
-    scene.play(mn.Transform(eq_rel, eq_rel.copy().shift(mn.RIGHT)))
 
-    eq_gm_copy = eq_gm.copy().next_to(chord3_v2)
+    eq_gm_copy = mn.MathTex("GM(a, b)?", color=GMCOL).next_to(chord3_v2, buff=1)
+    eq_am_copy = (
+        mn.MathTex("AM(a, b)?", color=AMCOL)
+        .next_to(chord2_v2)
+        .set_x(eq_gm_copy.get_x())
+    )
+
+    eq_rel_copy = eq_rel.copy()
+    eq_rel_copy.move_to((eq_am_copy.get_center() + eq_gm_copy.get_center()) / 2)
+
+    scene.wait(2)
+
+    scene.play(
+        mn.ReplacementTransform(chord2_v2.copy(), eq_am_copy),
+        mn.ReplacementTransform(eq_rel.copy(), eq_rel_copy),
+        mn.ReplacementTransform(chord3_v2.copy(), eq_gm_copy),
+    )
+
+    scene.wait(3)
+
+    fadeout_all(scene)
+
+    point_C = mn.Dot(mn.ORIGIN, color=TXTCOL)
+    point_A = mn.Dot(3 * mn.RIGHT, color=TXTCOL)
+    point_B = mn.Dot(4 * mn.UP, color=TXTCOL)
+
+    side_AB = mn.Line(point_A.get_center(), point_B.get_center(), color=TXTCOL)
+    side_BC = mn.Line(point_B.get_center(), point_C.get_center(), color=TXTCOL)
+    side_CA = mn.Line(point_C.get_center(), point_A.get_center(), color=TXTCOL)
+
+    triangle = mn.VGroup(point_A, point_B, point_C, side_AB, side_BC, side_CA)
+    triangle.center().shift(mn.DOWN)
+    scene.play(mn.FadeIn(triangle))
+
+    rightangle = mn.Angle(
+        mn.Line(point_C, point_A),
+        mn.Line(point_C, point_B),
+        radius=0.5,
+        other_angle=False,
+        dot=True,
+        dot_color=RIGHTANGLECOL,
+        color=RIGHTANGLECOL,
+    )
+
+    label_a = mn.MathTex("a", color=TXTCOL).next_to(side_BC, mn.LEFT)
+    label_b = mn.MathTex("b", color=TXTCOL).next_to(side_CA, mn.DOWN)
+    label_c = mn.MathTex("c", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
+
+    scene.wait(0.5)
+    scene.bring_to_back(rightangle)
+    scene.play(
+        mn.Create(rightangle), mn.Write(label_a), mn.Write(label_b), mn.Write(label_c)
+    )
+
+    term1 = mn.MathTex("c^2 = a^2 + b^2", color=TXTCOL).next_to(triangle).shift(mn.UP)
+    term2 = mn.MathTex(r"c^2 \geq a^2", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
+    term3 = mn.MathTex(r"c^2 \geq b^2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
+
+    term2_v2 = mn.MathTex(r"c \geq a", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
+    term3_v2 = mn.MathTex(r"c \geq b", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
+    group_v2 = mn.VGroup(term2_v2, term3_v2)
+
+    eq_thm = mn.Text("Satz im rechtwinkligen Dreieck:", font_size=28, color=TXTCOL)
+
+    eq_thm2 = mn.Text(
+        "Die Hypotenuse ist stets länger als eine Kathete.", font_size=28, color=TXTCOL
+    )
+
+    group_thm = mn.VGroup(eq_thm, eq_thm2).arrange(mn.DOWN).shift(3 * mn.UP)
+
+    scene.play(
+        mn.Succession(
+            mn.Write(term1),
+            mn.TransformMatchingShapes(term1.copy(), term2),
+            mn.TransformMatchingShapes(term1.copy(), term3),
+        ),
+        mn.Write(group_thm),
+    )
+
+    scene.play(
+        mn.Transform(term2, term2_v2),
+        mn.Transform(term3, term3_v2),
+        mn.Create(mn.SurroundingRectangle(group_v2, color=TXTCOL)),
+    )
 
 
 class MainSketch(mn.Scene):
     def construct(self):
         START = int(Audio.strophe1 * 1000)
         STOP = int(Audio.refrain2 * 1000)
-        # if os.path.exists(Audio.path):
-        # self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
+        if os.path.exists(Audio.path):
+            self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)
