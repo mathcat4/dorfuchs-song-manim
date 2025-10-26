@@ -152,7 +152,7 @@ def construct_scene(scene: mn.Scene):
 
     chord_qm2 = chord_qm.copy().rotate(-chord_qm.get_angle())
     question_chord_qm2 = question_chord_qm.copy().next_to(
-        chord_qm2.get_center(), mn.DOWN, buff=0.15
+        chord_qm2.get_center(), mn.DOWN, buff=0.2
     )
     group_chord_qm2 = (
         mn.VGroup(chord_qm2, question_chord_qm2)
@@ -202,7 +202,6 @@ def construct_scene(scene: mn.Scene):
 
     triangle = mn.VGroup(point_A, point_B, point_C, side_AB, side_BC, side_CA)
     triangle.center().shift(mn.DOWN)
-    scene.play(mn.FadeIn(triangle))
 
     rightangle = mn.Angle(
         mn.Line(point_C, point_A),
@@ -218,24 +217,6 @@ def construct_scene(scene: mn.Scene):
     label_b = mn.MathTex("k_2", color=TXTCOL).next_to(side_CA, mn.DOWN)
     label_c = mn.MathTex("h", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
 
-    scene.wait(0.5)
-    scene.bring_to_back(rightangle)
-    scene.play(
-        mn.Create(rightangle), mn.Write(label_a), mn.Write(label_b), mn.Write(label_c)
-    )
-
-    term1 = (
-        mn.MathTex(r"h^2 = {k_1}^2 + {k_2}^2", color=TXTCOL)
-        .next_to(triangle)
-        .shift(mn.UP)
-    )
-    term2 = mn.MathTex(r"h^2 \geq {k_1}^2", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
-    term3 = mn.MathTex(r"h^2 \geq {k_2}^2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
-
-    term2_2 = mn.MathTex(r"h \geq k_1", color=TXTCOL).next_to(term1, 2 * mn.DOWN)
-    term3_2 = mn.MathTex(r"h \geq k_2", color=TXTCOL).next_to(term2, 2 * mn.DOWN)
-    group_2 = mn.VGroup(term2_2, term3_2)
-
     eq_thm = (
         mn.Paragraph(
             "Satz im rechtwinkligen Dreieck:",
@@ -248,20 +229,21 @@ def construct_scene(scene: mn.Scene):
         .shift(3 * mn.UP)
     )
 
-    scene.play(mn.Write(term1))
+    scene.bring_to_back(rightangle)
     scene.play(
-        mn.Succession(
-            mn.TransformMatchingShapes(term1.copy(), term2),
-            mn.TransformMatchingShapes(term1.copy(), term3),
-        ),
-        mn.Write(eq_thm),
+        mn.FadeIn(triangle),
+        mn.FadeIn(rightangle),
+        mn.FadeIn(label_a),
+        mn.FadeIn(label_b),
+        mn.FadeIn(label_c),
     )
 
+    scene.wait(0.5)
     scene.play(
-        mn.Transform(term2, term2_2),
-        mn.Transform(term3, term3_2),
-        mn.Create(mn.SurroundingRectangle(group_2, color=mn.RED)),
+        mn.Write(typ.cast(mn.VMobject, eq_thm.chars[0])),
     )
+
+    scene.play(mn.Write(typ.cast(mn.VMobject, eq_thm.chars[1])))
 
 
 class MainSketch(mn.Scene):
