@@ -5,25 +5,43 @@ def construct_scene(scene: mn.Scene):
     """Konstruktion Kreis + AM"""
     geo = Geo()
 
-    # ANIMATIONSSTART 44,69s
+    firsta = mn.Line(
+        geo.A.get_center() + (-0.25, 0.5, 0),
+        geo.S.get_center() + (-0.25, 0.5, 0),
+        color=TXTCOL,
+    )
+    firstb = mn.Line(
+        geo.S.get_center() + (0.25, 0.5, 0),
+        geo.B.get_center() + (0.25, 0.5, 0),
+        color=TXTCOL,
+    )
+
+    b1 = mn.Brace(firsta, direction=mn.UP, color=TXTCOL)
+    b1text = b1.get_tex("a")
+    b1text.set_color(TXTCOL)
+
+    b2 = mn.Brace(firstb, direction=mn.UP, color=TXTCOL)
+    b2text = b2.get_tex("b")
+    b2text.set_color(TXTCOL)
+    labelAB = mn.VGroup(b1text, b2text)
 
     ## Part one
 
     scene.play(
-        mn.FadeIn(geo.firsta),
-        mn.FadeIn(geo.firstb),
-        mn.FadeIn(geo.b1),
-        mn.FadeIn(geo.labelAB),
-        mn.FadeIn(geo.b2),
+        mn.FadeIn(firsta),
+        mn.FadeIn(firstb),
+        mn.FadeIn(b1),
+        mn.FadeIn(labelAB),
+        mn.FadeIn(b2),
     )
     scene.wait(4.13)
     term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
-        mn.ReplacementTransform(geo.firsta, geo.sega),
-        mn.FadeOut(geo.b1),
-        mn.FadeOut(geo.b2),
-        mn.TransformMatchingShapes(geo.labelAB, term1),
-        mn.ReplacementTransform(geo.firstb, geo.segb),
+        mn.ReplacementTransform(firsta, geo.sega),
+        mn.ReplacementTransform(firstb, geo.segb),
+        mn.FadeOut(b1),
+        mn.FadeOut(b2),
+        mn.TransformMatchingShapes(labelAB, term1),
     )
     term2 = mn.MathTex(r"\frac{a + b}{2}", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
@@ -77,10 +95,10 @@ def construct_scene(scene: mn.Scene):
         mn.FadeOut(term2, term3), geo.construction.animate.shift(mn.DOWN + 2 * mn.LEFT)
     )
 
-    base_point = lambda val: geo.M.get_center() + [RADIUS * (2 * val - 1), 0, 0]
+    base_point = lambda val: geo.M.get_center() + [geo.RADIUS * (2 * val - 1), 0, 0]
     arc_point = lambda val: geo.M.get_center() + [
-        -RADIUS * math.cos(val * mn.PI),
-        RADIUS * math.sin(val * mn.PI),
+        -geo.RADIUS * math.cos(val * mn.PI),
+        geo.RADIUS * math.sin(val * mn.PI),
         0,
     ]
 

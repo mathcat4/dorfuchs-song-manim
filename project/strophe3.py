@@ -35,16 +35,18 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(geo.X), run_time=1)
     scene.play(mn.Create(geo.labelX), run_time=1)
     scene.mobjects.insert(1, geo.am1)
+    lineAX = mn.Line(geo.A.get_center(), geo.X.get_center(), color=TXTCOL)
+    lineBX = mn.Line(geo.B.get_center(), geo.X.get_center(), color=TXTCOL)
     scene.play(
-        mn.Create(geo.lineAX),
-        mn.Create(geo.lineBX),
+        mn.Create(lineAX),
+        mn.Create(lineBX),
         mn.Create(geo.am1),
         run_time=1,
     )
     scene.wait(1.17)
     # 51,85
-    scene.mobjects.insert(4, geo.rightAXB)  # viel hacky aber klappt lmao
-    scene.play(mn.Create(geo.rightAXB), run_time=1)
+    scene.mobjects.insert(4, geo.rightX)  # viel hacky aber klappt lmao
+    scene.play(mn.Create(geo.rightX), run_time=1)
     scene.wait(2.72)
     # 55,57
     term7 = mn.MathTex(

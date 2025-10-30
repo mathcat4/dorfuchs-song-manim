@@ -20,7 +20,7 @@ def construct_scene(scene: mn.Scene):
             (
                 geo.S.get_x(),
                 geo.M.get_y()
-                + math.sqrt(RADIUS**2 - (geo.M.get_x() - geo.S.get_x()) ** 2),
+                + math.sqrt(geo.RADIUS**2 - (geo.M.get_x() - geo.S.get_x()) ** 2),
                 0,
             )
         )
@@ -44,7 +44,7 @@ def construct_scene(scene: mn.Scene):
     geo.hm.add_updater(
         lambda line: line.put_start_and_end_on(geo.X.get_center(), geo.G.get_center())
     )
-    geo.dashed1.add_updater(
+    geo.lineSG.add_updater(
         lambda line: line.put_start_and_end_on(geo.S.get_center(), geo.G.get_center())
     )
 
@@ -82,7 +82,7 @@ def construct_scene(scene: mn.Scene):
         geo.am1,
         geo.am2,
         geo.hm,
-        geo.dashed1,
+        geo.lineSG,
         geo.construction,
         geo.N,
         geo.X,
@@ -101,8 +101,8 @@ def construct_scene(scene: mn.Scene):
         rotation=mn.PI / 2,
     ).shift(4 * mn.RIGHT + 0.5 * mn.DOWN)
 
-    dot_a = mn.Dot(number_line.n2p(A_VAL), color=TXTCOL)
-    dot_b = mn.Dot(number_line.n2p(2 * RADIUS - A_VAL), color=TXTCOL)
+    dot_a = mn.Dot(number_line.n2p(geo.A_VAL), color=TXTCOL)
+    dot_b = mn.Dot(number_line.n2p(2 * geo.RADIUS - geo.A_VAL), color=TXTCOL)
 
     num_a = lambda: number_line.p2n(tuple(dot_a.get_center()))
     num_b = lambda: number_line.p2n(tuple(dot_b.get_center()))
@@ -179,8 +179,8 @@ def construct_scene(scene: mn.Scene):
     scene.play(
         geo.S.animate.move_to(geo.M.get_center()),
         geo.labelG.animate.next_to(geo.M, mn.UP, buff=0.05),
-        dot_a.animate.move_to(number_line.n2p(RADIUS)),
-        dot_b.animate.move_to(number_line.n2p(RADIUS)),
+        dot_a.animate.move_to(number_line.n2p(geo.RADIUS)),
+        dot_b.animate.move_to(number_line.n2p(geo.RADIUS)),
         rate_func=lambda t: 1 - (1 - t) ** 2,
         run_time=5,
     )

@@ -7,17 +7,17 @@ def construct_scene(scene: mn.Scene):
 
     term10 = (
         mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL)
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.LEFT * 1.5)
     )
     term11 = (
         mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL)
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.RIGHT * 1.5)
     )
     term12 = (
         mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL)
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.RIGHT * 1.5)
     )
     term13 = (
@@ -25,7 +25,7 @@ def construct_scene(scene: mn.Scene):
             r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
             color=TXTCOL,
         )
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
     term135 = (
@@ -33,7 +33,7 @@ def construct_scene(scene: mn.Scene):
             r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
             color=TXTCOL,
         )
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
     term14 = (
@@ -41,22 +41,22 @@ def construct_scene(scene: mn.Scene):
             r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
             color=TXTCOL,
         )
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
     term15 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
         color=TXTCOL,
         font_size=36,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term16 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} {{+}} 2{{b^2}} {{\over}} {{2^2}}}",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term17 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}}  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} } ",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term17skid = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}}  {{ {a^2 + b^2 \over 2} }}"
     )
@@ -65,14 +65,22 @@ def construct_scene(scene: mn.Scene):
             r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
             color=TXTCOL,
         )
-        .move_to(right_half_center)
+        .move_to(RIGHT_HALF_CENTER)
         .shift(mn.DOWN * 1.5)
     )
 
     term19 = mn.MathTex(
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
+
+    bquestion = mn.Brace(
+        geo.qm,
+        direction=geo.qm.copy().rotate(mn.PI / 2).get_unit_vector(),
+        color=TXTCOL,
+    )
+    bqtext = bquestion.get_tex("?")
+    bqtext.set_color(TXTCOL)
 
     # ANIMATION START 1:22,97
 
@@ -94,9 +102,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(geo.qm), run_time=1)
     scene.play(mn.Create(geo.labelN), run_time=1)
     scene.play(mn.Create(geo.rightM), run_time=1)
-    scene.play(mn.FadeIn(geo.bquestion, geo.bqtext), run_time=0.5)
+    scene.play(mn.FadeIn(bquestion, bqtext), run_time=0.5)
     scene.wait(0.5)
-    scene.play(mn.FadeOut(geo.bquestion, geo.bqtext), run_time=0.5)
+    scene.play(mn.FadeOut(bquestion, bqtext), run_time=0.5)
     scene.wait(1)
     # 40,61
     scene.play(mn.Wiggle(geo.QMAMDreieck), run_time=1.7)

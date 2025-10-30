@@ -24,36 +24,35 @@ def construct_scene(scene: mn.Scene):
     term20 = mn.MathTex(
         r"{ {{|\overline{XG}|}} {{\over}} |\overline{XS}|} {{=}} {|\overline{XS}| {{\over}} |\overline{XM}|}",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term21 = mn.MathTex(
         r"{ {{|\overline{XG}|}} {{\over}} \sqrt{ab} } {{=}} {\sqrt{ab} {{\over}}  {{ {a+b \over 2} }} }",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term22 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}   {{ {a+b \over 2} }}   }",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term23 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}   {{ {a+b \over 2} }}  \cdot \frac{2}{ab} }",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term24 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { 2 {{\over}} {1 \over a} {{+}} {1 \over b}}",
         color=TXTCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
     term25 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { 2 {{\over}} {1 \over a} {{+}} {1 \over b}} = HM(a,b)",
         color=HMCOL,
-    ).move_to(right_half_center)
+    ).move_to(RIGHT_HALF_CENTER)
 
     # 3:24,04
     scene.wait(1)
     scene.play(mn.Write(tex1), run_time=2)
-    # scene.play(mn.ReplacementTransform(geo.am1, geo.dashedam), run_time=1)
     scene.wait(2.56)
     # 28,6
     scene.play(
-        mn.Create(geo.dashed1),
+        mn.Create(geo.lineSG),
         mn.Create(geo.G),
         mn.Create(geo.labelG),
         run_time=1,
