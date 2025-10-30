@@ -1,4 +1,4 @@
-# "Mittelungleichungen" Manimations
+# Manimations for "Mittelungleichungen"
 
 Animations using manim for the Dorfuchs song
 "Mittelungleichungen".
@@ -25,7 +25,7 @@ Steps 2 to 4 are also outlined in the official [manim installation guide](https:
 
 - Move the audio file to `media/Audio/audio.wav` to render with sound.
 - Execute `uv run manim -pql [FILE] [SCENE]` for a low-quality preview
-- The main animation is rendered using (e.g. `uv run manim -pqh project/main.py MainSketch`).
+- The main animation is rendered using `uv run manim -pqh project/main.py MainSketch`
 
 ## Debug
 
