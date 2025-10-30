@@ -2,8 +2,12 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene, reverse=False):
+    """
+    Animation for refrains 6 and 7.
+    """
 
     # Multi variable means
+
     eq_QM = mn.MathTex(
         r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
         color=QMCOL,
@@ -65,7 +69,7 @@ def construct_scene(scene: mn.Scene, reverse=False):
     group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
     group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
 
-    # Fade and scale animations
+    # Focus and scale animations
 
     fade_in = []
     group_anims = [group_QM_AM, group_AM_GM, group_GM_HM]
@@ -73,6 +77,8 @@ def construct_scene(scene: mn.Scene, reverse=False):
         group_anims = group_anims[::-1]
 
     for group_anim in group_anims:
+        # Fade out last iteration and fade in current iteration
+
         fade_out = [
             mobj
             for mobj in [*group_eq, *group_rel, *group_text]
@@ -87,6 +93,8 @@ def construct_scene(scene: mn.Scene, reverse=False):
         ]
 
         scene.play(*(fade_out_anims + fade_in_anims))
+
+        # Circumscribe box
         scene.play(mn.Circumscribe(group_anim, color=TXTCOL), run_time=3)
 
         fade_in = fade_out.copy()
@@ -94,7 +102,7 @@ def construct_scene(scene: mn.Scene, reverse=False):
     for mobj in fade_in:
         mobj.set_opacity(1)
 
-    # Final text
+    # Write final text
 
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.6)
     scene.play(mn.Write(final_text), run_time=3.3)
@@ -107,5 +115,3 @@ class MainSketch(mn.Scene):
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
         construct_scene(self)
-
-        # construct_scene(self, reverse=True)
