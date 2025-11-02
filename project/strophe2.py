@@ -5,22 +5,22 @@ def construct_scene(scene: mn.Scene):
     """Konstruktion QM"""
     geo = Geo()
 
-    term10 = (
+    term1 = (
         mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL)
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.LEFT * 1.5)
     )
-    term11 = (
+    term2 = (
         mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL)
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.RIGHT * 1.5)
     )
-    term12 = (
+    term3 = (
         mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL)
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.RIGHT * 1.5)
     )
-    term13 = (
+    term4 = (
         mn.MathTex(
             r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
             color=TXTCOL,
@@ -28,7 +28,7 @@ def construct_scene(scene: mn.Scene):
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
-    term135 = (
+    term5 = (
         mn.MathTex(
             r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
             color=TXTCOL,
@@ -36,7 +36,7 @@ def construct_scene(scene: mn.Scene):
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
-    term14 = (
+    term6 = (
         mn.MathTex(
             r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
             color=TXTCOL,
@@ -44,23 +44,20 @@ def construct_scene(scene: mn.Scene):
         .move_to(RIGHT_HALF_CENTER)
         .shift(mn.UP * 1.5)
     )
-    term15 = mn.MathTex(
+    term7 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
         color=TXTCOL,
         font_size=36,
     ).move_to(RIGHT_HALF_CENTER)
-    term16 = mn.MathTex(
+    term8 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} {{+}} 2{{b^2}} {{\over}} {{2^2}}}",
         color=TXTCOL,
     ).move_to(RIGHT_HALF_CENTER)
-    term17 = mn.MathTex(
+    term9 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}}  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} } ",
         color=TXTCOL,
     ).move_to(RIGHT_HALF_CENTER)
-    term17skid = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}}  {{ {a^2 + b^2 \over 2} }}"
-    )
-    term18 = (
+    term10 = (
         mn.MathTex(
             r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
             color=TXTCOL,
@@ -69,7 +66,7 @@ def construct_scene(scene: mn.Scene):
         .shift(mn.DOWN * 1.5)
     )
 
-    term19 = mn.MathTex(
+    term11 = mn.MathTex(
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
     ).move_to(RIGHT_HALF_CENTER)
@@ -119,7 +116,7 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Wiggle(geo.am2), run_time=1.7)
     am2_copy = geo.am2.copy()
     scene.play(
-        mn.ReplacementTransform(am2_copy, term10),
+        mn.ReplacementTransform(am2_copy, term1),
         run_time=1,
     )
     scene.wait(1.02)
@@ -132,44 +129,44 @@ def construct_scene(scene: mn.Scene):
     scene.bring_to_front(geo.M)
     scene.play(mn.ReplacementTransform(geo.am3, geo.lineMS), run_time=1.2)
     scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.3)
-    scene.play(mn.ReplacementTransform(geo.lineMS, term11), run_time=0.76)
-    scene.play(mn.TransformMatchingShapes(term11, term12), run_time=0.5)
+    scene.play(mn.ReplacementTransform(geo.lineMS, term2), run_time=0.76)
+    scene.play(mn.TransformMatchingShapes(term2, term3), run_time=0.5)
 
     # scene.play(geo.lineMS.animate.set_color(TXTCOL), run_time=0.14)
     # 51,86
-    scene.play(mn.TransformMatchingTex(mn.Group(term12, term10), term13), run_time=1)
+    scene.play(mn.TransformMatchingTex(mn.Group(term3, term1), term4), run_time=1)
     scene.wait(0.03)
-    scene.play(mn.TransformMatchingTex(term13, term135), run_time=1)
+    scene.play(mn.TransformMatchingTex(term4, term5), run_time=1)
     scene.wait(0.03)
-    scene.play(mn.TransformMatchingTex(term135, term14), run_time=1)
+    scene.play(mn.TransformMatchingTex(term5, term6), run_time=1)
     scene.wait(0.03)
     # 54,95
-    scene.play(TransformMatchingTexNoReplace(term14, term15), run_time=1)
-    scene.play(mn.TransformMatchingTex(term15, term16), run_time=1)
-    scene.play(mn.TransformMatchingTex(term16, term17), run_time=1)
+    scene.play(TransformMatchingTexNoReplace(term6, term7), run_time=1)
+    scene.play(mn.TransformMatchingTex(term7, term8), run_time=1)
+    scene.play(mn.TransformMatchingTex(term8, term9), run_time=1)
     # alt
     # scene.add(mn.index_labels(term17))
     # scene.add(mn.index_labels(term18))
     scene.play(
-        mn.TransformMatchingShapes(term17[0].copy(), term18[0]),
-        mn.TransformMatchingShapes(term17[3].copy(), term18[2]),
+        mn.TransformMatchingShapes(term9[0].copy(), term10[0]),
+        mn.TransformMatchingShapes(term9[3].copy(), term10[2]),
         mn.TransformMatchingShapes(
             mn.VGroup(
-                typ.cast(mn.VGroup, term17[5]),
-                typ.cast(mn.VGroup, term17[7]),
-                typ.cast(mn.VGroup, term17[9]),
-                typ.cast(mn.VGroup, term17[11]),
-                typ.cast(mn.VGroup, term17[13]),
+                typ.cast(mn.VGroup, term9[5]),
+                typ.cast(mn.VGroup, term9[7]),
+                typ.cast(mn.VGroup, term9[9]),
+                typ.cast(mn.VGroup, term9[11]),
+                typ.cast(mn.VGroup, term9[13]),
             ).copy(),
-            term18[4],
+            term10[4],
         ),
         run_time=1,
     )
 
     scene.play(
-        mn.TransformMatchingTex(term18, term19),
-        mn.FadeOut(term17),
-        mn.FadeOut(term14),
+        mn.TransformMatchingTex(term10, term11),
+        mn.FadeOut(term9),
+        mn.FadeOut(term6),
         run_time=1,
     )
     # 59.95

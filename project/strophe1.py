@@ -3,7 +3,7 @@ from helpers import *
 
 def construct_scene(scene: mn.Scene):
     """
-    Animation for Strophe 1. Konstruktion Kreis + AM.
+    Animation for strophe 1. Konstruktion Kreis + AM.
     """
     geo = Geo()
 

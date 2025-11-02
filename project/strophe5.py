@@ -52,7 +52,7 @@ def construct_scene(scene: mn.Scene):
         lambda brace: brace.become(
             mn.Brace(
                 mn.Line(start=geo.A.get_center(), end=geo.S.get_center()),
-                direction=geo.firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+                direction=mn.DOWN,
                 color=TXTCOL,
             )
         )
@@ -66,7 +66,7 @@ def construct_scene(scene: mn.Scene):
         lambda brace: brace.become(
             mn.Brace(
                 mn.Line(start=geo.S.get_center(), end=geo.B.get_center()),
-                direction=geo.firsta.copy().rotate(3 * mn.PI / 2).get_unit_vector(),
+                direction=mn.DOWN,
                 color=TXTCOL,
             )
         )
