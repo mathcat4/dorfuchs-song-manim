@@ -21,7 +21,7 @@ sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev
 
 Steps 2 to 4 are also outlined in the official [manim installation guide](https://docs.manim.community/en/stable/installation/uv.html).
 
-# Usage
+## Usage
 
 - Move the audio file to `media/Audio/audio.wav` to render with sound.
 - Execute `uv run manim -pql [FILE] [SCENE]` for a low-quality preview
