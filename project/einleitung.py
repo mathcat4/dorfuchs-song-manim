@@ -2,6 +2,10 @@ from helpers import *
 
 
 def construct_scene(scene: mn.Scene):
+    """
+    Animation for einleitung.
+    """
+
     # Number line
 
     number_line = mn.NumberLine(
@@ -51,7 +55,7 @@ def construct_scene(scene: mn.Scene):
 
     label_mean.clear_updaters()
 
-    # Four mean dots
+    # Draw the four mean dots
 
     dot_am = mn.Dot(number_line.n2p((num_a + num_b) / 2), color=AMCOL)
     label_am = mn.MathTex("AM", color=AMCOL).scale(0.75).next_to(dot_mean, mn.UP)
@@ -80,7 +84,8 @@ def construct_scene(scene: mn.Scene):
         .align_to(label_am, mn.UP)
     )
 
-    # Mean descriptions
+    # Write mean descriptions
+
     desc_am = mn.Text("AM: Arithmetisches Mittel", color=AMCOL)
     desc_gm = mn.Text("GM: Geometrisches Mittel", color=GMCOL)
     desc_qm = mn.Text("QM: Quadratisches Mittel", color=QMCOL)

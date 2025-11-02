@@ -1,10 +1,13 @@
-# Dorfuchs Song Manim
+# Manimations for "Mittelungleichungen"
 
-- Manim: https://docs.manim.community/en/stable/index.html
+Animations using manim for the Dorfuchs song
+"Mittelungleichungen".
 
-## Setup and Usage
+- Manim Docs: https://docs.manim.community/en/stable/index.html
 
-1. Clone this repo.
+## Setup
+
+1. Clone this repo using `git clone https://github.com/mathcat4/dorfuchs-song-manim.git`.
 2. [Install uv](https://docs.astral.sh/uv/getting-started/installation/#installation-methods) (Python package manager).
 3. Install the corresponding LaTeX distribution packages for your OS.
 4. If you're using linux, then additionally install these packages:
@@ -14,8 +17,15 @@ sudo apt update
 sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev
 ```
 
-5. Run `uv sync`.
-6. Execute `uv run manim -pql [FILE] [SCENE]` for a low-quality preview (e.g. `uv run manim -pql project/main.py MainSketch`).
+5. Run `uv sync` to load python modules.
+
+Steps 2 to 4 are also outlined in the official [manim installation guide](https://docs.manim.community/en/stable/installation/uv.html).
+
+# Usage
+
+- Move the audio file to `media/Audio/audio.wav` to render with sound.
+- Execute `uv run manim -pql [FILE] [SCENE]` for a low-quality preview
+- The main animation is rendered using `uv run manim -pqh project/main.py MainSketch`
 
 ## Debug
 

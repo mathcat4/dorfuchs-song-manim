@@ -2,23 +2,29 @@ from helpers import *
 
 
 def construct_scene(
-    scene: mn.Scene, ext_objs: mn.VGroup | None = None, mObjsFocus=None
+    scene: mn.Scene,
+    ext_objs: mn.VGroup | None = None,
+    mObjsFocus: dict[int, mn.VGroup] | None = None,
 ):
+    """
+    Variable animation for refrains 1 to 5.
+    External objects can be passed to `ext_objs`.
+    Objects to be focused can be passed along with its iteration-index as a dictionary to `mObjsFocus`.
+    """
+
     if mObjsFocus is None:
         mObjsFocus = {}
 
     # Equation and Relation objects
 
     eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=TXTCOL)
-    rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)
-
     eq_AM = mn.MathTex(r"\frac{a+b}{2}", color=TXTCOL)
-    rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
-
     eq_GM = mn.MathTex(r"\sqrt{ab}", color=TXTCOL)
-    rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
-
     eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
+
+    rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)
+    rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
+    rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
 
     group_eq = mn.VGroup(
         eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
@@ -53,6 +59,7 @@ def construct_scene(
     final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
     final_text.next_to(group_eq, mn.DOWN, buff=1.2)
 
+    # Conditionally add either the external objects or the helper text
     if isinstance(ext_objs, mn.VGroup):
         ext_objs.shift(1.2 * mn.DOWN)
 
@@ -67,12 +74,13 @@ def construct_scene(
             ).shift(2.5 * mn.UP)
         )
 
-    # Fade and scale animations
+    # Focus and scale animations
 
     fade_in = []
-    iteration = 0
 
-    for group_anim in [group_QM_AM, group_AM_GM, group_GM_HM]:
+    for iteration, group_anim in enumerate([group_QM_AM, group_AM_GM, group_GM_HM]):
+        # Fade out last iteration and fade in current iteration
+
         fade_out = [mobj for mobj in [*group_eq, *group_text] if mobj not in group_anim]
 
         fade_out_anims = [
@@ -87,32 +95,36 @@ def construct_scene(
         wait_duration = 1
         if iteration in mObjsFocus:
             assert isinstance(ext_objs, mn.VGroup)
-            focus_obj: mn.VMobject = mObjsFocus[iteration]
+            focus_obj = mObjsFocus[iteration]
 
             # this is so hacky I hate that it works
+            # update: i acutally forgor why this works so don't touch it and it won't break
             fade_group = ext_objs.copy().remove(focus_obj)
             scene.add(fade_group)
             scene.remove(ext_objs)
 
+            # Focus in external objects
             scene.play(
-                group_anim.animate.scale(5 / 4),
+                group_anim.animate.scale(1.25),
                 fade_group.animate.fade(0.8),
                 focus_obj.animate.scale(
-                    5 / 4, about_point=focus_obj.get_center_of_mass()
+                    1.25, about_point=focus_obj.get_center_of_mass()
                 ),
                 rate_func=mn.rate_functions.rush_from,
                 run_time=1,
             )
 
             scene.wait(wait_duration)
+
+            # Focus out external objects
             if iteration != 2:
                 scene.play(
-                    group_anim.animate.scale(4 / 5),
+                    group_anim.animate.scale(0.8),
                     fade_group.animate.fade(
                         -4
-                    ),  # fu manim I had to solve a fricking equation to figure this value
+                    ),  # fu manim I had to solve a fricking equation to figure out this value
                     focus_obj.animate.scale(
-                        4 / 5, about_point=focus_obj.get_center_of_mass()
+                        0.8, about_point=focus_obj.get_center_of_mass()
                     ),
                     rate_func=mn.rate_functions.rush_into,
                     run_time=1,
@@ -120,10 +132,11 @@ def construct_scene(
                 scene.add(ext_objs)
                 scene.remove(fade_group)
             else:
+                # Final iteration anims
                 scene.play(
-                    group_anim.animate.scale(4 / 5),
+                    group_anim.animate.scale(0.8),
                     focus_obj.animate.scale(
-                        4 / 5, about_point=focus_obj.get_center_of_mass()
+                        0.8, about_point=focus_obj.get_center_of_mass()
                     ).fade(1),
                     mn.FadeOut(fade_group),
                     rate_func=mn.rate_functions.rush_into,
@@ -131,32 +144,34 @@ def construct_scene(
                 )
 
         else:
+            # Focus in external objects
             scene.play(
-                group_anim.animate.scale(5 / 4),
+                group_anim.animate.scale(1.25),
                 rate_func=mn.rate_functions.rush_from,
                 run_time=1,
             )
+
             scene.wait(wait_duration)
 
-            if iteration == 2 and isinstance(ext_objs, mn.VGroup):
+            # Focus out external objects
+            if iteration != 2 or not isinstance(ext_objs, mn.VGroup):
                 scene.play(
-                    group_anim.animate.scale(4 / 5),
-                    mn.FadeOut(ext_objs),
+                    group_anim.animate.scale(0.8),
                     rate_func=mn.rate_functions.rush_into,
                     run_time=1,
                 )
             else:
+                # Final iteration anims
                 scene.play(
-                    group_anim.animate.scale(4 / 5),
+                    group_anim.animate.scale(0.8),
+                    mn.FadeOut(ext_objs),
                     rate_func=mn.rate_functions.rush_into,
                     run_time=1,
                 )
 
         fade_in = fade_out.copy()
 
-        iteration += 1
-
-    # Final animation
+    # Play final animations
 
     for mobj in fade_in:
         mobj.set_opacity(1)
@@ -198,8 +213,8 @@ class MainSketch(mn.Scene):
                 geo.GMHMDreieck,
             ),
             mObjsFocus={
-                # 0: geo.QMAMDreieck,
-                # 1: geo.AMGMDreieck,
-                # 2: geo.GMHMDreieck,
+                0: geo.QMAMDreieck,
+                1: geo.AMGMDreieck,
+                2: geo.GMHMDreieck,
             },
         )
