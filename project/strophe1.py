@@ -212,75 +212,75 @@ def construct_scene(scene: mn.Scene):
         mn.ReplacementTransform(chord_qm2.copy(), eq_qm_copy),
     )
 
-    scene.wait(3)
-    fadeout_all(scene)
+    # scene.wait(3)
+    # fadeout_all(scene)
 
-    ## Part 3
+    # ## Part 3
 
-    # Triangle setup
+    # # Triangle setup
 
-    point_C = mn.Dot(mn.ORIGIN, color=TXTCOL)
-    point_A = mn.Dot(3 * mn.RIGHT, color=TXTCOL)
-    point_B = mn.Dot(4 * mn.UP, color=TXTCOL)
+    # point_C = mn.Dot(mn.ORIGIN, color=TXTCOL)
+    # point_A = mn.Dot(3 * mn.RIGHT, color=TXTCOL)
+    # point_B = mn.Dot(4 * mn.UP, color=TXTCOL)
 
-    side_AB = mn.Line(point_A.get_center(), point_B.get_center(), color=TXTCOL)
-    side_BC = mn.Line(point_B.get_center(), point_C.get_center(), color=TXTCOL)
-    side_CA = mn.Line(point_C.get_center(), point_A.get_center(), color=TXTCOL)
+    # side_AB = mn.Line(point_A.get_center(), point_B.get_center(), color=TXTCOL)
+    # side_BC = mn.Line(point_B.get_center(), point_C.get_center(), color=TXTCOL)
+    # side_CA = mn.Line(point_C.get_center(), point_A.get_center(), color=TXTCOL)
 
-    triangle = mn.VGroup(point_A, point_B, point_C, side_AB, side_BC, side_CA)
-    triangle.center().shift(mn.DOWN)
+    # triangle = mn.VGroup(point_A, point_B, point_C, side_AB, side_BC, side_CA)
+    # triangle.center().shift(mn.DOWN)
 
-    rightangle = mn.Angle(
-        mn.Line(point_C, point_A),
-        mn.Line(point_C, point_B),
-        radius=0.5,
-        other_angle=False,
-        dot=True,
-        dot_color=RIGHTANGLECOL,
-        color=RIGHTANGLECOL,
-    )
-    scene.bring_to_back(rightangle)
+    # rightangle = mn.Angle(
+    #     mn.Line(point_C, point_A),
+    #     mn.Line(point_C, point_B),
+    #     radius=0.5,
+    #     other_angle=False,
+    #     dot=True,
+    #     dot_color=RIGHTANGLECOL,
+    #     color=RIGHTANGLECOL,
+    # )
+    # scene.bring_to_back(rightangle)
 
-    label_a = mn.MathTex("k_1", color=TXTCOL).next_to(side_BC, mn.LEFT)
-    label_b = mn.MathTex("k_2", color=TXTCOL).next_to(side_CA, mn.DOWN)
-    label_c = mn.MathTex("h", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
+    # label_a = mn.MathTex("k_1", color=TXTCOL).next_to(side_BC, mn.LEFT)
+    # label_b = mn.MathTex("k_2", color=TXTCOL).next_to(side_CA, mn.DOWN)
+    # label_c = mn.MathTex("h", color=TXTCOL).next_to(side_AB.get_center(), mn.UR)
 
-    scene.play(
-        mn.FadeIn(triangle),
-        mn.FadeIn(rightangle),
-        mn.FadeIn(label_a),
-        mn.FadeIn(label_b),
-        mn.FadeIn(label_c),
-    )
+    # scene.play(
+    #     mn.FadeIn(triangle),
+    #     mn.FadeIn(rightangle),
+    #     mn.FadeIn(label_a),
+    #     mn.FadeIn(label_b),
+    #     mn.FadeIn(label_c),
+    # )
 
-    # Write theorem and equation step by step
+    # # Write theorem and equation step by step
 
-    eq_thm = (
-        mn.Paragraph(
-            "Satz im rechtwinkligen Dreieck:",
-            "Die Hypotenuse ist stets länger als eine Kathete.",
-            alignment="center",
-            line_spacing=1,
-            color=mn.RED,
-        )
-        .scale(0.6)
-        .shift(3 * mn.UP)
-    )
+    # eq_thm = (
+    #     mn.Paragraph(
+    #         "Satz im rechtwinkligen Dreieck:",
+    #         "Die Hypotenuse ist stets länger als eine Kathete.",
+    #         alignment="center",
+    #         line_spacing=1,
+    #         color=mn.RED,
+    #     )
+    #     .scale(0.6)
+    #     .shift(3 * mn.UP)
+    # )
 
-    scene.play(
-        mn.Write(typ.cast(mn.VMobject, eq_thm.chars[0])),
-    )
+    # scene.play(
+    #     mn.Write(typ.cast(mn.VMobject, eq_thm.chars[0])),
+    # )
 
-    eq_ineq1 = mn.MathTex(r"h \geq k_1", color=TXTCOL)
-    eq_ineq2 = mn.MathTex(r"h \geq k_2", color=TXTCOL)
-    group_ineq = mn.VGroup(eq_ineq1, eq_ineq2).arrange(mn.DOWN)
-    group_ineq.move_to(RIGHT_HALF_CENTER)
+    # eq_ineq1 = mn.MathTex(r"h \geq k_1", color=TXTCOL)
+    # eq_ineq2 = mn.MathTex(r"h \geq k_2", color=TXTCOL)
+    # group_ineq = mn.VGroup(eq_ineq1, eq_ineq2).arrange(mn.DOWN)
+    # group_ineq.move_to(RIGHT_HALF_CENTER)
 
-    scene.play(
-        mn.Write(typ.cast(mn.VMobject, eq_thm.chars[1])),
-        mn.Write(group_ineq),
-        mn.Create(mn.SurroundingRectangle(group_ineq, color=TXTCOL)),
-    )
+    # scene.play(
+    #     mn.Write(typ.cast(mn.VMobject, eq_thm.chars[1])),
+    #     mn.Write(group_ineq),
+    #     mn.Create(mn.SurroundingRectangle(group_ineq, color=TXTCOL)),
+    # )
 
 
 class MainSketch(mn.Scene):

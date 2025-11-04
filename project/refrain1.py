@@ -91,8 +91,8 @@ def construct_scene(
         ]
 
         scene.play(*(fade_out_anims + fade_in_anims), run_time=1)
+        wait_duration = 1.66
 
-        wait_duration = 1
         if iteration in mObjsFocus:
             assert isinstance(ext_objs, mn.VGroup)
             focus_obj = mObjsFocus[iteration]
@@ -185,7 +185,7 @@ def construct_scene(
             group_text.animate.shift(2 * mn.DOWN),
         ]
 
-    scene.play(*all_final_anims, run_time=3.3)
+    scene.play(*all_final_anims, run_time=3.67)
 
 
 class MainSketch(mn.Scene):

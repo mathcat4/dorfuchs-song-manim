@@ -285,15 +285,19 @@ class Audio:
     else:
         warnings.warn(f"\033[1;33m{path} not found. Rendering without Audio.\033[0m")
 
-    refrain1 = 26.94  # Zwei Schläge vor "QM"
-    strophe1 = 44.78  # Ende letzte Note vom 1. Refain
-    refrain2 = 1 * 60 + 33.05  # Schlag auf "un-gemein"
-    strophe2 = 1 * 60 + 50.80  # Ende letzte Note vom 2. Refain
-    refrain3 = 2 * 60 + 34.82  # Schlag auf "da-nn"
-    strophe3 = 2 * 60 + 52.93  # Ende letzte Note vom 3 Refain
-    refrain4 = 3 * 60 + 36.55  # Schlag auf "da-nn"
-    strophe4 = 3 * 60 + 54.07  # Ende letzte Note vom 4. Refain
-    refrain5 = 4 * 60 + 33.57  # Schlag auf "da-nn"
-    strophe5 = 4 * 60 + 51.95  # Ende letzte Note vom 5. Refain
-    refrain6 = 5 * 60 + 30.07  # Schlag auf "al-lem"
-    refrain7 = 5 * 60 + 46.11  # Auf und-3-und-4 letzter Takt vom 6. Refrain
+    taktnull = 10.95  # ein Takt vor Anfang
+    takt = 2.4  # 100 bpm
+
+    einleitung = 0.75 * takt + taktnull  # Stell dir vor
+    refrain1 = 14 * takt + taktnull  # Auf "QM"
+    strophe1 = 22 * takt + taktnull  # Ende letzte Note vom 1. Refrain
+    refrain2 = 38 * takt + taktnull  # Schlag auf "un-gemein"
+    strophe2 = 46 * takt + taktnull  # Ende letzte Note vom 2. Refrain
+    refrain3 = 63 * takt + taktnull  # Schlag auf "da-nn"
+    strophe3 = 71 * takt + taktnull  # Ende letzte Note vom 3 Refrain
+    refrain4 = 88 * takt + taktnull  # Schlag auf "da-nn"
+    strophe4 = 96 * takt + taktnull  # Ende letzte Note vom 4. Refrain
+    refrain5 = 112 * takt + taktnull  # Schlag auf "da-nn"
+    strophe5 = 120 * takt + taktnull  # Ende letzte Note vom 5. Refrain
+    refrain6 = 137 * takt + taktnull  # Schlag auf "al-lem"
+    refrain7 = 145 * takt + taktnull  # Auf und-3-und-4 letzter Takt vom 6. Refrain
