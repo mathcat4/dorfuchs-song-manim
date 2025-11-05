@@ -39,7 +39,7 @@ def construct_scene(scene: mn.Scene):
         mn.FadeIn(b2),
     )
 
-    #scene.wait(4.13)
+    # scene.wait(4.13)
     scene.wait(3.9)
     term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
     scene.play(

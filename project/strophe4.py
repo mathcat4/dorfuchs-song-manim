@@ -119,23 +119,49 @@ def construct_scene(scene: mn.Scene):
     scene.play(*anims, run_time=0.5)
     geo2 = Geo()
 
-    geo2.GMHMDreieck.move_to(geo2.GMHMDreieck.get_center() - geo2.GMHMDreieck.get_center_of_mass())
-    geo2.GMHMDreieck.shift(2*mn.DOWN)
+    geo2.GMHMDreieck.move_to(
+        geo2.GMHMDreieck.get_center() - geo2.GMHMDreieck.get_center_of_mass()
+    )
+    geo2.GMHMDreieck.shift(2 * mn.DOWN)
     scene.add(geo2.GMHMDreieck)
 
-    geq = mn.MathTex(r"\geq", color = TXTCOL).next_to(geo2.X.get_center(), mn.UP, buff=0.3).set_x(0)
-    fulluneq = mn.MathTex(r"\text{Hypothenuse}",r"\geq", r"\text{Kathete}", color = TXTCOL).next_to(geo2.X.get_center(), mn.UP, buff=0.3)
-    fulluneq.move_to(fulluneq.get_center() +geq.get_center() -fulluneq[1].get_center())
+    geq = (
+        mn.MathTex(r"\geq", color=TXTCOL)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+        .set_x(0)
+    )
+    fulluneq = mn.MathTex(
+        r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL
+    ).next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+    fulluneq.move_to(
+        fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
+    )
     fulluneq[0].set_color(GMCOL)
     fulluneq[2].set_color(HMCOL)
 
-    hypolabel = mn.Text("Hypothenuse", font_size=24, color = GMCOL).move_to(geo2.gm)
-    hypolabel.rotate(geo2.gm.get_angle()).shift( (-0.3*math.cos(mn.PI/2 - geo2.gm.get_angle()), -0.3*math.sin(mn.PI/2 - geo2.gm.get_angle()), 0) ).rotate(mn.PI)
-    kathlabel = mn.Text("Kathete", font_size=24, color = HMCOL).move_to(geo2.hm)
-    kathlabel.rotate(geo2.hm.get_angle()).shift( (0.2*math.cos(mn.PI/2 + geo2.hm.get_angle()), 0.2*math.sin(mn.PI/2 + geo2.hm.get_angle()), 0) )
+    hypolabel = mn.Text("Hypothenuse", font_size=24, color=GMCOL).move_to(geo2.gm)
+    hypolabel.rotate(geo2.gm.get_angle()).shift(
+        (
+            -0.3 * math.cos(mn.PI / 2 - geo2.gm.get_angle()),
+            -0.3 * math.sin(mn.PI / 2 - geo2.gm.get_angle()),
+            0,
+        )
+    ).rotate(mn.PI)
+    kathlabel = mn.Text("Kathete", font_size=24, color=HMCOL).move_to(geo2.hm)
+    kathlabel.rotate(geo2.hm.get_angle()).shift(
+        (
+            0.2 * math.cos(mn.PI / 2 + geo2.hm.get_angle()),
+            0.2 * math.sin(mn.PI / 2 + geo2.hm.get_angle()),
+            0,
+        )
+    )
     scene.add(hypolabel, kathlabel)
     scene.wait(1.5)
-    scene.play(mn.Transform(hypolabel, fulluneq[0]), mn.Transform(kathlabel, fulluneq[2]), mn.FadeIn(geq))
+    scene.play(
+        mn.Transform(hypolabel, fulluneq[0]),
+        mn.Transform(kathlabel, fulluneq[2]),
+        mn.FadeIn(geq),
+    )
 
 
 class MainSketch(mn.Scene):
