@@ -39,7 +39,8 @@ def construct_scene(scene: mn.Scene):
         mn.FadeIn(b2),
     )
 
-    scene.wait(4.13)
+    #scene.wait(4.13)
+    scene.wait(3.9)
     term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
     scene.play(
         mn.ReplacementTransform(firsta, geo.sega),
@@ -205,7 +206,7 @@ def construct_scene(scene: mn.Scene):
     )
     eq_rel_copy = eq_rel.copy()
     eq_rel_copy.move_to((eq_am_copy.get_center() + eq_qm_copy.get_center()) / 2)
-    scene.wait(2)
+    scene.wait(1.75)
     scene.play(
         mn.ReplacementTransform(chord_am2.copy(), eq_am_copy),
         mn.ReplacementTransform(eq_rel.copy(), eq_rel_copy),

@@ -9,6 +9,7 @@ import os
 # Settings and constants
 
 mn.config.background_color = mn.WHITE
+mn.config.max_files_cached = 400
 TXTCOL = mn.BLACK
 AMCOL = mn.ORANGE
 GMCOL = mn.GREEN_D

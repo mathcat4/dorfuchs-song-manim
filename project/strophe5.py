@@ -173,7 +173,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    scene.play(mn.Write(eq_mean_equal, run_time=3))
+    scene.play(mn.Write(eq_mean_equal, run_time=2))
     scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
 
     scene.play(
@@ -182,7 +182,7 @@ def construct_scene(scene: mn.Scene):
         dot_a.animate.move_to(number_line.n2p(geo.RADIUS)),
         dot_b.animate.move_to(number_line.n2p(geo.RADIUS)),
         rate_func=lambda t: 1 - (1 - t) ** 2,
-        run_time=5,
+        run_time=6,
     )
 
     eq_equal = mn.MathTex(r"\iff a", "=", "b", color=TXTCOL).shift(2 * mn.UP)

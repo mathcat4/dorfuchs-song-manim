@@ -166,13 +166,42 @@ def construct_scene(scene: mn.Scene):
     term11 = mn.MathTex(
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).shift(mn.UP * 3)
     scene.play(
         mn.TransformMatchingTex(term10, term11),
         mn.FadeOut(term9),
         mn.FadeOut(term6),
         run_time=1,
     )
+
+    anims = []
+    for mobj in scene.mobjects:
+        if mobj != term11:
+            anims.append(mn.FadeOut(mobj))
+
+    scene.play(*anims, run_time=0.5)
+    geo2 = Geo()
+
+    geo2.QMAMDreieck.move_to(geo2.AMGMDreieck.get_center() - geo2.AMGMDreieck.get_center_of_mass())
+    geo2.QMAMDreieck.shift(2*mn.DOWN)
+
+    scene.add(geo2.QMAMDreieck)
+    geq = mn.MathTex(r"\geq", color = TXTCOL).next_to(geo2.N.get_center(), mn.UP, buff=0.3).set_x(0)
+    fulluneq = mn.MathTex(r"\text{Hypothenuse}",r"\geq", r"\text{Kathete}", color = TXTCOL).next_to(geo2.N.get_center(), mn.UP, buff=0.3)
+    fulluneq.move_to(fulluneq.get_center() +geq.get_center() -fulluneq[1].get_center())
+    fulluneq[0].set_color(QMCOL)
+    fulluneq[2].set_color(AMCOL)
+
+    hypolabel = mn.Text("Hypothenuse", font_size=24, color = QMCOL).move_to(geo2.qm)
+    hypolabel.rotate(geo2.qm.get_angle()).shift( (0.2*math.cos(mn.PI/2 + geo2.qm.get_angle()), 0.2*math.sin(mn.PI/2 + geo2.qm.get_angle()), 0) )
+    kathlabel = mn.Text("Kathete", font_size=24, color = AMCOL).move_to(geo2.am2)
+    kathlabel.rotate(-geo2.am2.get_angle()).shift( (0.2*math.cos(mn.PI/2 - geo2.am2.get_angle()), 0.2*math.sin(mn.PI/2 - geo2.am2.get_angle()), 0) )
+    scene.add(hypolabel, kathlabel)
+    scene.wait(1)
+    scene.play(mn.Transform(hypolabel, fulluneq[0]), mn.Transform(kathlabel, fulluneq[2]), mn.FadeIn(geq))
+
+
+    
 
 
 class MainSketch(mn.Scene):
