@@ -104,10 +104,8 @@ def construct_scene(scene: mn.Scene):
     geo2.AMGMDreieck.shift(2 * mn.DOWN)
     scene.add(geo2.AMGMDreieck)
 
-    geq = (
-        mn.MathTex(r"\leq", color=TXTCOL)
-        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
-        .set_x(0)
+    geq = mn.MathTex(r"\leq", color=TXTCOL).next_to(
+        geo2.X.get_center(), mn.UP, buff=0.3
     )
     fulluneq = mn.MathTex(
         r"\text{Kathete}", r"\leq", r"\text{Hypothenuse}", color=TXTCOL

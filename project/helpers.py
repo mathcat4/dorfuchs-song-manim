@@ -51,6 +51,22 @@ def zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn: typ.Callable):
     scene.play(*[anim_fn(m.animate) for m in visible_parts])
 
 
+def _zauberfunktion(scene: mn.Scene, group: mn.VGroup, anim_fn: typ.Callable):
+    """
+    Apply a function to a group, but like cooler and works.
+    Please only use homogenous animations.
+    """
+    visible_parts = [m for m in group if m in scene.mobjects]
+    hidden_parts = [m for m in group if m not in scene.mobjects]
+
+    # Apply transformation instant to hidden parts
+    for m in hidden_parts:
+        anim_fn(m)
+
+    # Animate visible parts
+    return [anim_fn(m.animate) for m in visible_parts]
+
+
 def TransformMatchingTexNoReplace(src: mn.Mobject, target: mn.Mobject, **kwargs):
     """
     Transform a *copy* of `src` into `target`, leaving `src` unchanged.
