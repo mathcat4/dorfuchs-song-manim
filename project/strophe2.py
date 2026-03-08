@@ -167,30 +167,61 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
     ).shift(mn.UP * 3)
-    scene.play(
+
+    # Outro Zeugs
+
+    fade_out_anims = [mobj.animate.fade(1) for mobj in scene.mobjects if mobj != term11]
+
+    geo2 = Geo()
+    geo2.QMAMDreieck.shift(
+        geo.construction.get_center() - geo2.construction.get_center()
+    )
+    scene.add(geo2.QMAMDreieck)
+
+    # Hypothenuse Dings und so
+
+    hypolabel = mn.Text("Hypothenuse", font_size=24, color=QMCOL).move_to(geo2.qm)
+    hypolabel.rotate(geo2.qm.get_angle()).shift(
+        np.asarray(
+            [
+                0.2 * math.cos(mn.PI / 2 + geo2.qm.get_angle()),
+                0.2 * math.sin(mn.PI / 2 + geo2.qm.get_angle()),
+                0,
+            ]
+        )
+    )
+    kathlabel = mn.Text("Kathete", font_size=24, color=AMCOL).move_to(geo2.am2)
+    kathlabel.rotate(-geo2.am2.get_angle()).shift(
+        np.asarray(
+            [
+                0.2 * math.cos(mn.PI / 2 - geo2.am2.get_angle()),
+                0.2 * math.sin(mn.PI / 2 - geo2.am2.get_angle()),
+                0,
+            ]
+        )
+    )
+
+    move_dir = (
+        Geo().QMAMDreieck.get_center() - geo2.QMAMDreieck.get_center() + 1.2 * mn.DOWN
+    )
+    fade_out_anims += [
+        # Triangle and labels
+        geo2.QMAMDreieck.animate.shift(move_dir),
+        mn.FadeIn(hypolabel),
+        mn.FadeIn(kathlabel),
+        hypolabel.animate.shift(move_dir),
+        kathlabel.animate.shift(move_dir),
+        # Other anims
         mn.TransformMatchingTex(term10, term11),
         mn.FadeOut(term9),
         mn.FadeOut(term6),
-        run_time=1,
-    )
+    ]
+    scene.play(*fade_out_anims, run_time=1)
 
-    anims = []
-    for mobj in scene.mobjects:
-        if mobj != term11:
-            anims.append(mn.FadeOut(mobj))
-
-    scene.play(*anims, run_time=0.5)
-    geo2 = Geo()
-
-    geo2.QMAMDreieck.move_to(
-        geo2.AMGMDreieck.get_center() - geo2.AMGMDreieck.get_center_of_mass()
-    )
-    geo2.QMAMDreieck.shift(2 * mn.DOWN)
-
-    scene.add(geo2.QMAMDreieck)
     geq = mn.MathTex(r"\geq", color=TXTCOL).next_to(
         geo2.N.get_center(), mn.UP, buff=0.3
     )
+
     fulluneq = mn.MathTex(
         r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL
     ).next_to(geo2.N.get_center(), mn.UP, buff=0.3)
@@ -200,29 +231,27 @@ def construct_scene(scene: mn.Scene):
     fulluneq[0].set_color(QMCOL)
     fulluneq[2].set_color(AMCOL)
 
-    hypolabel = mn.Text("Hypothenuse", font_size=24, color=QMCOL).move_to(geo2.qm)
-    hypolabel.rotate(geo2.qm.get_angle()).shift(
-        (
-            0.2 * math.cos(mn.PI / 2 + geo2.qm.get_angle()),
-            0.2 * math.sin(mn.PI / 2 + geo2.qm.get_angle()),
-            0,
-        )
-    )
-    kathlabel = mn.Text("Kathete", font_size=24, color=AMCOL).move_to(geo2.am2)
-    kathlabel.rotate(-geo2.am2.get_angle()).shift(
-        (
-            0.2 * math.cos(mn.PI / 2 - geo2.am2.get_angle()),
-            0.2 * math.sin(mn.PI / 2 - geo2.am2.get_angle()),
-            0,
-        )
-    )
-    scene.add(hypolabel, kathlabel)
     scene.wait(1)
     scene.play(
         mn.Transform(hypolabel, fulluneq[0]),
         mn.Transform(kathlabel, fulluneq[2]),
         mn.FadeIn(geq),
     )
+
+    # Fade out
+
+    if __name__ == "__main__":
+        scene.wait(Audio.refrain3 - Audio.strophe2 - scene.time - 1)
+    else:
+        scene.wait(Audio.refrain3 - scene.time - 1)
+
+    anims = []
+    for mobj in scene.mobjects:
+        if mobj != geo2.QMAMDreieck:
+            anims.append(mn.FadeOut(mobj))
+
+    if anims:
+        scene.play(*anims, run_time=1)
 
 
 class MainSketch(mn.Scene):

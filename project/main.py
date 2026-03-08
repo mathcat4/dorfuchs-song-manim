@@ -38,8 +38,9 @@ class MainSketch(mn.Scene):
         strophe2.construct_scene(self)
 
         # Refrain 3
-        self.wait(Audio.refrain3 - self.time - fade_duration)
-        fadeout_all(self, run_time=fade_duration)
+        self.wait(Audio.refrain3 - self.time)
+        self.clear()
+
         geo = Geo()
         refrain1.construct_scene(
             self,
@@ -53,8 +54,9 @@ class MainSketch(mn.Scene):
         strophe3.construct_scene(self)
 
         # Refrain 4
-        self.wait(Audio.refrain4 - self.time - fade_duration)
-        fadeout_all(self, run_time=fade_duration)
+        self.wait(Audio.refrain4 - self.time)
+        self.clear()
+
         geo = Geo()
         refrain1.construct_scene(
             self,
@@ -76,8 +78,9 @@ class MainSketch(mn.Scene):
         strophe4.construct_scene(self)
 
         # Refrain 5
-        self.wait(Audio.refrain5 - self.time - fade_duration)
-        fadeout_all(self, run_time=fade_duration)
+        self.wait(Audio.refrain5 - self.time)
+        self.clear()
+
         geo = Geo()
         refrain1.construct_scene(
             self,
