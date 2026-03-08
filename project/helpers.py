@@ -302,7 +302,7 @@ class Audio:
     else:
         warnings.warn(f"\033[1;33m{path} not found. Rendering without Audio.\033[0m")
 
-    taktnull = 10.95 - 0.4  # ein Takt vor Anfang
+    taktnull = 10.95  # ein Takt vor Anfang
     takt = 2.4  # 100 bpm
 
     einleitung = 0.75 * takt + taktnull  # Stell dir vor

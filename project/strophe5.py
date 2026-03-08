@@ -200,18 +200,27 @@ def construct_scene(scene: mn.Scene):
         },
     ).shift(3 * mn.UP)
 
+    scene.wait(0.75)
+
     scene.play(mn.Transform(eq_mean_equal, eq_mean_equal_2))
 
-    scene.wait(1)
+    scene.wait(1.5)
 
     # Part two
 
-    # Two variable means
-    eq_QM = mn.MathTex(r"\sqrt{ {{ {{ a^2 + b^2 }} \over {{ 2 }} }} }", color=QMCOL)
-    eq_AM = mn.MathTex(r"{{ a + b }} \over {{ 2 }}", color=AMCOL)
-    eq_GM = mn.MathTex(r"\sqrt[2]{ \hspace{0.1pt} {{ ab }} }", color=GMCOL)
-    eq_HM = mn.MathTex(r"{{ 2 }} \over {{ \frac{1}{a} + \frac{1}{b} }}", color=HMCOL)
-
+    # Multivariable means
+    eq_QM = mn.MathTex(
+        r"\sqrt{ {{ {{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 }} \over {{ n }} }} }",
+        color=QMCOL,
+    )
+    eq_AM = mn.MathTex(r"{{ a_1 + a_2 + \dots + a_n }} \over {{ n }}", color=AMCOL)
+    eq_GM = mn.MathTex(
+        r"\sqrt[n]{ \hspace{0.1pt} {{ a_1 a_2 \ldots a_n }} }", color=GMCOL
+    )
+    eq_HM = mn.MathTex(
+        r"{{ n }} \over {{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }}",
+        color=HMCOL,
+    )
     group_eq = mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM).arrange_in_grid(
         rows=2, cols=2, buff=4
     )
@@ -243,36 +252,10 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(*anims)
 
-    # Multi-variable means
-
-    eq2_QM = mn.MathTex(
-        r"\sqrt{ {{ {{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 }} \over {{ n }} }} }",
-        color=QMCOL,
-    )
-    eq2_AM = mn.MathTex(r"{{ a_1 + a_2 + \dots + a_n }} \over {{ n }}", color=AMCOL)
-    eq2_GM = mn.MathTex(
-        r"\sqrt[n]{ \hspace{0.1pt} {{ a_1 a_2 \ldots a_n }} }", color=GMCOL
-    )
-    eq2_HM = mn.MathTex(
-        r"{{ n }} \over {{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }}",
-        color=HMCOL,
-    )
-
-    mn.VGroup(eq2_QM, eq2_AM, eq2_HM, eq2_GM).arrange_in_grid(rows=2, cols=2, buff=4)
-
-    scene.wait(1)
-    scene.play(
-        mn.ReplacementTransform(eq_QM, eq2_QM),
-        mn.ReplacementTransform(eq_AM, eq2_AM),
-        mn.ReplacementTransform(eq_GM, eq2_GM),
-        mn.ReplacementTransform(eq_HM, eq2_HM),
-        rel_QM_AM.animate.move_to((eq2_QM.get_bottom() + eq2_AM.get_top()) / 2),
-        rel_AM_GM.animate.move_to((eq2_AM.get_bottom() + eq2_GM.get_top()) / 2),
-        rel_GM_HM.animate.move_to((eq2_GM.get_bottom() + eq2_HM.get_top()) / 2),
-    )
+    scene.wait(1.5)
 
     # Wiggle Relations
-    scene.play(mn.Wiggle(group_rel), run_time=1.5)
+    scene.play(mn.Wiggle(group_rel, run_time=1))
 
     # Equation Relations
     rel2_QM_AM = mn.MathTex(r"=", color=TXTCOL).move_to(
@@ -300,7 +283,7 @@ def construct_scene(scene: mn.Scene):
         run_time=1,
     )
 
-    scene.wait(0.75)
+    scene.wait(1)
 
     eq_equality = mn.MathTex(r"\iff a_1 = a_2 = \dots = a_n", color=TXTCOL)
     scene.play(mn.Write(eq_equality), run_time=1.5)
@@ -363,10 +346,10 @@ def construct_scene(scene: mn.Scene):
     scene.wait(1)
 
     scene.play(
-        eq2_QM.animate.scale(1.2),
-        eq2_AM.animate.scale(1.2),
-        eq2_GM.animate.scale(1.2),
-        eq2_HM.animate.scale(1.2),
+        eq_QM.animate.scale(1.2),
+        eq_AM.animate.scale(1.2),
+        eq_GM.animate.scale(1.2),
+        eq_HM.animate.scale(1.2),
         rate_func=mn.rate_functions.there_and_back,
     )
 
