@@ -26,25 +26,27 @@ def construct_scene(
     rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
     rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
 
-    group_eq = mn.VGroup(
-        eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
-    ).arrange(mn.RIGHT, buff=0.5)
+    group_eq = (
+        mn.VGroup(eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM)
+        .arrange(mn.RIGHT, buff=0.5)
+        .scale(0.8)
+    )
 
     # Text objects
 
-    text_QM = mn.Text("QM", color=QMCOL).scale(0.75)
+    text_QM = mn.Text("QM", color=QMCOL).scale(0.6)
     text_QM.move_to(eq_QM).align_to(group_eq.get_top() + mn.UP, mn.UP)
     group_QM = mn.VGroup(eq_QM, text_QM)
 
-    text_AM = mn.Text("AM", color=AMCOL).scale(0.75)
+    text_AM = mn.Text("AM", color=AMCOL).scale(0.6)
     text_AM.move_to(eq_AM).align_to(group_eq.get_top() + mn.UP, mn.UP)
     group_AM = mn.VGroup(eq_AM, text_AM)
 
-    text_GM = mn.Text("GM", color=GMCOL).scale(0.75)
+    text_GM = mn.Text("GM", color=GMCOL).scale(0.6)
     text_GM.move_to(eq_GM).align_to(group_eq.get_top() + mn.UP, mn.UP)
     group_GM = mn.VGroup(eq_GM, text_GM)
 
-    text_HM = mn.Text("HM", color=HMCOL).scale(0.75)
+    text_HM = mn.Text("HM", color=HMCOL).scale(0.6)
     text_HM.move_to(eq_HM).align_to(group_eq.get_top() + mn.UP, mn.UP)
     group_HM = mn.VGroup(eq_HM, text_HM)
 
@@ -56,11 +58,12 @@ def construct_scene(
 
     scene.add(group_eq, group_text)
 
-    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.75)
+    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.6)
     final_text.next_to(group_eq, mn.DOWN, buff=1.2)
 
     # Conditionally add either the external objects or the helper text
     if isinstance(ext_objs, mn.VGroup):
+        ext_objs.scale(0.8)
         ext_objs.shift(1.2 * mn.DOWN)
 
         group_eq.shift(2 * mn.UP)
@@ -71,7 +74,9 @@ def construct_scene(
         scene.add(
             mn.MathTex(
                 r"\text{Für alle } a,b \in \mathbb{R}^+ \text{ gilt:}", color=TXTCOL
-            ).shift(2.5 * mn.UP)
+            )
+            .shift(2.75 * mn.UP)
+            .scale(0.9)
         )
 
     # Focus and scale animations

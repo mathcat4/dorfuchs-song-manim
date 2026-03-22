@@ -8,9 +8,11 @@ def construct_scene(scene: mn.Scene):
 
     # Number line
 
-    number_line = mn.NumberLine(
-        x_range=[0, 10, 1], include_numbers=True, color=TXTCOL
-    ).shift(mn.DOWN)
+    number_line = (
+        mn.NumberLine(x_range=[0, 10, 1], include_numbers=True, color=TXTCOL)
+        .shift(mn.DOWN)
+        .scale(0.75)
+    )
     for num in number_line.numbers:
         num.set_color(TXTCOL)
 

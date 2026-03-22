@@ -11,6 +11,8 @@ def construct_scene(scene: mn.Scene):
 
     # Initial braces and segments
 
+    geo.GanzeSkizze.shift(2 * mn.LEFT)
+
     firsta = mn.Line(
         geo.A.get_center() + (-0.25, 0.5, 0),
         geo.S.get_center() + (-0.25, 0.5, 0),
@@ -41,7 +43,7 @@ def construct_scene(scene: mn.Scene):
 
     # scene.wait(4.13)
     scene.wait(3.9)
-    term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3)
+    term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3 + 2 * mn.LEFT)
     scene.play(
         mn.ReplacementTransform(firsta, geo.sega),
         mn.ReplacementTransform(firstb, geo.segb),
@@ -50,7 +52,7 @@ def construct_scene(scene: mn.Scene):
         mn.TransformMatchingShapes(labelAB, term1),
     )
 
-    term2 = mn.MathTex(r"\frac{a + b}{2}", color=TXTCOL).shift(mn.UP * 3)
+    term2 = mn.MathTex(r"\frac{a + b}{2}", color=TXTCOL).shift(mn.UP * 3 + 2 * mn.LEFT)
     scene.play(
         mn.Create(geo.S),
         mn.FadeIn(geo.abr),
@@ -71,7 +73,7 @@ def construct_scene(scene: mn.Scene):
     # whole radius moving animation thing
     scene.wait(1.47)
     term3 = mn.MathTex("r =", r"\frac{a + b}{2}", "= AM(a,b)", color=AMCOL).shift(
-        mn.UP * 3
+        mn.UP * 3 + 2 * mn.LEFT
     )
     # bitte bite funktuniertre
     moving_dot = geo.B.copy().set_opacity(0)
@@ -99,7 +101,7 @@ def construct_scene(scene: mn.Scene):
     ## Part two
 
     scene.wait(2.5)
-    scene.play(mn.FadeOut(term3), geo.construction.animate.shift(mn.DOWN + 2 * mn.LEFT))
+    scene.play(mn.FadeOut(term3), geo.construction.animate.shift(mn.DOWN + mn.LEFT))
 
     # Construct chords in semicircle
 
@@ -130,6 +132,7 @@ def construct_scene(scene: mn.Scene):
     eq_group = mn.VGroup(eq_qm, eq_am, eq_gm, eq_hm).arrange(mn.DOWN)
     eq_group.move_to(RIGHT_HALF_CENTER)
     eq_group.align_to(geo.semikreis, mn.DOWN)
+    eq_group.shift(2 * mn.LEFT)
 
     scene.play(mn.Write(eq_group))
 

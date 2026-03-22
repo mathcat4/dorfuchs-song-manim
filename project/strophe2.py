@@ -8,9 +8,10 @@ def construct_scene(scene: mn.Scene):
 
     geo = Geo()
     scene.add(geo.construction)
+    geo.GanzeSkizze.shift(2 * mn.LEFT)
 
     tex1 = mn.MathTex(r"QM(a,b) = \sqrt{\frac{a^2+b^2}{2}}", color=QMCOL).shift(
-        mn.UP * 3
+        mn.UP * 3 + 2 * mn.LEFT
     )
     scene.wait(1)
     scene.play(mn.Write(tex1), run_time=2)
@@ -43,16 +44,12 @@ def construct_scene(scene: mn.Scene):
     scene.bring_to_back(geo.am2)
 
     scene.play(mn.FadeOut(tex1, run_time=0.5))
-    zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
+    zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT))
 
     scene.wait(0.25)
     scene.play(mn.Wiggle(geo.am2), run_time=1.7)
     am2_copy = geo.am2.copy()
-    term1 = (
-        mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL)
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.LEFT * 1.5)
-    )
+    term1 = mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.LEFT)
     scene.play(
         mn.ReplacementTransform(am2_copy, term1),
         run_time=1,
@@ -70,52 +67,32 @@ def construct_scene(scene: mn.Scene):
     )
     scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.3)
 
-    term2 = (
-        mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL)
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.RIGHT * 1.5)
-    )
+    term2 = mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
     scene.play(mn.Transform(geo.lineMS, term2), run_time=0.76)
     scene.remove(geo.lineMS)
 
     # Pure eqution manipulation
 
-    term3 = (
-        mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL)
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.RIGHT * 1.5)
-    )
+    term3 = mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
     scene.play(mn.TransformMatchingShapes(term2, term3), run_time=0.5)
 
-    term4 = (
-        mn.MathTex(
-            r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
-            color=TXTCOL,
-        )
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.UP * 1.5)
-    )
+    term4 = mn.MathTex(
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
+        color=TXTCOL,
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.play(mn.TransformMatchingTex(mn.Group(term3, term1), term4), run_time=1)
 
-    term5 = (
-        mn.MathTex(
-            r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
-            color=TXTCOL,
-        )
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.UP * 1.5)
-    )
+    term5 = mn.MathTex(
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
+        color=TXTCOL,
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.wait(0.03)
     scene.play(mn.TransformMatchingTex(term4, term5), run_time=1)
 
-    term6 = (
-        mn.MathTex(
-            r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
-            color=TXTCOL,
-        )
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.UP * 1.5)
-    )
+    term6 = mn.MathTex(
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}} {{+}} {{(}}b-a{{)}} {{\hspace{0pt}^2}}  {{\over}} {{2^2}}}",
+        color=TXTCOL,
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.wait(0.03)
     scene.play(mn.TransformMatchingTex(term5, term6), run_time=1)
 
@@ -123,33 +100,30 @@ def construct_scene(scene: mn.Scene):
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{{a^2}} + 2ab + {{b^2}} {{+}} {{a^2}} - 2ab + {{b^2}} \over {{2^2}}}",
         color=TXTCOL,
         font_size=36,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.wait(0.03)
-    scene.play(TransformMatchingTexNoReplace(term6, term7), run_time=1)
+    scene.play(mn.TransformMatchingTex(term6, term7), run_time=1)
 
     term8 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {2{{a^2}} {{+}} 2{{b^2}} {{\over}} {{2^2}}}",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.play(mn.TransformMatchingTex(term7, term8), run_time=1)
 
     term9 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}}  { {{a^2}} {{+}} {{b^2}} {{\over}} {{2}} } ",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.play(mn.TransformMatchingTex(term8, term9), run_time=1)
 
-    term10 = (
-        mn.MathTex(
-            r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
-            color=TXTCOL,
-        )
-        .move_to(RIGHT_HALF_CENTER)
-        .shift(mn.DOWN * 1.5)
-    )
+    term10 = mn.MathTex(
+        r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
+        color=TXTCOL,
+    ).move_to(3 * mn.UP + mn.LEFT)
     scene.play(
-        mn.TransformMatchingShapes(term9[0].copy(), term10[0]),
-        mn.TransformMatchingShapes(term9[3].copy(), term10[2]),
+        mn.TransformMatchingShapes(term9[0], term10[0]),
+        mn.FadeOut(term9[1]),
+        mn.TransformMatchingShapes(term9[3], term10[2]),
         mn.TransformMatchingShapes(
             mn.VGroup(
                 typ.cast(mn.VGroup, term9[5]),
@@ -157,7 +131,7 @@ def construct_scene(scene: mn.Scene):
                 typ.cast(mn.VGroup, term9[9]),
                 typ.cast(mn.VGroup, term9[11]),
                 typ.cast(mn.VGroup, term9[13]),
-            ).copy(),
+            ),
             term10[4],
         ),
         run_time=1,
@@ -166,7 +140,7 @@ def construct_scene(scene: mn.Scene):
     term11 = mn.MathTex(
         r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
         color=QMCOL,
-    ).shift(mn.UP * 3)
+    ).shift(3 * mn.UP)
 
     # Outro Zeugs
 
@@ -213,8 +187,6 @@ def construct_scene(scene: mn.Scene):
         kathlabel.animate.shift(move_dir),
         # Other anims
         mn.TransformMatchingTex(term10, term11),
-        mn.FadeOut(term9),
-        mn.FadeOut(term6),
     ]
     scene.play(*fade_out_anims, run_time=1)
 
@@ -245,7 +217,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain3 - scene.time - 1)
 
-    anims = []
+    anims = [geo2.QMAMDreieck.animate.scale(0.8)]
     for mobj in scene.mobjects:
         if mobj != geo2.QMAMDreieck:
             anims.append(mn.FadeOut(mobj))
