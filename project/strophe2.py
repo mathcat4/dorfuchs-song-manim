@@ -49,7 +49,9 @@ def construct_scene(scene: mn.Scene):
     scene.wait(0.25)
     scene.play(mn.Wiggle(geo.am2), run_time=1.7)
     am2_copy = geo.am2.copy()
-    term1 = mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.LEFT)
+    term1 = mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL).move_to(
+        3 * mn.UP + 2 * mn.LEFT
+    )
     scene.play(
         mn.ReplacementTransform(am2_copy, term1),
         run_time=1,
@@ -190,13 +192,17 @@ def construct_scene(scene: mn.Scene):
     ]
     scene.play(*fade_out_anims, run_time=1)
 
-    geq = mn.MathTex(r"\geq", color=TXTCOL).next_to(
-        geo2.N.get_center(), mn.UP, buff=0.3
+    geq = (
+        mn.MathTex(r"\geq", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.N.get_center(), mn.UP, buff=0.3)
     )
 
-    fulluneq = mn.MathTex(
-        r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL
-    ).next_to(geo2.N.get_center(), mn.UP, buff=0.3)
+    fulluneq = (
+        mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.N.get_center(), mn.UP, buff=0.3)
+    )
     fulluneq.move_to(
         fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
     )
@@ -217,7 +223,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain3 - scene.time - 1)
 
-    anims = [geo2.QMAMDreieck.animate.scale(0.8)]
+    anims = [geo2.QMAMDreieck.animate.scale(0.8, about_point=mn.ORIGIN)]
     for mobj in scene.mobjects:
         if mobj != geo2.QMAMDreieck:
             anims.append(mn.FadeOut(mobj))

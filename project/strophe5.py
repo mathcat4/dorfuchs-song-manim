@@ -7,7 +7,7 @@ def construct_scene(scene: mn.Scene):
 
     # Part one
 
-    geo.GanzeSkizze.shift(mn.DOWN + 2 * mn.LEFT)
+    geo.GanzeSkizze.shift(1.25 * mn.DOWN + 3 * mn.LEFT)
 
     # Updaters for animation
 
@@ -98,8 +98,7 @@ def construct_scene(scene: mn.Scene):
         x_range=[1, 5, 1],
         length=5,
         color=TXTCOL,
-        rotation=mn.PI / 2,
-    ).shift(4 * mn.RIGHT + 0.5 * mn.DOWN)
+    ).shift(3 * mn.LEFT + 1.5 * mn.UP)
 
     dot_a = mn.Dot(number_line.n2p(geo.A_VAL), color=TXTCOL)
     dot_b = mn.Dot(number_line.n2p(2 * geo.RADIUS - geo.A_VAL), color=TXTCOL)
@@ -111,15 +110,15 @@ def construct_scene(scene: mn.Scene):
     dec_a = CommaDecimalNumber(color=TXTCOL).scale(0.75).next_to(label_a, buff=0.15)
     dec_a.set_value(num_a())
     dec_a.add_updater(lambda dec: dec.set_value(num_a()))
-    group_a = mn.VGroup(label_a, dec_a).next_to(dot_a, mn.LEFT)
-    group_a.add_updater(lambda group: group.set_y(dot_a.get_y()))
+    group_a = mn.VGroup(label_a, dec_a).next_to(dot_a, mn.UP)
+    group_a.add_updater(lambda group: group.set_x(dot_a.get_x()))
 
     label_b = mn.MathTex(f"b = ", color=TXTCOL).scale(0.75)
     dec_b = CommaDecimalNumber(color=TXTCOL).scale(0.75).next_to(label_b, buff=0.15)
     dec_b.set_value(num_b())
     dec_b.add_updater(lambda dec: dec.set_value(num_b()))
-    group_b = mn.VGroup(label_b, dec_b).next_to(dot_b, mn.RIGHT)
-    group_b.add_updater(lambda group: group.set_y(dot_b.get_y()))
+    group_b = mn.VGroup(label_b, dec_b).next_to(dot_b, mn.DOWN)
+    group_b.add_updater(lambda group: group.set_x(dot_b.get_x()))
 
     num_qm = lambda: ((num_a() ** 2 + num_b() ** 2) / 2) ** 0.5
     num_am = lambda: (num_a() + num_b()) / 2
@@ -128,19 +127,19 @@ def construct_scene(scene: mn.Scene):
 
     dot_qm = mn.Dot(number_line.n2p(num_qm()), color=QMCOL)
     dot_qm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_qm())))
-    label_qm = mn.MathTex("QM", color=QMCOL).scale(0.5).next_to(dot_qm, mn.LEFT)
+    label_qm = mn.MathTex("QM", color=QMCOL).scale(0.5).next_to(dot_qm, mn.UP)
 
     dot_am = mn.Dot(number_line.n2p(num_am()), color=AMCOL)
     dot_am.add_updater(lambda dot: dot.move_to(number_line.n2p(num_am())))
-    label_am = mn.MathTex("AM", color=AMCOL).scale(0.5).next_to(dot_am, mn.RIGHT)
+    label_am = mn.MathTex("AM", color=AMCOL).scale(0.5).next_to(dot_am, mn.DOWN)
 
     dot_gm = mn.Dot(number_line.n2p(num_gm()), color=GMCOL)
     dot_gm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_gm())))
-    label_gm = mn.MathTex("GM", color=GMCOL).scale(0.5).next_to(dot_gm, mn.LEFT)
+    label_gm = mn.MathTex("GM", color=GMCOL).scale(0.5).next_to(dot_gm, mn.UP)
 
     dot_hm = mn.Dot(number_line.n2p(num_hm()), color=HMCOL)
     dot_hm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_hm())))
-    label_hm = mn.MathTex("HM", color=HMCOL).scale(0.5).next_to(dot_hm, mn.RIGHT)
+    label_hm = mn.MathTex("HM", color=HMCOL).scale(0.5).next_to(dot_hm, mn.DOWN)
 
     scene.add(
         number_line,
@@ -169,7 +168,7 @@ def construct_scene(scene: mn.Scene):
             "GM(a,b)": GMCOL,
             "HM(a,b)": HMCOL,
         },
-    ).shift(3 * mn.UP)
+    ).shift(3.25 * mn.UP)
 
     scene.wait(1)
 
@@ -185,7 +184,7 @@ def construct_scene(scene: mn.Scene):
         run_time=6,
     )
 
-    eq_equal = mn.MathTex(r"\iff a", "=", "b", color=TXTCOL).shift(2 * mn.UP)
+    eq_equal = mn.MathTex(r"\iff a", "=", "b", color=TXTCOL).shift(2.65 * mn.UP)
     eq_equal.shift(np.array([-eq_equal[1].get_x(), 0, 0]))
     scene.play(mn.Write(eq_equal), run_time=1.5)
 
@@ -198,7 +197,7 @@ def construct_scene(scene: mn.Scene):
             "GM(a,b)": GMCOL,
             "HM(a,b)": HMCOL,
         },
-    ).shift(3 * mn.UP)
+    ).shift(3.25 * mn.UP)
 
     scene.wait(0.75)
 
@@ -221,8 +220,10 @@ def construct_scene(scene: mn.Scene):
         r"{{ n }} \over {{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }}",
         color=HMCOL,
     )
-    group_eq = mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM).arrange_in_grid(
-        rows=2, cols=2, buff=4
+    group_eq = (
+        mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM)
+        .arrange_in_grid(rows=2, cols=2, buff=4)
+        .shift(2 * mn.LEFT)
     )
 
     # Relations

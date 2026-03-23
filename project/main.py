@@ -38,7 +38,8 @@ class MainSketch(mn.Scene):
         strophe2.construct_scene(self)
 
         # Refrain 3
-        self.wait(Audio.refrain3 - self.time)
+        if Audio.refrain3 - self.time > 0:
+            self.wait(Audio.refrain3 - self.time)
         self.clear()
 
         geo = Geo()

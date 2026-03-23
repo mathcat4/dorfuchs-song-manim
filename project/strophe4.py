@@ -18,11 +18,12 @@ def construct_scene(scene: mn.Scene):
         geo.labelX,
         geo.rightS,
     )
+    geo.GanzeSkizze.shift(2 * mn.LEFT)
 
     scene.wait(1)
     tex1 = mn.MathTex(
         r"HM(a,b) = \frac{2}{\frac{1}{a} + \frac{1}{b}}", color=HMCOL
-    ).shift(mn.UP * 3)
+    ).shift(mn.UP * 3 + mn.LEFT * 2)
     scene.play(mn.Write(tex1), run_time=2)
 
     scene.wait(2.56)
@@ -45,8 +46,8 @@ def construct_scene(scene: mn.Scene):
     )
     scene.play(mn.FadeOut(tex1), run_time=1)
 
-    scene.add(geo.sega, geo.angleX)  # zauberfunktionfix
-    zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
+    # scene.add(geo.sega, geo.angleX)  # zauberfunktionfix
+    # zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
 
     scene.wait(0.64)
     scene.play(
@@ -70,46 +71,46 @@ def construct_scene(scene: mn.Scene):
     term1 = mn.MathTex(
         r"{ {{|\overline{XG}|}} {{\over}} |\overline{XS}|} {{=}} {|\overline{XS}| {{\over}} |\overline{XM}|}",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.play(mn.Write(term1), run_time=1.6)
 
     term2 = mn.MathTex(
         r"{ {{|\overline{XG}|}} {{\over}} \sqrt{ab} } {{=}} {\sqrt{ab} {{\over}}  {{ {a+b \over 2} }} }",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.wait(0.38)
     scene.play(mn.TransformMatchingTex(term1, term2))
 
     term3 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { {{ab}} {{\over}}   {{ {a+b \over 2} }}   }",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingTex(term2, term3))
 
     term4 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { {{ab}} \cdot \frac{2}{ab} {{\over}}   {{ {a+b \over 2} }}  \cdot \frac{2}{ab} }",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingTex(term3, term4))
 
     term5 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { 2 {{\over}} {1 \over a} {{+}} {1 \over b}}",
         color=TXTCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingTex(term4, term5))
 
     term6 = mn.MathTex(
         r"{{|\overline{XG}|}} {{=}} { 2 {{\over}} {1 \over a} {{+}} {1 \over b}} = HM(a,b)",
         color=HMCOL,
-    ).move_to(RIGHT_HALF_CENTER)
+    ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingShapes(term5, term6))
 
     scene.wait(2)
     scene.play(mn.Wiggle(geo.hm, scale_value=1.2))
 
-    scene.wait(3)
+    scene.wait(4)
 
-    scene.play(term6.animate.move_to(mn.UP * 3))
+    # scene.play(term6.animate.move_to(mn.UP * 3))
 
     # Outro
 
@@ -155,12 +156,16 @@ def construct_scene(scene: mn.Scene):
     ]
     scene.play(*fade_out_anims, run_time=1)
 
-    geq = mn.MathTex(r"\geq", color=TXTCOL).next_to(
-        geo2.X.get_center(), mn.UP, buff=0.3
+    geq = (
+        mn.MathTex(r"\geq", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
     )
-    fulluneq = mn.MathTex(
-        r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL
-    ).next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+    fulluneq = (
+        mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+    )
     fulluneq.move_to(
         fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
     )
@@ -182,7 +187,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain5 - scene.time - 1)
 
-    anims = []
+    anims = [geo2.GMHMDreieck.animate.scale(0.8, about_point=mn.ORIGIN)]
     for mobj in scene.mobjects:
         if mobj != geo2.GMHMDreieck:
             anims.append(mn.FadeOut(mobj))

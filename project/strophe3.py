@@ -7,18 +7,21 @@ def construct_scene(scene: mn.Scene):
     """
     geo = Geo()
     scene.add(geo.qm, geo.construction, geo.N)
+    geo.GanzeSkizze.shift(2 * mn.LEFT)
 
     # Equation manipulation
 
-    term1 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3)
+    term1 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3 + mn.LEFT * 2)
     scene.wait(1.77)
     scene.play(mn.Write(term1), run_time=1.5)
 
-    term2 = mn.MathTex(r"\sqrt{ab}", color=TXTCOL).shift(mn.UP * 3)
+    term2 = mn.MathTex(r"\sqrt{ab}", color=TXTCOL).shift(mn.UP * 3 + mn.LEFT * 2)
     scene.wait(1.62)
     scene.play(mn.TransformMatchingShapes(term1, term2), run_time=1)
 
-    term3 = mn.MathTex(r"GM(a,b) =", r"\sqrt{ab}", color=GMCOL).shift(mn.UP * 3)
+    term3 = mn.MathTex(r"GM(a,b) =", r"\sqrt{ab}", color=GMCOL).shift(
+        mn.UP * 3 + mn.LEFT * 2
+    )
     scene.play(
         mn.FadeIn(term3[0]),
         term2.animate.move_to(term3[1].get_center()).set_color(GMCOL),
@@ -57,7 +60,7 @@ def construct_scene(scene: mn.Scene):
 
     term4 = mn.MathTex(
         r"|\overline{SX}|", r"^2", r"=", r"a", r"\cdot", r"b", color=TXTCOL
-    ).shift(mn.UP * 3)
+    ).shift(mn.UP * 3 + mn.LEFT * 2)
     scene.wait(2.72)
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(mn.ReplacementTransform(geo.gm.copy(), term4[0]), run_time=0.5)
@@ -81,7 +84,7 @@ def construct_scene(scene: mn.Scene):
 
     term5 = mn.MathTex(
         r"{{|\overline{SX}|}}{{=}}\sqrt{{{a}}{{b}}}", color=TXTCOL
-    ).shift(mn.UP * 3)
+    ).shift(mn.UP * 3 + mn.LEFT * 2)
     scene.wait(0.1)
     scene.play(mn.TransformMatchingTex(term4, term5))
 
@@ -138,12 +141,16 @@ def construct_scene(scene: mn.Scene):
     ]
     scene.play(*fade_out_anims, run_time=1)
 
-    geq = mn.MathTex(r"\leq", color=TXTCOL).next_to(
-        geo2.X.get_center(), mn.UP, buff=0.3
+    geq = (
+        mn.MathTex(r"\leq", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
     )
-    fulluneq = mn.MathTex(
-        r"\text{Kathete}", r"\leq", r"\text{Hypothenuse}", color=TXTCOL
-    ).next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+    fulluneq = (
+        mn.MathTex(r"\text{Kathete}", r"\leq", r"\text{Hypothenuse}", color=TXTCOL)
+        .scale(0.8)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+    )
     fulluneq.move_to(
         fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
     )
@@ -164,7 +171,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain4 - scene.time - 1)
 
-    anims = []
+    anims = [geo2.AMGMDreieck.animate.scale(0.8, about_point=mn.ORIGIN)]
     for mobj in scene.mobjects:
         if mobj != geo2.AMGMDreieck:
             anims.append(mn.FadeOut(mobj))
