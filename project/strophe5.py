@@ -211,18 +211,20 @@ def construct_scene(scene: mn.Scene):
     eq_QM = mn.MathTex(
         r"\sqrt{ {{ {{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 }} \over {{ n }} }} }",
         color=QMCOL,
-    )
-    eq_AM = mn.MathTex(r"{{ a_1 + a_2 + \dots + a_n }} \over {{ n }}", color=AMCOL)
+    ).scale(0.8)
+    eq_AM = mn.MathTex(
+        r"{{ a_1 + a_2 + \dots + a_n }} \over {{ n }}", color=AMCOL
+    ).scale(0.8)
     eq_GM = mn.MathTex(
         r"\sqrt[n]{ \hspace{0.1pt} {{ a_1 a_2 \ldots a_n }} }", color=GMCOL
-    )
+    ).scale(0.8)
     eq_HM = mn.MathTex(
         r"{{ n }} \over {{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }}",
         color=HMCOL,
-    )
+    ).scale(0.8)
     group_eq = (
         mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM)
-        .arrange_in_grid(rows=2, cols=2, buff=4)
+        .arrange_in_grid(rows=2, cols=2, buff=(2, 4))
         .shift(2 * mn.LEFT)
     )
 
@@ -286,7 +288,11 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    eq_equality = mn.MathTex(r"\iff a_1 = a_2 = \dots = a_n", color=TXTCOL)
+    eq_equality = (
+        mn.MathTex(r"\iff a_1 = a_2 = \dots = a_n", color=TXTCOL)
+        .scale(0.8)
+        .shift(mn.LEFT * 2)
+    )
     scene.play(mn.Write(eq_equality), run_time=1.5)
     scene.wait(0.75)
 
@@ -300,38 +306,40 @@ def construct_scene(scene: mn.Scene):
 
     # Power means
 
-    eq_PM = mn.MathTex(
-        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=TXTCOL
+    eq_PM = (
+        mn.MathTex(
+            r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=TXTCOL
+        )
+        .scale(0.8)
+        .shift(mn.LEFT * 2)
     )
     scene.play(mn.Write(eq_PM))
 
-    eq_implies_QM = mn.MathTex(r"\implies", color=QMCOL)
+    eq_implies_QM = mn.MathTex(r"\implies", color=QMCOL).scale(0.8)
     eq_p_QM = (
-        mn.MathTex(r"p = 2", color=QMCOL).scale(-0.75).next_to(eq_implies_QM, mn.DOWN)
+        mn.MathTex(r"p = 2", color=QMCOL).scale(-0.6).next_to(eq_implies_QM, mn.DOWN)
     )
     group_implies_QM = mn.VGroup(eq_implies_QM, eq_p_QM)
     group_implies_QM.move_to(eq_PM.get_corner(mn.UL)).shift(0.5 * mn.UL)
     group_implies_QM.rotate(3 / 4 * mn.PI)
 
-    eq_implies_AM = mn.MathTex(r"\implies", color=AMCOL)
-    eq_p_AM = (
-        mn.MathTex(r"p = 1", color=AMCOL).scale(0.75).next_to(eq_implies_AM, mn.UP)
-    )
+    eq_implies_AM = mn.MathTex(r"\implies", color=AMCOL).scale(0.8)
+    eq_p_AM = mn.MathTex(r"p = 1", color=AMCOL).scale(0.6).next_to(eq_implies_AM, mn.UP)
     group_implies_AM = mn.VGroup(eq_implies_AM, eq_p_AM)
     group_implies_AM.move_to(eq_PM.get_corner(mn.UR)).shift(0.5 * mn.UR)
     group_implies_AM.rotate(1 / 4 * mn.PI)
 
-    eq_implies_GM = mn.MathTex(r"\implies", color=GMCOL)
+    eq_implies_GM = mn.MathTex(r"\implies", color=GMCOL).scale(0.8)
     eq_p_GM = (
-        mn.MathTex(r"p \to 0", color=GMCOL).scale(0.75).next_to(eq_implies_GM, mn.UP)
+        mn.MathTex(r"p \to 0", color=GMCOL).scale(0.6).next_to(eq_implies_GM, mn.UP)
     )
     group_implies_GM = mn.VGroup(eq_implies_GM, eq_p_GM)
     group_implies_GM.move_to(eq_PM.get_corner(mn.DR)).shift(0.5 * mn.DR)
     group_implies_GM.rotate(-1 / 4 * mn.PI)
 
-    eq_implies_HM = mn.MathTex(r"\implies", color=HMCOL)
+    eq_implies_HM = mn.MathTex(r"\implies", color=HMCOL).scale(0.8)
     eq_p_HM = (
-        mn.MathTex(r"p = -1", color=HMCOL).scale(-0.75).next_to(eq_implies_HM, mn.DOWN)
+        mn.MathTex(r"p = -1", color=HMCOL).scale(-0.6).next_to(eq_implies_HM, mn.DOWN)
     )
     group_implies_HM = mn.VGroup(eq_implies_HM, eq_p_HM)
     group_implies_HM.move_to(eq_PM.get_corner(mn.DL)).shift(0.5 * mn.DL)
@@ -371,17 +379,22 @@ def construct_scene(scene: mn.Scene):
     text = mn.MathTex(
         r"\text{Für alle } {{ p }} \geq {{ q }} \text{ gilt:}",
         color=TXTCOL,
-    ).shift(mn.UP)
+    ).shift(2.5 * mn.UP + mn.LEFT * 2)
     text[1].set_color(mn.RED)
     text[3].set_color(mn.DARK_BLUE)
-    ineq_PM = mn.MathTex(
-        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }",
-        r"\geq",
-        r"\sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }",
-        color=TXTCOL,
-    ).shift(0.5 * mn.DOWN)
-    ineq_PM[0].set_color(mn.RED)
-    ineq_PM[2].set_color(mn.DARK_BLUE)
+
+    ineq_PM_1 = mn.MathTex(
+        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=mn.RED
+    )
+    ineq_PM_2 = mn.MathTex(r"\geq", color=TXTCOL).rotate(-mn.PI / 2)
+    ineq_PM_3 = mn.MathTex(
+        r"\sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }", color=mn.DARK_BLUE
+    )
+    ineq_PM = (
+        mn.VGroup(ineq_PM_1, ineq_PM_2, ineq_PM_3)
+        .arrange(mn.DOWN, buff=0.4)
+        .shift(0.5 * mn.DOWN + 2 * mn.LEFT)
+    )
 
     scene.play(
         mn.Write(text),
