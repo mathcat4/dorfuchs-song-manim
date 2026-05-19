@@ -187,7 +187,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain5 - scene.time - 1)
 
-    anims = [geo2.GMHMDreieck.animate.scale(0.8, about_point=mn.ORIGIN)]
+    anims = [geo2.GMHMDreieck.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
     for mobj in scene.mobjects:
         if mobj != geo2.GMHMDreieck:
             anims.append(mn.FadeOut(mobj))

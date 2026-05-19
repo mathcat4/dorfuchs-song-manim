@@ -44,7 +44,6 @@ def construct_scene(scene: mn.Scene):
     scene.bring_to_back(geo.am2)
 
     scene.play(mn.FadeOut(tex1, run_time=0.5))
-    zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT))
 
     scene.wait(0.25)
     scene.play(mn.Wiggle(geo.am2), run_time=1.7)
@@ -223,7 +222,7 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain3 - scene.time - 1)
 
-    anims = [geo2.QMAMDreieck.animate.scale(0.8, about_point=mn.ORIGIN)]
+    anims = [geo2.QMAMDreieck.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
     for mobj in scene.mobjects:
         if mobj != geo2.QMAMDreieck:
             anims.append(mn.FadeOut(mobj))

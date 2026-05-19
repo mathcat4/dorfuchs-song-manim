@@ -11,16 +11,20 @@ def construct_scene(scene: mn.Scene, reverse=False):
     eq_QM = mn.MathTex(
         r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
         color=QMCOL,
+    ).scale(0.8)
+    eq_AM = mn.MathTex(r"\frac{ a_1 + a_2 + \dots + a_n } { n }", color=AMCOL).scale(
+        0.8
     )
-    eq_AM = mn.MathTex(r"\frac{ a_1 + a_2 + \dots + a_n } { n }", color=AMCOL)
-    eq_GM = mn.MathTex(r"\sqrt[n]{ a_1 a_2 \ldots a_n }", color=GMCOL)
+    eq_GM = mn.MathTex(r"\sqrt[n]{ a_1 a_2 \ldots a_n }", color=GMCOL).scale(0.8)
     eq_HM = mn.MathTex(
         r"\frac{ n }{ \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} }",
         color=HMCOL,
-    )
+    ).scale(0.8)
 
-    group_eq = mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM).arrange_in_grid(
-        rows=2, cols=2, buff=4
+    group_eq = (
+        mn.VGroup(eq_QM, eq_AM, eq_HM, eq_GM)
+        .arrange_in_grid(rows=2, cols=2, buff=(2, 3.5))
+        .shift(0.5 * mn.DOWN)
     )
 
     # Relations
@@ -42,24 +46,28 @@ def construct_scene(scene: mn.Scene, reverse=False):
 
     # Text objects
 
-    text_QM = mn.MathTex(r"\textbf{QM } (p = 2)", color=QMCOL).scale(0.75)
+    text_QM = mn.MathTex(r"\textbf{QM } (p = 2)", color=QMCOL).scale(0.6)
     text_QM.move_to(eq_QM).align_to(
-        mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
+        mn.VGroup(eq_QM, eq_AM).get_bottom() + 0.8 * mn.DOWN, mn.DOWN
     )
     group_QM = mn.VGroup(eq_QM, text_QM)
 
-    text_AM = mn.MathTex(r"\textbf{AM } (p = 1)", color=AMCOL).scale(0.75)
+    text_AM = mn.MathTex(r"\textbf{AM } (p = 1)", color=AMCOL).scale(0.6)
     text_AM.move_to(eq_AM).align_to(
-        mn.VGroup(eq_QM, eq_AM).get_bottom() + mn.DOWN, mn.DOWN
+        mn.VGroup(eq_QM, eq_AM).get_bottom() + 0.8 * mn.DOWN, mn.DOWN
     )
     group_AM = mn.VGroup(eq_AM, text_AM)
 
-    text_GM = mn.MathTex(r"\textbf{GM } (p \to 0)", color=GMCOL).scale(0.75)
-    text_GM.move_to(eq_GM).align_to(mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP)
+    text_GM = mn.MathTex(r"\textbf{GM } (p \to 0)", color=GMCOL).scale(0.6)
+    text_GM.move_to(eq_GM).align_to(
+        mn.VGroup(eq_GM, eq_HM).get_top() + 0.8 * mn.UP, mn.UP
+    )
     group_GM = mn.VGroup(eq_GM, text_GM)
 
-    text_HM = mn.MathTex(r"\textbf{HM } (p = -1)", color=HMCOL).scale(0.75)
-    text_HM.move_to(eq_HM).align_to(mn.VGroup(eq_GM, eq_HM).get_top() + mn.UP, mn.UP)
+    text_HM = mn.MathTex(r"\textbf{HM } (p = -1)", color=HMCOL).scale(0.6)
+    text_HM.move_to(eq_HM).align_to(
+        mn.VGroup(eq_GM, eq_HM).get_top() + 0.8 * mn.UP, mn.UP
+    )
     group_HM = mn.VGroup(eq_HM, text_HM)
 
     group_text = mn.VGroup(text_QM, text_AM, text_GM, text_HM)
@@ -68,6 +76,16 @@ def construct_scene(scene: mn.Scene, reverse=False):
     group_QM_AM = mn.VGroup(*group_QM, rel_QM_AM, *group_AM)
     group_AM_GM = mn.VGroup(*group_AM, rel_AM_GM, *group_GM)
     group_GM_HM = mn.VGroup(*group_GM, rel_GM_HM, *group_HM)
+
+    # Final text
+
+    final_text = (
+        mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL)
+        .scale(0.6)
+        .shift(mn.UP * 3)
+    )
+
+    scene.add(final_text)
 
     # Focus and scale animations
 
@@ -102,10 +120,15 @@ def construct_scene(scene: mn.Scene, reverse=False):
     for mobj in fade_in:
         mobj.set_opacity(1)
 
-    # Write final text
-
-    final_text = mn.Text("Das sind die Mittelungleichungen!", color=TXTCOL).scale(0.6)
-    scene.play(mn.Write(final_text), run_time=3.67)
+    # Underline final text
+    underline = mn.Line(
+        start=final_text.get_left(), end=final_text.get_right(), color=TXTCOL
+    )
+    underline.next_to(final_text, mn.DOWN, buff=0.2)
+    scene.play(
+        mn.ShowPassingFlash(underline, time_width=0.2),
+        run_time=3.67,
+    )
 
 
 class MainSketch(mn.Scene):

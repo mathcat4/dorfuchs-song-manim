@@ -19,6 +19,7 @@ RIGHTANGLECOL = mn.GREY
 ANGLECOL = mn.PINK
 RIGHT_HALF_CENTER = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 LEFT_HALF_CENTER = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
+FIGURE_SCALE = 0.9
 
 # Helper functions and classes
 

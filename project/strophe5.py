@@ -141,7 +141,7 @@ def construct_scene(scene: mn.Scene):
     dot_hm.add_updater(lambda dot: dot.move_to(number_line.n2p(num_hm())))
     label_hm = mn.MathTex("HM", color=HMCOL).scale(0.5).next_to(dot_hm, mn.DOWN)
 
-    scene.add(
+    group_line = mn.VGroup(
         number_line,
         dot_qm,
         label_qm,
@@ -172,7 +172,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    scene.play(mn.Write(eq_mean_equal, run_time=2))
+    scene.play(mn.Write(eq_mean_equal), mn.FadeIn(group_line), run_time=2)
     scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
 
     scene.play(

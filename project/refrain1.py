@@ -64,7 +64,7 @@ def construct_scene(
     # Conditionally add either the external objects or the helper text
     if isinstance(ext_objs, mn.VGroup):
         ext_objs.shift(1.2 * mn.DOWN)
-        ext_objs.scale(0.8, about_point=mn.ORIGIN)
+        ext_objs.scale(FIGURE_SCALE, about_point=mn.ORIGIN)
 
         group_eq.shift(2 * mn.UP)
         group_text.shift(2 * mn.UP)
