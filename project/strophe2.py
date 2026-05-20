@@ -145,13 +145,16 @@ def construct_scene(scene: mn.Scene):
 
     # Outro Zeugs
 
-    fade_out_anims = [mobj.animate.fade(1) for mobj in scene.mobjects if mobj != term11]
-
     geo2 = Geo()
-    geo2.QMAMDreieck.shift(
-        geo.construction.get_center() - geo2.construction.get_center()
-    )
-    scene.add(geo2.QMAMDreieck)
+
+    group_move = mn.VGroup(geo2.construction, geo2.N, geo2.labelN, geo2.QMAMDreieck)
+    group_move.shift(geo.construction.get_center() - geo2.construction.get_center())
+
+    scene.add(group_move)
+
+    for mobj in scene.mobjects:
+        if mobj != term11:
+            scene.remove(mobj)
 
     # Hypothenuse Dings und so
 
@@ -177,11 +180,10 @@ def construct_scene(scene: mn.Scene):
     )
 
     move_dir = (
-        Geo().QMAMDreieck.get_center() - geo2.QMAMDreieck.get_center() + 1.2 * mn.DOWN
+        Geo().construction.get_center() - geo2.construction.get_center() + 1.2 * mn.DOWN
     )
-    fade_out_anims += [
-        # Triangle and labels
-        geo2.QMAMDreieck.animate.shift(move_dir),
+    fade_out_anims = [
+        # Labels shift
         mn.FadeIn(hypolabel),
         mn.FadeIn(kathlabel),
         hypolabel.animate.shift(move_dir),
@@ -189,18 +191,25 @@ def construct_scene(scene: mn.Scene):
         # Other anims
         mn.TransformMatchingTex(term10, term11),
     ]
+
+    for mobj in group_move:
+        if mobj != geo2.QMAMDreieck:
+            fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir)]
+        else:
+            fade_out_anims += [mobj.animate.shift(move_dir)]
+
     scene.play(*fade_out_anims, run_time=1)
 
     geq = (
         mn.MathTex(r"\geq", color=TXTCOL)
         .scale(0.8)
-        .next_to(geo2.N.get_center(), mn.UP, buff=0.3)
+        .next_to(geo2.N.get_center(), mn.UP, buff=0.5)
     )
 
     fulluneq = (
         mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
         .scale(0.8)
-        .next_to(geo2.N.get_center(), mn.UP, buff=0.3)
+        .next_to(geo2.N.get_center(), mn.UP, buff=0.5)
     )
     fulluneq.move_to(
         fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()

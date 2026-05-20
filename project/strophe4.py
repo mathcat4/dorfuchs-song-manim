@@ -114,13 +114,27 @@ def construct_scene(scene: mn.Scene):
 
     # Outro
 
-    fade_out_anims = [mobj.animate.fade(1) for mobj in scene.mobjects if mobj != term6]
-
     geo2 = Geo()
-    geo2.GMHMDreieck.shift(
-        geo.construction.get_center() - geo2.construction.get_center()
+    group_move = mn.VGroup(
+        geo2.qm,
+        geo2.construction,
+        geo2.N,
+        geo2.labelN,
+        geo2.X,
+        geo2.labelX,
+        geo2.G,
+        geo2.labelG,
+        geo2.AMGMDreieck,
+        geo2.GMHMDreieck,
+        geo2.angXl,
     )
-    scene.add(geo2.GMHMDreieck)
+
+    group_move.shift(geo.construction.get_center() - geo2.construction.get_center())
+    scene.add(group_move)
+
+    for mobj in scene.mobjects:
+        if mobj != term6:
+            scene.remove(mobj)
 
     hypolabel = mn.Text("Hypothenuse", font_size=24, color=GMCOL).move_to(geo2.gm)
     hypolabel.rotate(mn.PI + geo2.gm.get_angle()).shift(
@@ -144,27 +158,33 @@ def construct_scene(scene: mn.Scene):
     )
 
     move_dir = (
-        Geo().GMHMDreieck.get_center() - geo2.GMHMDreieck.get_center() + 1.2 * mn.DOWN
+        Geo().construction.get_center() - geo2.construction.get_center() + 1.2 * mn.DOWN
     )
-    fade_out_anims += [
-        # Triangle and Label shift
-        geo2.GMHMDreieck.animate.shift(move_dir),
+    fade_out_anims = [
+        # Labels shift
         mn.FadeIn(hypolabel),
         mn.FadeIn(kathlabel),
         hypolabel.animate.shift(move_dir),
         kathlabel.animate.shift(move_dir),
     ]
+
+    for mobj in group_move:
+        if mobj != geo2.GMHMDreieck:
+            fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir)]
+        else:
+            fade_out_anims += [mobj.animate.shift(move_dir)]
+
     scene.play(*fade_out_anims, run_time=1)
 
     geq = (
         mn.MathTex(r"\geq", color=TXTCOL)
         .scale(0.8)
-        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
     fulluneq = (
         mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
         .scale(0.8)
-        .next_to(geo2.X.get_center(), mn.UP, buff=0.3)
+        .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
     fulluneq.move_to(
         fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
