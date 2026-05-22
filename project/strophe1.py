@@ -41,18 +41,31 @@ def construct_scene(scene: mn.Scene):
         mn.FadeIn(b2),
     )
 
-    # scene.wait(4.13)
-    scene.wait(3.9)
-    term1 = mn.MathTex(r"a + b", color=TXTCOL).shift(mn.UP * 3 + 2 * mn.LEFT)
+    avg_text = mn.MathTex(r"AM(a, b)", r"= \O(a, b)", color=TXTCOL).shift(
+        mn.UP * 3 + 2 * mn.LEFT
+    )
+
+    scene.wait(1.5)
+
+    scene.play(mn.Write(avg_text, run_time=1.5))
+    scene.wait(0.9)
+
+    term1 = mn.MathTex(r"a + b", r"\quad \enspace AM(a,b)", color=TXTCOL).shift(
+        mn.UP * 3 + 2 * mn.LEFT
+    )
     scene.play(
         mn.ReplacementTransform(firsta, geo.sega),
         mn.ReplacementTransform(firstb, geo.segb),
         mn.FadeOut(b1),
         mn.FadeOut(b2),
-        mn.TransformMatchingShapes(labelAB, term1),
+        mn.TransformMatchingShapes(labelAB, term1[0]),
+        mn.TransformMatchingShapes(avg_text[0], term1[1]),
+        mn.FadeOut(avg_text[1]),
     )
 
-    term2 = mn.MathTex(r"\frac{a + b}{2}", color=TXTCOL).shift(mn.UP * 3 + 2 * mn.LEFT)
+    term2 = mn.MathTex(r"\frac{a + b}{2}", r"=", r"AM(a,b)", color=TXTCOL).shift(
+        mn.UP * 3 + 2 * mn.LEFT
+    )
     scene.play(
         mn.Create(geo.S),
         mn.FadeIn(geo.abr),
@@ -64,7 +77,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(
         mn.Create(geo.M),
         mn.Create(geo.labelM),
-        mn.TransformMatchingShapes(term1, term2),
+        mn.TransformMatchingShapes(term1[0], term2[0]),
+        mn.TransformMatchingShapes(term1[1], term2[2]),
+        mn.FadeIn(term2[1]),
     )
 
     scene.wait(1.74)
@@ -72,7 +87,7 @@ def construct_scene(scene: mn.Scene):
 
     # whole radius moving animation thing
     scene.wait(1.47)
-    term3 = mn.MathTex("r =", r"\frac{a + b}{2}", "= AM(a,b)", color=AMCOL).shift(
+    term3 = mn.MathTex("r =", r"\frac{a + b}{2}", r"=", r"AM(a,b)", color=AMCOL).shift(
         mn.UP * 3 + 2 * mn.LEFT
     )
     # bitte bite funktuniertre
@@ -83,9 +98,10 @@ def construct_scene(scene: mn.Scene):
     scene.add(moving_dot)
     scene.mobjects.insert(1, line)
     scene.play(
-        mn.TransformMatchingShapes(term2, term3[1]),  # morph fraction to new fraction
+        mn.TransformMatchingShapes(term2[0], term3[1]),
+        mn.TransformMatchingShapes(term2[1], term3[2]),
+        mn.TransformMatchingShapes(term2[2], term3[3]),
         mn.FadeIn(term3[0]),  # r =
-        mn.FadeIn(term3[2]),  # = AM(a,b)
         mn.MoveAlongPath(
             moving_dot,
             geo.semikreis,
@@ -95,12 +111,12 @@ def construct_scene(scene: mn.Scene):
     )
     scene.remove(line)
 
-    scene.wait(2)
+    scene.wait(1.8)
     scene.play(mn.Create(geo.labelS))
 
     ## Part two
 
-    scene.wait(2.5)
+    scene.wait(2.7)
     scene.play(mn.FadeOut(term3), geo.construction.animate.shift(mn.DOWN + mn.LEFT))
 
     # Construct chords in semicircle

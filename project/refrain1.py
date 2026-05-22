@@ -5,6 +5,7 @@ def construct_scene(
     scene: mn.Scene,
     ext_objs: mn.VGroup | None = None,
     mObjsFocus: dict[int, mn.VGroup] | None = None,
+    switch_formulas: bool = False,
 ):
     """
     Variable animation for refrains 1 to 5.
@@ -17,36 +18,59 @@ def construct_scene(
 
     # Equation and Relation objects
 
-    eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=TXTCOL)
-    eq_AM = mn.MathTex(r"\frac{a+b}{2}", color=TXTCOL)
-    eq_GM = mn.MathTex(r"\sqrt{ab}", color=TXTCOL)
-    eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
+    if not switch_formulas:
+        eq_QM = mn.MathTex(r"\sqrt{\frac{a^2+b^2}{2}}", color=TXTCOL)
+        eq_AM = mn.MathTex(r"\frac{a+b}{2}", color=TXTCOL)
+        eq_GM = mn.MathTex(r"\sqrt{ab}", color=TXTCOL)
+        eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
+    else:
+        eq_QM = mn.MathTex(
+            r"\sqrt{ \frac{1}{n} \sum_{i=1}^n x_i^2 }",
+            color=QMCOL,
+        )
+        eq_AM = mn.MathTex(r"\frac{1}{n} \sum_{i=1}^n x_i", color=AMCOL)
+        eq_GM = mn.MathTex(r"\sqrt[n]{ \prod_{i=1}^n x_i }", color=GMCOL)
+        eq_HM = mn.MathTex(
+            r"\left( \frac{1}{n} \sum_{i=1}^n \frac{1}{x_i} \right)^{-1}", color=HMCOL
+        )
 
     rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)
     rel_AM_GM = mn.MathTex(r"\geq", color=TXTCOL)
     rel_GM_HM = mn.MathTex(r"\geq", color=TXTCOL)
 
-    group_eq = (
-        mn.VGroup(eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM)
-        .arrange(mn.RIGHT, buff=0.5)
-        .scale(0.8)
-    )
+    if not switch_formulas:
+        group_eq = mn.VGroup(
+            eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
+        ).arrange(mn.RIGHT, buff=0.5)
+        group_eq.scale(0.8)
+    else:
+        group_eq = mn.VGroup(
+            eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
+        ).arrange(mn.RIGHT, buff=0.75)
+        group_eq.scale(0.65)
 
     # Text objects
 
-    text_QM = mn.Text("QM", color=QMCOL).scale(0.6)
+    if not switch_formulas:
+        text_QM = mn.Text("QM", color=QMCOL).scale(0.6)
+        text_AM = mn.Text("AM", color=AMCOL).scale(0.6)
+        text_GM = mn.Text("GM", color=GMCOL).scale(0.6)
+        text_HM = mn.Text("HM", color=HMCOL).scale(0.6)
+    else:
+        text_QM = mn.MathTex(r"\textbf{QM } (p = 2)", color=QMCOL).scale(0.65)
+        text_AM = mn.MathTex(r"\textbf{AM } (p = 1)", color=AMCOL).scale(0.65)
+        text_GM = mn.MathTex(r"\textbf{GM } (p \to 0)", color=GMCOL).scale(0.65)
+        text_HM = mn.MathTex(r"\textbf{HM } (p = -1)", color=HMCOL).scale(0.65)
+
     text_QM.move_to(eq_QM).align_to(group_eq.get_top() + 0.8 * mn.UP, mn.UP)
     group_QM = mn.VGroup(eq_QM, text_QM)
 
-    text_AM = mn.Text("AM", color=AMCOL).scale(0.6)
     text_AM.move_to(eq_AM).align_to(group_eq.get_top() + 0.8 * mn.UP, mn.UP)
     group_AM = mn.VGroup(eq_AM, text_AM)
 
-    text_GM = mn.Text("GM", color=GMCOL).scale(0.6)
     text_GM.move_to(eq_GM).align_to(group_eq.get_top() + 0.8 * mn.UP, mn.UP)
     group_GM = mn.VGroup(eq_GM, text_GM)
 
-    text_HM = mn.Text("HM", color=HMCOL).scale(0.6)
     text_HM.move_to(eq_HM).align_to(group_eq.get_top() + 0.8 * mn.UP, mn.UP)
     group_HM = mn.VGroup(eq_HM, text_HM)
 
@@ -83,7 +107,12 @@ def construct_scene(
 
     fade_in = []
 
-    for iteration, group_anim in enumerate([group_QM_AM, group_AM_GM, group_GM_HM]):
+    group_anims = [group_QM_AM, group_AM_GM, group_GM_HM]
+
+    if switch_formulas:
+        group_anims = group_anims[::-1]
+
+    for iteration, group_anim in enumerate(group_anims):
         # Fade out last iteration and fade in current iteration
 
         fade_out = [mobj for mobj in [*group_eq, *group_text] if mobj not in group_anim]
@@ -200,26 +229,28 @@ class MainSketch(mn.Scene):
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
 
-        # construct_scene(self)
+        construct_scene(self)
 
-        geo = Geo()
-        construct_scene(
-            self,
-            ext_objs=mn.VGroup(
-                geo.construction,
-                geo.N,
-                geo.labelN,
-                geo.X,
-                geo.labelX,
-                geo.G,
-                geo.labelG,
-                geo.QMAMDreieck,
-                geo.AMGMDreieck,
-                geo.GMHMDreieck,
-            ),
-            mObjsFocus={
-                0: geo.QMAMDreieck,
-                1: geo.AMGMDreieck,
-                2: geo.GMHMDreieck,
-            },
-        )
+        # construct_scene(self, switch_formulas=True)
+
+        # geo = Geo()
+        # construct_scene(
+        #     self,
+        #     ext_objs=mn.VGroup(
+        #         geo.construction,
+        #         geo.N,
+        #         geo.labelN,
+        #         geo.X,
+        #         geo.G,
+        #         geo.QMAMDreieck,
+        #         geo.AMGMDreieck,
+        #         geo.GMHMDreieck,
+        #         geo.labelG,
+        #         geo.labelX,
+        #     ),
+        #     mObjsFocus={
+        #         0: geo.QMAMDreieck,
+        #         1: geo.AMGMDreieck,
+        #         2: geo.GMHMDreieck,
+        #     },
+        # )

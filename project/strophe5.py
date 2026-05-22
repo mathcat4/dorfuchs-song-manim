@@ -172,7 +172,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.wait(1)
 
-    scene.play(mn.Write(eq_mean_equal), mn.FadeIn(group_line), run_time=2)
+    scene.play(mn.Write(eq_mean_equal, run_time=2), mn.FadeIn(group_line, run_time=1))
     scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
 
     scene.play(

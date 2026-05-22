@@ -19,7 +19,7 @@ RIGHTANGLECOL = mn.GREY
 ANGLECOL = mn.PINK
 RIGHT_HALF_CENTER = mn.ORIGIN + mn.RIGHT * mn.config.frame_x_radius / 2
 LEFT_HALF_CENTER = mn.ORIGIN + mn.LEFT * mn.config.frame_x_radius / 2
-FIGURE_SCALE = 0.9
+FIGURE_SCALE = 1  # naahhh the countless hours of strugle just for the scale to be one
 
 # Helper functions and classes
 
@@ -150,6 +150,8 @@ class Geo:
         self.lineSG = mn.DashedLine(
             self.S.get_center(), self.G.get_center(), color=TXTCOL, stroke_width=3
         )
+        self.lineAX = mn.Line(self.A.get_center(), self.X.get_center(), color=TXTCOL)
+        self.lineBX = mn.Line(self.B.get_center(), self.X.get_center(), color=TXTCOL)
 
         # Labels
         self.labelM = mn.MathTex("M", font_size=24, color=TXTCOL)
@@ -255,6 +257,8 @@ class Geo:
                 self.hm,
                 self.lineMS,
                 self.lineSG,
+                self.lineAX,
+                self.lineBX,
             ],
             # Labels
             *[self.labelM, self.labelS, self.labelN, self.labelX, self.labelG],

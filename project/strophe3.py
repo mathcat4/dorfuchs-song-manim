@@ -43,11 +43,9 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Create(geo.labelX), run_time=1)
     scene.mobjects.insert(1, geo.am1)
 
-    lineAX = mn.Line(geo.A.get_center(), geo.X.get_center(), color=TXTCOL)
-    lineBX = mn.Line(geo.B.get_center(), geo.X.get_center(), color=TXTCOL)
     scene.play(
-        mn.Create(lineAX),
-        mn.Create(lineBX),
+        mn.Create(geo.lineAX),
+        mn.Create(geo.lineBX),
         mn.Create(geo.am1),
         run_time=1,
     )
@@ -97,13 +95,16 @@ def construct_scene(scene: mn.Scene):
     geo2 = Geo()
 
     group_move = mn.VGroup(
+        geo2.qm,
         geo2.construction,
         geo2.N,
-        geo2.labelN,
         geo2.X,
         geo2.labelX,
-        geo2.QMAMDreieck,
         geo2.AMGMDreieck,
+        geo2.rightX,
+        geo2.rightS,
+        geo2.lineAX,
+        geo2.lineBX,
     )
 
     group_move.shift(geo.construction.get_center() - geo2.construction.get_center())
@@ -148,11 +149,7 @@ def construct_scene(scene: mn.Scene):
         term5.animate.move_to(term6[0]).set_color(GMCOL),
     ]
 
-    for mobj in group_move:
-        if mobj != geo2.AMGMDreieck:
-            fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir)]
-        else:
-            fade_out_anims += [mobj.animate.shift(move_dir)]
+    fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir) for mobj in group_move]
 
     scene.play(*fade_out_anims, run_time=1)
 
@@ -186,13 +183,22 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain4 - scene.time - 1)
 
-    anims = [geo2.AMGMDreieck.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
+    anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
+    keep_group = [
+        geo2.construction,
+        geo2.N,
+        geo2.labelN,
+        geo2.X,
+        geo2.labelX,
+        geo2.QMAMDreieck,
+        geo2.AMGMDreieck,
+    ]
+
     for mobj in scene.mobjects:
-        if mobj != geo2.AMGMDreieck:
+        if mobj not in keep_group:
             anims.append(mn.FadeOut(mobj))
 
-    if anims:
-        scene.play(*anims, run_time=1)
+    scene.play(*anims, run_time=1)
 
 
 class MainSketch(mn.Scene):

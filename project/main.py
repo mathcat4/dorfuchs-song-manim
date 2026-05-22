@@ -90,12 +90,12 @@ class MainSketch(mn.Scene):
                 geo.N,
                 geo.labelN,
                 geo.X,
-                geo.labelX,
                 geo.G,
-                geo.labelG,
                 geo.QMAMDreieck,
                 geo.AMGMDreieck,
                 geo.GMHMDreieck,
+                geo.labelX,
+                geo.labelG,
             ),
             mObjsFocus={
                 0: geo.QMAMDreieck,
@@ -115,6 +115,6 @@ class MainSketch(mn.Scene):
         refrain6.construct_scene(self)
 
         # Refrain 7
-        self.wait(Audio.refrain7 - self.time)
-        self.clear()
-        refrain6.construct_scene(self, reverse=True)
+        self.wait(Audio.refrain7 - self.time - fade_duration)
+        fadeout_all(self, run_time=fade_duration)
+        refrain1.construct_scene(self, switch_formulas=True)

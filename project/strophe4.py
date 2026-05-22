@@ -168,11 +168,7 @@ def construct_scene(scene: mn.Scene):
         kathlabel.animate.shift(move_dir),
     ]
 
-    for mobj in group_move:
-        if mobj != geo2.GMHMDreieck:
-            fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir)]
-        else:
-            fade_out_anims += [mobj.animate.shift(move_dir)]
+    fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir) for mobj in group_move]
 
     scene.play(*fade_out_anims, run_time=1)
 
@@ -207,13 +203,25 @@ def construct_scene(scene: mn.Scene):
     else:
         scene.wait(Audio.refrain5 - scene.time - 1)
 
-    anims = [geo2.GMHMDreieck.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
+    anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
+    keep_group = [
+        geo2.construction,
+        geo2.N,
+        geo2.labelN,
+        geo2.X,
+        geo2.G,
+        geo2.QMAMDreieck,
+        geo2.AMGMDreieck,
+        geo2.GMHMDreieck,
+        geo2.labelX,
+        geo2.labelG,
+    ]
+
     for mobj in scene.mobjects:
-        if mobj != geo2.GMHMDreieck:
+        if mobj not in keep_group:
             anims.append(mn.FadeOut(mobj))
 
-    if anims:
-        scene.play(*anims, run_time=1)
+    scene.play(*anims, run_time=1)
 
 
 class MainSketch(mn.Scene):

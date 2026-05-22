@@ -9,7 +9,7 @@ def construct_scene(scene: mn.Scene, reverse=False):
     # Multi variable means
 
     eq_QM = mn.MathTex(
-        r"\frac{ \sqrt{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } } { n }",
+        r"\sqrt{ \frac{ {a_1}^2 + {a_2}^2 + \dots + {a_n}^2 } { n } }",
         color=QMCOL,
     ).scale(0.8)
     eq_AM = mn.MathTex(r"\frac{ a_1 + a_2 + \dots + a_n } { n }", color=AMCOL).scale(
