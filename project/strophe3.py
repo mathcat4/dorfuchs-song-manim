@@ -119,8 +119,8 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     hypolabel.rotate(geo2.am1.get_angle()).shift(
         np.asarray(
             [
-                0.3 * math.cos(mn.PI / 2 - geo2.am1.get_angle()),
-                0.3 * math.sin(mn.PI / 2 - geo2.am1.get_angle()),
+                0.35 * math.cos(mn.PI / 2 - geo2.am1.get_angle()),
+                0.35 * math.sin(mn.PI / 2 - geo2.am1.get_angle()),
                 0,
             ]
         )
@@ -190,13 +190,19 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
 
+    add_objs = [geo2.am2, geo2.rightM]
+    for mobj in add_objs:
+        mobj.shift(1.2 * mn.DOWN)
+        anims.append(mn.FadeIn(mobj))
+
     keep_objs = [
         geo2.construction,
         geo2.N,
         geo2.labelN,
         geo2.X,
         geo2.labelX,
-        geo2.QMAMDreieck,
+        geo2.qm,
+        geo2.rightS,
     ]
     keep_family = set()
     for obj in keep_objs:
@@ -208,6 +214,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         elif mobj != triangle:
             anims.append(mn.FadeOut(mobj))
 
+    scene.mobjects.insert(1, geo2.am2)
     scene.play(*anims, run_time=1)
 
 

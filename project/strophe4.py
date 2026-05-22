@@ -124,9 +124,9 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         geo2.labelN,
         geo2.X,
         geo2.labelX,
-        geo2.G,
         geo2.labelG,
         geo2.AMGMDreieck,
+        triangle,
         geo2.angXl,
     )
 
@@ -210,12 +210,16 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
 
+    add_objs = [geo2.am2, geo2.rightM]
+    for mobj in add_objs:
+        mobj.shift(1.2 * mn.DOWN)
+        anims.append(mn.FadeIn(mobj))
+
     keep_objs = [
         geo2.construction,
         geo2.N,
         geo2.labelN,
         geo2.X,
-        geo2.G,
         geo2.QMAMDreieck,
         geo2.AMGMDreieck,
         geo2.labelX,
@@ -231,6 +235,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         elif mobj != triangle:
             anims.append(mn.FadeOut(mobj))
 
+    scene.mobjects.insert(1, geo2.am2)
     scene.play(*anims, run_time=1)
 
 
