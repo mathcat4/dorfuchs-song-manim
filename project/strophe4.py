@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene):
+def construct_scene(scene: mn.Scene, debug: bool = False):
     """
     Animation for strophe 4. Konstruktion QM.
     """
@@ -115,6 +115,8 @@ def construct_scene(scene: mn.Scene):
     # Outro
 
     geo2 = Geo()
+    triangle = geo2.GMHMDreieck
+
     group_move = mn.VGroup(
         geo2.qm,
         geo2.construction,
@@ -125,7 +127,6 @@ def construct_scene(scene: mn.Scene):
         geo2.G,
         geo2.labelG,
         geo2.AMGMDreieck,
-        geo2.GMHMDreieck,
         geo2.angXl,
     )
 
@@ -168,7 +169,11 @@ def construct_scene(scene: mn.Scene):
         kathlabel.animate.shift(move_dir),
     ]
 
-    fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir) for mobj in group_move]
+    for mobj in group_move:
+        if mobj == triangle:
+            fade_out_anims.append(mobj.animate.shift(move_dir))
+        else:
+            fade_out_anims.append(mobj.animate.fade(0.8).shift(move_dir))
 
     scene.play(*fade_out_anims, run_time=1)
 
@@ -198,13 +203,14 @@ def construct_scene(scene: mn.Scene):
 
     # Fade out
 
-    if __name__ == "__main__":
-        scene.wait(Audio.refrain5 - Audio.strophe4 - scene.time - 1)
-    else:
+    if not debug:
         scene.wait(Audio.refrain5 - scene.time - 1)
+    else:
+        scene.wait(Audio.refrain5 - Audio.strophe4 - scene.time - 1)
 
     anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
-    keep_group = [
+
+    keep_objs = [
         geo2.construction,
         geo2.N,
         geo2.labelN,
@@ -212,13 +218,17 @@ def construct_scene(scene: mn.Scene):
         geo2.G,
         geo2.QMAMDreieck,
         geo2.AMGMDreieck,
-        geo2.GMHMDreieck,
         geo2.labelX,
         geo2.labelG,
     ]
+    keep_family = set()
+    for obj in keep_objs:
+        keep_family.update(obj.get_family())
 
     for mobj in scene.mobjects:
-        if mobj not in keep_group:
+        if mobj in keep_family:
+            anims.append(mobj.animate.fade(-4))
+        elif mobj != triangle:
             anims.append(mn.FadeOut(mobj))
 
     scene.play(*anims, run_time=1)
@@ -230,4 +240,4 @@ class MainSketch(mn.Scene):
         STOP = int(Audio.refrain5 * 1000)
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
-        construct_scene(self)
+        construct_scene(self, debug=True)

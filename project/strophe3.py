@@ -1,7 +1,7 @@
 from helpers import *
 
 
-def construct_scene(scene: mn.Scene):
+def construct_scene(scene: mn.Scene, debug: bool = False):
     """
     Animation for strophe 3. Konstruktion GM.
     """
@@ -93,6 +93,7 @@ def construct_scene(scene: mn.Scene):
     # Outro Zeugs
 
     geo2 = Geo()
+    triangle = geo2.AMGMDreieck
 
     group_move = mn.VGroup(
         geo2.qm,
@@ -100,7 +101,7 @@ def construct_scene(scene: mn.Scene):
         geo2.N,
         geo2.X,
         geo2.labelX,
-        geo2.AMGMDreieck,
+        triangle,
         geo2.rightX,
         geo2.rightS,
         geo2.lineAX,
@@ -149,7 +150,11 @@ def construct_scene(scene: mn.Scene):
         term5.animate.move_to(term6[0]).set_color(GMCOL),
     ]
 
-    fade_out_anims += [mobj.animate.fade(0.8).shift(move_dir) for mobj in group_move]
+    for mobj in group_move:
+        if mobj == triangle:
+            fade_out_anims.append(mobj.animate.shift(move_dir))
+        else:
+            fade_out_anims.append(mobj.animate.fade(0.8).shift(move_dir))
 
     scene.play(*fade_out_anims, run_time=1)
 
@@ -178,24 +183,29 @@ def construct_scene(scene: mn.Scene):
 
     # Fade out
 
-    if __name__ == "__main__":
-        scene.wait(Audio.refrain4 - Audio.strophe3 - scene.time - 1)
-    else:
+    if not debug:
         scene.wait(Audio.refrain4 - scene.time - 1)
+    else:
+        scene.wait(Audio.refrain4 - Audio.strophe3 - scene.time - 1)
 
     anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
-    keep_group = [
+
+    keep_objs = [
         geo2.construction,
         geo2.N,
         geo2.labelN,
         geo2.X,
         geo2.labelX,
         geo2.QMAMDreieck,
-        geo2.AMGMDreieck,
     ]
+    keep_family = set()
+    for obj in keep_objs:
+        keep_family.update(obj.get_family())
 
     for mobj in scene.mobjects:
-        if mobj not in keep_group:
+        if mobj in keep_family:
+            anims.append(mobj.animate.fade(-4))
+        elif mobj != triangle:
             anims.append(mn.FadeOut(mobj))
 
     scene.play(*anims, run_time=1)
@@ -207,4 +217,4 @@ class MainSketch(mn.Scene):
         STOP = int(Audio.refrain4 * 1000)
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
-        construct_scene(self)
+        construct_scene(self, debug=True)
