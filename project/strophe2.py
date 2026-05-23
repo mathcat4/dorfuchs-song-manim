@@ -94,7 +94,6 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     term3 = mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
     scene.play(
         mn.TransformMatchingShapes(term2, term3),
-        geo.lineMS.animate.set_color(TXTCOL),
         run_time=0.5,
     )
 
@@ -106,7 +105,11 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{\right)}}{{\hspace{0pt}^2}} ",
         color=TXTCOL,
     ).move_to(3 * mn.UP + mn.LEFT)
-    scene.play(mn.TransformMatchingTex(mn.VGroup(term3, term1), term4), run_time=1)
+    scene.play(
+        mn.TransformMatchingTex(mn.VGroup(term3, term1), term4),
+        geo.lineMS.animate.set_color(TXTCOL),
+        run_time=1,
+    )
 
     term5 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",
