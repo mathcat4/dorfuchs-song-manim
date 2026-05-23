@@ -24,6 +24,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.bring_to_back(geo.qm)
     scene.play(mn.Create(geo.qm), run_time=1)
     scene.play(mn.Create(geo.labelN), run_time=1)
+    scene.bring_to_back(geo.rightM)
     scene.play(mn.Create(geo.rightM), run_time=1)
 
     bquestion = mn.Brace(
@@ -38,50 +39,74 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     scene.wait(1)
     scene.play(mn.Wiggle(geo.QMAMDreieck), run_time=1.7)
-    scene.add(
-        geo.am2
-    )  # sieht zwar fett dumm aus aber is nötig, weil das anwenden von Gruppen Daten komisch umformatiert (und man das iwie wieder auflösen muss) und deswegen meine hex hex funktion nd funktioniert.
-    scene.bring_to_back(geo.am2)
 
     scene.play(mn.FadeOut(tex1, run_time=0.5))
 
-    scene.wait(0.25)
-    scene.play(mn.Wiggle(geo.am2), run_time=1.7)
+    scene.wait(0.9)
+    scene.play(mn.Wiggle(geo.am2, run_time=1.05))
+
     am2_copy = geo.am2.copy()
-    term1 = mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL).move_to(
-        3 * mn.UP + 2 * mn.LEFT
+    label_rad = (
+        mn.MathTex(r"a+b \over 2", color=TXTCOL)
+        .scale(0.5)
+        .next_to(am2_copy, mn.RIGHT, buff=0.5)
     )
+    label_rad_copy = label_rad.copy()
     scene.play(
-        mn.ReplacementTransform(am2_copy, term1),
+        mn.Write(label_rad),
         run_time=1,
     )
 
-    scene.wait(1.02)
-    scene.bring_to_front(geo.am3)
+    term1 = mn.MathTex(r"{{{a+b \over 2}}}", color=TXTCOL).move_to(
+        3 * mn.UP + 2 * mn.LEFT
+    )
+
+    scene.mobjects.insert(3, am2_copy)
+    scene.bring_to_back(geo.rightM, geo.lineMS)
+    scene.wait(0.2)
+    scene.play(
+        mn.Rotate(am2_copy, mn.PI / 2, about_point=tuple(geo.M.get_center())),
+        RotatePreserveOrientation(label_rad, mn.PI / 2, about_point=geo.M.get_center()),
+        mn.ReplacementTransform(label_rad_copy, term1),
+        runtime=1.02,
+    )
+
     scene.bring_to_front(geo.S)
     scene.bring_to_front(geo.M)
-    scene.play(mn.FadeIn(geo.am3), run_time=0.4)
+    scene.wait(0.2)
+
+    label_rad_2 = (
+        mn.MathTex(r"{ a+b \over 2 }", r" - a", color=TXTCOL)
+        .scale(0.5)
+        .next_to(geo.lineMS, mn.UP, buff=0.5)
+    )
 
     scene.play(
-        mn.ReplacementTransform(geo.am3, geo.lineMS.set_color(mn.RED)),
+        mn.ReplacementTransform(am2_copy, geo.lineMS.set_color(ANGLECOL)),
+        mn.TransformMatchingShapes(label_rad, label_rad_2[0]),
+        mn.FadeIn(label_rad_2[1]),
         run_time=1.2,
     )
-    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5), run_time=1.3)
 
     term2 = mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
-    scene.play(mn.Transform(geo.lineMS, term2), run_time=0.76)
-    scene.remove(geo.lineMS)
+    scene.play(mn.TransformMatchingShapes(label_rad_2, term2), run_time=0.76)
+
+    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5, run_time=1.3))
 
     # Pure eqution manipulation
 
     term3 = mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
-    scene.play(mn.TransformMatchingShapes(term2, term3), run_time=0.5)
+    scene.play(
+        mn.TransformMatchingShapes(term2, term3),
+        geo.lineMS.animate.set_color(TXTCOL),
+        run_time=0.5,
+    )
 
     term4 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{\right)}}{{\hspace{0pt}^2}} ",
         color=TXTCOL,
     ).move_to(3 * mn.UP + mn.LEFT)
-    scene.play(mn.TransformMatchingTex(mn.Group(term3, term1), term4), run_time=1)
+    scene.play(mn.TransformMatchingTex(mn.VGroup(term3, term1), term4), run_time=1)
 
     term5 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {  {{(\kern0pt}}a+b{{)\kern0pt}} {{^2\kern0pt}}  {{\over}} {{2^2}} } {{+}} { {{(}}b-a{{)}} {{\hspace{0pt}^2}} {{\over}} {{2^2}} } ",

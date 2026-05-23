@@ -1,4 +1,5 @@
 import manim as mn
+import manim.typing as mpt
 import numpy as np
 import typing as typ
 import math
@@ -82,6 +83,20 @@ def TransformMatchingShapesNoReplace(src: mn.Mobject, target: mn.Mobject, **kwar
     """
     src_copy = src.copy()
     return mn.TransformMatchingShapes(src_copy, target, **kwargs)
+
+
+def RotatePreserveOrientation(
+    mobject: mn.Mobject, angle: float, about_point: mpt.Point3DLike
+):
+    """
+    Rotate `mobject` around `about_point` by `angle` while preserving its orientation
+    """
+    start_vec = mobject.get_center() - np.array(about_point)
+    dist = typ.cast(float, np.linalg.norm(start_vec))
+    start_angle = np.arctan2(start_vec[1], start_vec[0])
+
+    circle = mn.Arc(dist, start_angle=start_angle, angle=angle, arc_center=about_point)
+    return mn.MoveAlongPath(mobject, circle)
 
 
 class CommaDecimalNumber(mn.DecimalNumber):
