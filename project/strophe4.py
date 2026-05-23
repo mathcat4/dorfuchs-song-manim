@@ -137,22 +137,27 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         if mobj != term6:
             scene.remove(mobj)
 
-    hypolabel = mn.Text("Hypothenuse", font_size=24, color=GMCOL).move_to(geo2.gm)
-    hypolabel.rotate(mn.PI + geo2.gm.get_angle()).shift(
+    hypoangle = mn.PI + geo2.gm.get_angle()
+    kathangle = geo2.hm.get_angle()
+
+    hypolabel = mn.MathTex(r"\text{Hypothenuse}", color=GMCOL).scale(0.8)
+    hypolabel.rotate(hypoangle).move_to(geo2.gm)
+    hypolabel.shift(
         np.asarray(
             [
-                -0.3 * math.cos(mn.PI / 2 - geo2.gm.get_angle()),
-                -0.3 * math.sin(mn.PI / 2 - geo2.gm.get_angle()),
+                0.25 * math.cos(hypoangle - mn.PI / 2),
+                0.25 * math.sin(hypoangle - mn.PI / 2),
                 0,
             ]
         )
     ).rotate(mn.PI)
-    kathlabel = mn.Text("Kathete", font_size=24, color=HMCOL).move_to(geo2.hm)
-    kathlabel.rotate(geo2.hm.get_angle()).shift(
+    kathlabel = mn.MathTex(r"\text{Kathete}", color=HMCOL).scale(0.8)
+    kathlabel.rotate(kathangle).move_to(geo2.hm)
+    kathlabel.shift(
         np.asarray(
             [
-                0.2 * math.cos(mn.PI / 2 + geo2.hm.get_angle()),
-                0.2 * math.sin(mn.PI / 2 + geo2.hm.get_angle()),
+                0.2 * math.cos(mn.PI / 2 + kathangle),
+                0.2 * math.sin(mn.PI / 2 + kathangle),
                 0,
             ]
         )
@@ -182,22 +187,22 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         .scale(0.8)
         .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
-    fulluneq = (
+    fullineq = (
         mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
         .scale(0.8)
         .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
-    fulluneq.move_to(
-        fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
+    fullineq.move_to(
+        fullineq.get_center() + geq.get_center() - fullineq[1].get_center()
     )
-    fulluneq[0].set_color(GMCOL)
-    fulluneq[2].set_color(HMCOL)
+    fullineq[0].set_color(GMCOL)
+    fullineq[2].set_color(HMCOL)
 
     scene.add(hypolabel, kathlabel)
     scene.wait(1)
     scene.play(
-        mn.Transform(hypolabel, fulluneq[0]),
-        mn.Transform(kathlabel, fulluneq[2]),
+        hypolabel.animate.rotate(mn.PI - hypoangle).move_to(fullineq[0]),
+        kathlabel.animate.rotate(-kathangle).move_to(fullineq[2]),
         mn.FadeIn(geq),
     )
 

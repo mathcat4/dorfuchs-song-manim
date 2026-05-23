@@ -78,7 +78,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.play(mn.TransformMatchingShapes(term2, term3), run_time=0.5)
 
     term4 = mn.MathTex(
-        r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{)}}{{\hspace{0pt}^2}} ",
+        r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{\right)}}{{\hspace{0pt}^2}} ",
         color=TXTCOL,
     ).move_to(3 * mn.UP + mn.LEFT)
     scene.play(mn.TransformMatchingTex(mn.Group(term3, term1), term4), run_time=1)
@@ -118,28 +118,21 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.play(mn.TransformMatchingTex(term8, term9), run_time=1)
 
     term10 = mn.MathTex(
-        r"{{|\overline{SN}|}} {{=}}  {{ \sqrt{a^2 + b^2 \over 2} }}",
+        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{ a^2 + b^2 \over 2 } }}",
         color=TXTCOL,
     ).move_to(3 * mn.UP + mn.LEFT)
+
     scene.play(
         mn.TransformMatchingShapes(term9[0], term10[0]),
         mn.FadeOut(term9[1]),
         mn.TransformMatchingShapes(term9[3], term10[2]),
-        mn.TransformMatchingShapes(
-            mn.VGroup(
-                typ.cast(mn.VGroup, term9[5]),
-                typ.cast(mn.VGroup, term9[7]),
-                typ.cast(mn.VGroup, term9[9]),
-                typ.cast(mn.VGroup, term9[11]),
-                typ.cast(mn.VGroup, term9[13]),
-            ),
-            term10[4],
-        ),
+        mn.FadeIn(term10[4][0:2]),
+        mn.TransformMatchingShapes(term9[5:], term10[4][2:]),
         run_time=1,
     )
 
     term11 = mn.MathTex(
-        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{a^2 + b^2 \over 2} }} = QM(a,b)",
+        r"{{|\overline{SN}|}} {{=}} {{ \sqrt{ a^2 + b^2 \over 2 } }} = QM(a,b)",
         color=QMCOL,
     ).shift(3 * mn.UP)
 
@@ -159,22 +152,27 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     # Hypothenuse Dings und so
 
-    hypolabel = mn.Text("Hypothenuse", font_size=24, color=QMCOL).move_to(geo2.qm)
-    hypolabel.rotate(geo2.qm.get_angle()).shift(
+    hypoangle = geo2.qm.get_angle()
+    kathangle = -geo2.am2.get_angle()
+
+    hypolabel = mn.MathTex(r"\text{Hypothenuse}", color=QMCOL).scale(0.8)
+    hypolabel.rotate(hypoangle).move_to(geo2.qm)
+    hypolabel.shift(
         np.asarray(
             [
-                0.2 * math.cos(mn.PI / 2 + geo2.qm.get_angle()),
-                0.2 * math.sin(mn.PI / 2 + geo2.qm.get_angle()),
+                0.2 * math.cos(mn.PI / 2 + hypoangle),
+                0.2 * math.sin(mn.PI / 2 + hypoangle),
                 0,
             ]
         )
     )
-    kathlabel = mn.Text("Kathete", font_size=24, color=AMCOL).move_to(geo2.am2)
-    kathlabel.rotate(-geo2.am2.get_angle()).shift(
+    kathlabel = mn.MathTex(r"\text{Kathete}", color=AMCOL).scale(0.8)
+    kathlabel.rotate(kathangle).move_to(geo2.am2)
+    kathlabel.shift(
         np.asarray(
             [
-                0.2 * math.cos(mn.PI / 2 - geo2.am2.get_angle()),
-                0.2 * math.sin(mn.PI / 2 - geo2.am2.get_angle()),
+                0.2 * math.cos(mn.PI / 2 + kathangle),
+                0.2 * math.sin(mn.PI / 2 + kathangle),
                 0,
             ]
         )
@@ -207,21 +205,22 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         .next_to(geo2.N.get_center(), mn.UP, buff=0.5)
     )
 
-    fulluneq = (
+    fullineq = (
         mn.MathTex(r"\text{Hypothenuse}", r"\geq", r"\text{Kathete}", color=TXTCOL)
         .scale(0.8)
         .next_to(geo2.N.get_center(), mn.UP, buff=0.5)
     )
-    fulluneq.move_to(
-        fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
+    fullineq.move_to(
+        fullineq.get_center() + geq.get_center() - fullineq[1].get_center()
     )
-    fulluneq[0].set_color(QMCOL)
-    fulluneq[2].set_color(AMCOL)
+    fullineq[0].set_color(QMCOL)
+    fullineq[2].set_color(AMCOL)
 
     scene.wait(1)
+
     scene.play(
-        mn.Transform(hypolabel, fulluneq[0]),
-        mn.Transform(kathlabel, fulluneq[2]),
+        hypolabel.animate.rotate(-hypoangle).move_to(fullineq[0]),
+        kathlabel.animate.rotate(-kathangle).move_to(fullineq[2]),
         mn.FadeIn(geq),
     )
 

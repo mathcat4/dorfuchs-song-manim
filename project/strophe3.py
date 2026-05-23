@@ -56,9 +56,9 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     # Write equation and wiggle wiggle
 
-    term4 = mn.MathTex(
-        r"|\overline{SX}|", r"^2", r"=", r"a", r"\cdot", r"b", color=TXTCOL
-    ).shift(mn.UP * 3 + mn.LEFT * 2)
+    term4 = mn.MathTex(r"|\overline{SX}|", r"^2", r"=", r"a", r"b", color=TXTCOL).shift(
+        mn.UP * 3 + mn.LEFT * 2
+    )
     scene.wait(2.72)
     scene.play(mn.Wiggle(geo.gm), run_time=0.5)
     scene.play(mn.ReplacementTransform(geo.gm.copy(), term4[0]), run_time=0.5)
@@ -75,16 +75,22 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     scene.play(mn.Wiggle(geo.segb), run_time=0.5)
     scene.play(
-        mn.ReplacementTransform(geo.segb.copy(), term4[5]),
-        mn.Write(typ.cast(mn.VMobject, term4[4])),
+        mn.ReplacementTransform(geo.segb.copy(), term4[4]),
+        # mn.Write(typ.cast(mn.VMobject, term4[4])),
         run_time=0.5,
     )
 
-    term5 = mn.MathTex(
-        r"{{|\overline{SX}|}}{{=}}\sqrt{{{a}}{{b}}}", color=TXTCOL
-    ).shift(mn.UP * 3 + mn.LEFT * 2)
+    term5 = mn.MathTex(r"|\overline{SX}|", r"=", r"\sqrt{ ab }", color=TXTCOL).shift(
+        mn.UP * 3 + mn.LEFT * 2
+    )
     scene.wait(0.1)
-    scene.play(mn.TransformMatchingTex(term4, term5))
+    scene.play(
+        mn.TransformMatchingShapes(term4[0], term5[0]),
+        mn.FadeOut(term4[1]),
+        mn.TransformMatchingShapes(term4[2], term5[1]),
+        mn.FadeIn(term5[2][0:2]),
+        mn.TransformMatchingShapes(term4[3:], term5[2][2:]),
+    )
 
     term6 = mn.MathTex(r"|\overline{SX}| = \sqrt{ab}", r"= GM(a,b)", color=GMCOL).shift(
         mn.UP * 3
@@ -115,22 +121,27 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         if mobj not in (term6[1], term5):
             scene.remove(mobj)
 
-    hypolabel = mn.Text("Hypothenuse", font_size=24, color=AMCOL).move_to(geo2.am1)
-    hypolabel.rotate(geo2.am1.get_angle()).shift(
+    hypoangle = geo2.am1.get_angle()
+    kathangle = geo2.gm.get_angle()
+
+    hypolabel = mn.MathTex(r"\text{Hypothenuse}", color=AMCOL).scale(0.8)
+    hypolabel.rotate(hypoangle).move_to(geo2.am1)
+    hypolabel.shift(
         np.asarray(
             [
-                0.35 * math.cos(mn.PI / 2 - geo2.am1.get_angle()),
-                0.35 * math.sin(mn.PI / 2 - geo2.am1.get_angle()),
+                0.35 * math.cos(mn.PI / 2 - hypoangle),
+                0.35 * math.sin(mn.PI / 2 - hypoangle),
                 0,
             ]
         )
     ).rotate(mn.PI)
-    kathlabel = mn.Text("Kathete", font_size=24, color=GMCOL).move_to(geo2.gm)
-    kathlabel.rotate(geo2.gm.get_angle()).shift(
+    kathlabel = mn.MathTex(r"\text{Kathete}", color=GMCOL).scale(0.8)
+    kathlabel.rotate(kathangle).move_to(geo2.gm)
+    kathlabel.shift(
         np.asarray(
             [
-                0.2 * math.cos(mn.PI / 2 + geo2.gm.get_angle()),
-                0.2 * math.sin(mn.PI / 2 + geo2.gm.get_angle()),
+                0.2 * math.cos(mn.PI / 2 + kathangle),
+                0.2 * math.sin(mn.PI / 2 + kathangle),
                 0,
             ]
         )
@@ -163,21 +174,21 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         .scale(0.8)
         .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
-    fulluneq = (
+    fullineq = (
         mn.MathTex(r"\text{Kathete}", r"\leq", r"\text{Hypothenuse}", color=TXTCOL)
         .scale(0.8)
         .next_to(geo2.X.get_center(), mn.UP, buff=0.4)
     )
-    fulluneq.move_to(
-        fulluneq.get_center() + geq.get_center() - fulluneq[1].get_center()
+    fullineq.move_to(
+        fullineq.get_center() + geq.get_center() - fullineq[1].get_center()
     )
-    fulluneq[0].set_color(GMCOL)
-    fulluneq[2].set_color(AMCOL)
+    fullineq[0].set_color(GMCOL)
+    fullineq[2].set_color(AMCOL)
 
     scene.wait(1)
     scene.play(
-        mn.Transform(hypolabel, fulluneq[2]),
-        mn.Transform(kathlabel, fulluneq[0]),
+        hypolabel.animate.rotate(mn.PI - hypoangle).move_to(fullineq[2]),
+        kathlabel.animate.rotate(-kathangle).move_to(fullineq[0]),
         mn.FadeIn(geq),
     )
 
