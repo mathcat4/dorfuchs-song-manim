@@ -46,7 +46,7 @@ def construct_scene(
     else:
         group_eq = mn.VGroup(
             eq_QM, rel_QM_AM, eq_AM, rel_AM_GM, eq_GM, rel_GM_HM, eq_HM
-        ).arrange(mn.RIGHT, buff=0.75)
+        ).arrange(mn.RIGHT, buff=0.7)
         group_eq.scale(0.65)
 
     # Text objects

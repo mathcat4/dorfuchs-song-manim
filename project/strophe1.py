@@ -96,7 +96,7 @@ def construct_scene(scene: mn.Scene):
         lambda: mn.Line(geo.M.get_center(), moving_dot.get_center(), color=AMCOL)
     )
     scene.add(moving_dot)
-    scene.mobjects.insert(1, line)
+    scene.mobjects.insert(2, line)
     scene.play(
         mn.TransformMatchingShapes(term2[0], term3[1]),
         mn.TransformMatchingShapes(term2[1], term3[2]),

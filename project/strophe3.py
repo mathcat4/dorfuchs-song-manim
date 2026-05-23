@@ -202,7 +202,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     anims = [group_move.animate.scale(FIGURE_SCALE, about_point=mn.ORIGIN)]
 
-    add_objs = [geo2.am2, geo2.rightM]
+    add_objs = [geo2.am2, geo2.rightM, geo2.labelN]
     for mobj in add_objs:
         mobj.shift(1.2 * mn.DOWN)
         anims.append(mn.FadeIn(mobj))
@@ -226,6 +226,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
             anims.append(mn.FadeOut(mobj))
 
     scene.mobjects.insert(1, geo2.am2)
+    scene.mobjects.insert(1, geo2.rightM)
     scene.play(*anims, run_time=1)
 
 

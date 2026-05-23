@@ -91,16 +91,16 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     term2 = mn.MathTex(r"{a+b \over 2} - a", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
     scene.play(mn.TransformMatchingShapes(label_rad_2, term2), run_time=0.76)
 
-    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5, run_time=1.3))
-
-    # Pure eqution manipulation
-
     term3 = mn.MathTex(r"{{{b-a \over 2}}}", color=TXTCOL).move_to(3 * mn.UP + mn.RIGHT)
     scene.play(
         mn.TransformMatchingShapes(term2, term3),
         geo.lineMS.animate.set_color(TXTCOL),
         run_time=0.5,
     )
+
+    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5, run_time=1.3))
+
+    # Pure eqution manipulation
 
     term4 = mn.MathTex(
         r"{{|\overline{SN}|}}{{^2}} {{=}} {{(\kern0pt}}{{{a+b \over 2}}}{{)\kern0pt}}{{^2\kern0pt}} {{+}} {{(}}{{{b-a \over 2}}}{{\right)}}{{\hspace{0pt}^2}} ",
