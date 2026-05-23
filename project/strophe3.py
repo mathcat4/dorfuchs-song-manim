@@ -109,7 +109,6 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         geo2.labelX,
         triangle,
         geo2.rightX,
-        geo2.rightS,
         geo2.lineAX,
         geo2.lineBX,
     )
@@ -121,20 +120,22 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         if mobj not in (term6[1], term5):
             scene.remove(mobj)
 
-    hypoangle = geo2.am1.get_angle()
+    hypoangle = mn.PI + geo2.am1.get_angle()
     kathangle = geo2.gm.get_angle()
 
     hypolabel = mn.MathTex(r"\text{Hypothenuse}", color=AMCOL).scale(0.8)
+
     hypolabel.rotate(hypoangle).move_to(geo2.am1)
     hypolabel.shift(
         np.asarray(
             [
-                0.35 * math.cos(mn.PI / 2 - hypoangle),
-                0.35 * math.sin(mn.PI / 2 - hypoangle),
+                0.25 * math.cos(mn.PI / 2 + hypoangle),
+                0.25 * math.sin(mn.PI / 2 + hypoangle),
                 0,
             ]
         )
-    ).rotate(mn.PI)
+    )
+
     kathlabel = mn.MathTex(r"\text{Kathete}", color=GMCOL).scale(0.8)
     kathlabel.rotate(kathangle).move_to(geo2.gm)
     kathlabel.shift(
@@ -187,7 +188,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     scene.wait(1)
     scene.play(
-        hypolabel.animate.rotate(mn.PI - hypoangle).move_to(fullineq[2]),
+        hypolabel.animate.rotate(-hypoangle).move_to(fullineq[2]),
         kathlabel.animate.rotate(-kathangle).move_to(fullineq[0]),
         mn.FadeIn(geq),
     )
@@ -213,7 +214,6 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         geo2.X,
         geo2.labelX,
         geo2.qm,
-        geo2.rightS,
     ]
     keep_family = set()
     for obj in keep_objs:

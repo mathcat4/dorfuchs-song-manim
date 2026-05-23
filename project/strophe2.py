@@ -160,12 +160,13 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     hypolabel.shift(
         np.asarray(
             [
-                0.2 * math.cos(mn.PI / 2 + hypoangle),
-                0.2 * math.sin(mn.PI / 2 + hypoangle),
+                0.25 * math.cos(mn.PI / 2 + hypoangle),
+                0.25 * math.sin(mn.PI / 2 + hypoangle),
                 0,
             ]
         )
     )
+
     kathlabel = mn.MathTex(r"\text{Kathete}", color=AMCOL).scale(0.8)
     kathlabel.rotate(kathangle).move_to(geo2.am2)
     kathlabel.shift(

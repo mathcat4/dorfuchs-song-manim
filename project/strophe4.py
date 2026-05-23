@@ -7,6 +7,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     """
     geo = Geo()
     scene.add(
+        geo.rightS,
         geo.qm,
         geo.am1,
         geo.construction,
@@ -16,7 +17,6 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         geo.S,
         geo.labelN,
         geo.labelX,
-        geo.rightS,
     )
     geo.GanzeSkizze.shift(2 * mn.LEFT)
 
@@ -137,7 +137,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         if mobj != term6:
             scene.remove(mobj)
 
-    hypoangle = mn.PI + geo2.gm.get_angle()
+    hypoangle = geo2.gm.get_angle()
     kathangle = geo2.hm.get_angle()
 
     hypolabel = mn.MathTex(r"\text{Hypothenuse}", color=GMCOL).scale(0.8)
@@ -145,12 +145,13 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     hypolabel.shift(
         np.asarray(
             [
-                0.25 * math.cos(hypoangle - mn.PI / 2),
-                0.25 * math.sin(hypoangle - mn.PI / 2),
+                0.25 * math.cos(mn.PI / 2 + hypoangle),
+                0.25 * math.sin(mn.PI / 2 + hypoangle),
                 0,
             ]
         )
-    ).rotate(mn.PI)
+    )
+
     kathlabel = mn.MathTex(r"\text{Kathete}", color=HMCOL).scale(0.8)
     kathlabel.rotate(kathangle).move_to(geo2.hm)
     kathlabel.shift(
@@ -201,7 +202,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.add(hypolabel, kathlabel)
     scene.wait(1)
     scene.play(
-        hypolabel.animate.rotate(mn.PI - hypoangle).move_to(fullineq[0]),
+        hypolabel.animate.rotate(-hypoangle).move_to(fullineq[0]),
         kathlabel.animate.rotate(-kathangle).move_to(fullineq[2]),
         mn.FadeIn(geq),
     )
@@ -241,6 +242,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
             anims.append(mn.FadeOut(mobj))
 
     scene.mobjects.insert(1, geo2.am2)
+    scene.mobjects.insert(1, geo2.rightM)
     scene.play(*anims, run_time=1)
 
 

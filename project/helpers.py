@@ -232,13 +232,13 @@ class Geo:
 
         # Dreiecke und Groups
         self.QMAMDreieck = mn.VGroup(
-            self.qm, self.am2, self.lineMS, self.S, self.M, self.N, self.rightM
+            self.rightM, self.qm, self.am2, self.lineMS, self.S, self.M, self.N
         )
         self.AMGMDreieck = mn.VGroup(
-            self.gm, self.am1, self.lineMS, self.S, self.M, self.X, self.rightS
+            self.rightS, self.gm, self.am1, self.lineMS, self.S, self.M, self.X
         )  # auch Dreieck für Ähnlichkeit
         self.GMHMDreieck = mn.VGroup(
-            self.hm, self.gm, self.lineSG, self.S, self.G, self.X, self.rightG
+            self.rightG, self.hm, self.gm, self.lineSG, self.S, self.G, self.X
         )
         self.angXl = mn.VGroup(self.angleX, self.angleXlabel)
         self.GanzeSkizze = mn.VGroup(
