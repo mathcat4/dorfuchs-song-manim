@@ -12,7 +12,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     # Equation manipulation
 
     term1 = mn.MathTex(r"a \cdot b", color=TXTCOL).shift(mn.UP * 3 + mn.LEFT * 2)
-    scene.wait(1.77)
+    scene.wait(2.27)
     scene.play(mn.Write(term1), run_time=1.5)
 
     term2 = mn.MathTex(r"\sqrt{ab}", color=TXTCOL).shift(mn.UP * 3 + mn.LEFT * 2)
@@ -28,7 +28,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         run_time=1.5,
     )
 
-    scene.wait(4.7)
+    scene.wait(4.2)
     scene.play(mn.FadeOut(term3), mn.FadeOut(term2), run_time=1)
 
     # Geometric construction
@@ -232,7 +232,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
 class MainSketch(mn.Scene):
     def construct(self):
-        START = int(Audio.strophe3 * 1000)
+        START = int((Audio.strophe3 - 0.45) * 1000)
         STOP = int(Audio.refrain4 * 1000)
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])

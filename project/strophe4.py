@@ -49,12 +49,13 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     # scene.add(geo.sega, geo.angleX)  # zauberfunktionfix
     # zauberfunktion(scene, geo.GanzeSkizze, lambda m: m.shift(mn.LEFT * 3))
 
-    scene.wait(0.64)
+    scene.wait(1.3)
     scene.play(
         mn.Wiggle(
             geo.AMGMDreieck,
             scale_about_point=geo.AMGMDreieck.get_center_of_mass(),
-            run_time=1.33,
+            n_wiggles=4,
+            run_time=1,
         )
     )
     scene.wait(0.5)
@@ -62,7 +63,8 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         mn.Wiggle(
             geo.GMHMDreieck,
             scale_about_point=geo.GMHMDreieck.get_center_of_mass(),
-            run_time=1.33,
+            n_wiggles=4,
+            run_time=1,
         )
     )
 
@@ -105,10 +107,10 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingShapes(term5, term6))
 
-    scene.wait(2)
-    scene.play(mn.Wiggle(geo.hm, scale_value=1.2))
+    scene.wait(3)
+    scene.play(mn.Wiggle(geo.hm, scale_value=1.2, n_wiggles=8))
 
-    scene.wait(4)
+    scene.wait(3)
 
     # scene.play(term6.animate.move_to(mn.UP * 3))
 
@@ -248,7 +250,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
 class MainSketch(mn.Scene):
     def construct(self):
-        START = int(Audio.strophe4 * 1000)
+        START = int((Audio.strophe4 - 0.6) * 1000)
         STOP = int(Audio.refrain5 * 1000)
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])

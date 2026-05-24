@@ -318,7 +318,7 @@ class Audio:
 
     path = "media/Audio/audio.wav"
     if os.path.exists(path):
-        song = pydub.AudioSegment.from_file(path)
+        song = pydub.AudioSegment.from_wav(path)
     else:
         warnings.warn(f"\033[1;33m{path} not found. Rendering without Audio.\033[0m")
 

@@ -8,11 +8,11 @@ class MainSketch(mn.Scene):
     def construct(self):
         fade_duration = 1
 
-        self.wait(Audio.einleitung - self.time)
-
         # manim kinda doesn't cook otherwise
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song)
+
+        self.wait(Audio.einleitung - self.time)
 
         # Einleitung
         einleitung.construct_scene(self)
@@ -36,6 +36,7 @@ class MainSketch(mn.Scene):
         self.wait(Audio.strophe2 - self.time - fade_duration)
         fadeout_all(self, run_time=fade_duration)
         strophe2.construct_scene(self)
+        return
 
         # Refrain 3
         if Audio.refrain3 - self.time > 0:

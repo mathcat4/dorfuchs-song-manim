@@ -144,13 +144,13 @@ def construct_scene(scene: mn.Scene):
     group_line = mn.VGroup(
         number_line,
         dot_qm,
-        label_qm,
+        # label_qm,
         dot_am,
-        label_am,
+        # label_am,
         dot_gm,
-        label_gm,
+        # label_gm,
         dot_hm,
-        label_hm,
+        # label_hm,
         dot_a,
         group_a,
         dot_b,
@@ -173,7 +173,8 @@ def construct_scene(scene: mn.Scene):
     scene.wait(1)
 
     scene.play(mn.Write(eq_mean_equal, run_time=2), mn.FadeIn(group_line, run_time=1))
-    scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
+    # scene.play(mn.FadeOut(label_qm, label_am, label_gm, label_hm), run_time=1)
+    scene.wait(1)
 
     scene.play(
         geo.S.animate.move_to(geo.M.get_center()),
@@ -255,7 +256,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(*anims)
 
-    scene.wait(1.5)
+    scene.wait(2.5)
 
     # Wiggle Relations
     scene.play(mn.Wiggle(group_rel, run_time=1))
@@ -296,14 +297,6 @@ def construct_scene(scene: mn.Scene):
     scene.play(mn.Write(eq_equality), run_time=1.5)
     scene.wait(0.75)
 
-    scene.play(
-        mn.FadeOut(eq_equality),
-        mn.Transform(rel_QM_AM, orel_QM_AM),
-        mn.Transform(rel_AM_GM, orel_AM_GM),
-        mn.Transform(rel_GM_HM, orel_GM_HM),
-        run_time=1,
-    )
-
     # Power means
 
     eq_PM = (
@@ -313,7 +306,15 @@ def construct_scene(scene: mn.Scene):
         .scale(0.8)
         .shift(mn.LEFT * 2)
     )
-    scene.play(mn.Write(eq_PM))
+
+    scene.play(
+        mn.FadeOut(eq_equality),
+        mn.Transform(rel_QM_AM, orel_QM_AM),
+        mn.Transform(rel_AM_GM, orel_AM_GM),
+        mn.Transform(rel_GM_HM, orel_GM_HM),
+        mn.FadeIn(eq_PM),
+        run_time=1,
+    )
 
     eq_implies_QM = mn.MathTex(r"\implies", color=QMCOL).scale(0.8)
     eq_p_QM = (
@@ -406,7 +407,7 @@ def construct_scene(scene: mn.Scene):
 
 class MainSketch(mn.Scene):
     def construct(self):
-        START = int(Audio.strophe5 * 1000)
+        START = int((Audio.strophe5 - 0.6) * 1000)
         STOP = int(Audio.refrain6 * 1000)
         if os.path.exists(Audio.path):
             self.renderer.file_writer.add_audio_segment(Audio.song[START:STOP])
