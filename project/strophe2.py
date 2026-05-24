@@ -37,8 +37,9 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.play(mn.FadeIn(bquestion, bqtext), run_time=0.75)
     scene.play(mn.FadeOut(bquestion, bqtext), run_time=0.75)
 
-    scene.wait(1)
+    scene.wait(0.5)
     scene.play(mn.Wiggle(geo.QMAMDreieck), run_time=1.7)
+    scene.wait(0.5)
 
     scene.play(mn.FadeOut(tex1, run_time=0.5))
 

@@ -25,13 +25,13 @@ def construct_scene(
         eq_HM = mn.MathTex(r"\frac{2}{\frac{1}{a} + \frac{1}{b}}", color=TXTCOL)
     else:
         eq_QM = mn.MathTex(
-            r"\sqrt{ \frac{1}{n} \sum_{i=1}^n x_i^2 }",
+            r"\sqrt{ \frac{1}{n} \sum_{i=1}^n a_i^2 }",
             color=QMCOL,
         )
-        eq_AM = mn.MathTex(r"\frac{1}{n} \sum_{i=1}^n x_i", color=AMCOL)
-        eq_GM = mn.MathTex(r"\sqrt[n]{ \prod_{i=1}^n x_i }", color=GMCOL)
+        eq_AM = mn.MathTex(r"\frac{1}{n} \sum_{i=1}^n a_i", color=AMCOL)
+        eq_GM = mn.MathTex(r"\sqrt[n]{ \prod_{i=1}^n a_i }", color=GMCOL)
         eq_HM = mn.MathTex(
-            r"\left( \frac{1}{n} \sum_{i=1}^n \frac{1}{x_i} \right)^{-1}", color=HMCOL
+            r"\left( \frac{1}{n} \sum_{i=1}^n \frac{1}{a_i} \right)^{-1}", color=HMCOL
         )
 
     rel_QM_AM = mn.MathTex(r"\geq", color=TXTCOL)

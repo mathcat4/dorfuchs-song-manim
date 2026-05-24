@@ -256,7 +256,7 @@ def construct_scene(scene: mn.Scene):
 
     scene.play(*anims)
 
-    scene.wait(2.5)
+    scene.wait(2.2)
 
     # Wiggle Relations
     scene.play(mn.Wiggle(group_rel, run_time=1))
@@ -278,7 +278,7 @@ def construct_scene(scene: mn.Scene):
     orel_AM_GM = rel_AM_GM.copy()
     orel_GM_HM = rel_GM_HM.copy()
 
-    scene.wait(1)
+    scene.wait(1.3)
 
     scene.play(
         mn.Transform(rel_QM_AM, rel2_QM_AM),
@@ -385,11 +385,11 @@ def construct_scene(scene: mn.Scene):
     text[3].set_color(BLUECOL)
 
     ineq_PM_1 = mn.MathTex(
-        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=mn.RED
+        r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=REDCOL
     )
     ineq_PM_2 = mn.MathTex(r"\geq", color=TXTCOL).rotate(-mn.PI / 2)
     ineq_PM_3 = mn.MathTex(
-        r"\sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }", color=mn.DARK_BLUE
+        r"\sqrt[q]{ \frac{{a_1}^q + {a_2}^q + \dots + {a_n}^q}{n} }", color=BLUECOL
     )
     ineq_PM = (
         mn.VGroup(ineq_PM_1, ineq_PM_2, ineq_PM_3)
