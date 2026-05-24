@@ -36,7 +36,6 @@ class MainSketch(mn.Scene):
         self.wait(Audio.strophe2 - self.time - fade_duration)
         fadeout_all(self, run_time=fade_duration)
         strophe2.construct_scene(self)
-        return
 
         # Refrain 3
         if Audio.refrain3 - self.time > 0:

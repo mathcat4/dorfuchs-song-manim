@@ -381,8 +381,8 @@ def construct_scene(scene: mn.Scene):
         r"\text{Für alle } {{ p }} \geq {{ q }} \text{ gilt:}",
         color=TXTCOL,
     ).shift(2.5 * mn.UP + mn.LEFT * 2)
-    text[1].set_color(mn.RED)
-    text[3].set_color(mn.DARK_BLUE)
+    text[1].set_color(REDCOL)
+    text[3].set_color(BLUECOL)
 
     ineq_PM_1 = mn.MathTex(
         r"\sqrt[p]{ \frac{{a_1}^p + {a_2}^p + \dots + {a_n}^p}{n} }", color=mn.RED

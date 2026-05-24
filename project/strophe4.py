@@ -107,10 +107,10 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     ).move_to(mn.UP * 3)
     scene.play(mn.TransformMatchingShapes(term5, term6))
 
-    scene.wait(3)
+    scene.wait(2.8)
     scene.play(mn.Wiggle(geo.hm, scale_value=1.2, n_wiggles=8))
 
-    scene.wait(3)
+    scene.wait(3.2)
 
     # scene.play(term6.animate.move_to(mn.UP * 3))
 

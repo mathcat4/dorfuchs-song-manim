@@ -43,7 +43,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     scene.play(mn.FadeOut(tex1, run_time=0.5))
 
     scene.wait(0.9)
-    scene.play(mn.Wiggle(geo.am2, run_time=1.05))
+    scene.play(mn.Wiggle(geo.am2, n_wiggles=8, run_time=1.05))
 
     am2_copy = geo.am2.copy()
     label_rad = (
@@ -82,7 +82,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
     )
 
     scene.play(
-        mn.ReplacementTransform(am2_copy, geo.lineMS.set_color(ANGLECOL)),
+        mn.ReplacementTransform(am2_copy, geo.lineMS.set_color(REDCOL)),
         mn.TransformMatchingShapes(label_rad, label_rad_2[0]),
         mn.FadeIn(label_rad_2[1]),
         run_time=1.2,
@@ -97,7 +97,7 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
         run_time=0.5,
     )
 
-    scene.play(mn.Wiggle(geo.lineMS, scale_value=1.5, run_time=1.3))
+    scene.play(mn.Wiggle(geo.lineMS, n_wiggles=8, scale_value=1.5, run_time=1.3))
 
     # Pure eqution manipulation
 

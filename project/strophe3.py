@@ -33,12 +33,12 @@ def construct_scene(scene: mn.Scene, debug: bool = False):
 
     # Geometric construction
 
-    scene.wait(6.14)
+    scene.wait(5.64)
     scene.mobjects.insert(1, geo.rightS)
     scene.mobjects.insert(1, geo.gm)
     scene.play(mn.Create(geo.gm), mn.Create(geo.rightS), run_time=1)
 
-    scene.wait(2.48)
+    scene.wait(2.98)
     scene.play(mn.Create(geo.X), run_time=1)
     scene.play(mn.Create(geo.labelX), run_time=1)
     scene.mobjects.insert(1, geo.am1)

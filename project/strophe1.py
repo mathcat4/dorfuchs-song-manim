@@ -45,10 +45,10 @@ def construct_scene(scene: mn.Scene):
         mn.UP * 3 + 2 * mn.LEFT
     )
 
-    scene.wait(1.5)
+    scene.wait(1)
 
     scene.play(mn.Write(avg_text, run_time=1.5))
-    scene.wait(0.9)
+    scene.wait(1.4)
 
     term1 = mn.MathTex(r"a + b", r"\quad \enspace AM(a,b)", color=TXTCOL).shift(
         mn.UP * 3 + 2 * mn.LEFT
